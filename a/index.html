@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Fitly — yönlendiriliyorsun</title>
+<!--
+  Fitly auth-link yönlendiricisi (ADR-013).
+  Mail linki token'ı FRAGMENT'ta taşır (#token_hash=…) — fragment tarayıcıdan
+  sunucuya asla gönderilmez; bu sayfayı barındıran host token'ı GÖREMEZ.
+  JS fragment'ı okuyup Supabase verify endpoint'ine yönlendirir; verify
+  başarılıysa fitly://auth/callback ile uygulama açılır. JS'siz istemciler
+  (mail tarayıcıları) token'ı TÜKETEMEZ — bilinçli özellik.
+-->
+<style>
+  body { margin:0; background:#060709; color:#F5F6F8; font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+         min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .card { text-align:center; padding:40px 28px; }
+  .tile { width:56px; height:56px; border-radius:16px; background:#171B0D; color:#6EE088;
+          font-size:28px; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; }
+  h1 { font-size:19px; font-weight:700; margin:0 0 8px; }
+  p  { font-size:14px; line-height:1.6; color:rgba(235,237,245,.55); margin:0; max-width:320px; }
+  #err { display:none; }
+  .spin { width:22px; height:22px; margin:18px auto 0; border:2.5px solid rgba(255,255,255,.12);
+          border-top-color:#6EE088; border-radius:50%; animation:s 0.8s linear infinite; }
+  @keyframes s { to { transform:rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .spin { animation:none; } }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="tile">F</div>
+    <div id="go">
+      <h1>Fitly'ye yönlendiriliyorsun…</h1>
+      <p>Giriş bağlantın doğrulanıyor. Uygulama birazdan açılacak.</p>
+      <div class="spin" aria-hidden="true"></div>
+    </div>
+    <div id="err">
+      <h1>Bağlantı eksik görünüyor</h1>
+      <p>Bu bağlantı süresi dolmuş ya da eksik olabilir. Uygulamadan yeni bir giriş bağlantısı iste.</p>
+    </div>
+    <noscript><p style="margin-top:12px;">Devam etmek için JavaScript gerekli — bağlantıyı Safari'de aç.</p></noscript>
+  </div>
+<script>
+(function () {
+  var p = new URLSearchParams(location.hash.slice(1));
+  var token = p.get("token_hash");
+  var type = p.get("type") || "magiclink";
+  var okToken = token && /^[A-Za-z0-9._\-]{6,512}$/.test(token);
+  var okType = /^[a-z_]{3,32}$/.test(type);
+  if (okToken && okType) {
+    location.replace(
+      "https://ayjyxoemxrzjvuvwlxcv.supabase.co/auth/v1/verify" +
+      "?token=" + encodeURIComponent(token) +
+      "&type=" + encodeURIComponent(type) +
+      "&redirect_to=" + encodeURIComponent("fitly://auth/callback")
+    );
+  } else {
+    document.getElementById("go").style.display = "none";
+    document.getElementById("err").style.display = "block";
+  }
+})();
+</script>
+</body>
+</html>
