@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fitly</title>
-<meta name="description" content="Fitly, tek koç değil bir konsey. Güç, beslenme ve toparlanma uzmanları senin hedefin için birlikte çalışır: haftalık programını, kalori planını ve yemek listeni birlikte yazar.">
+<meta name="description" content="Fitly, 한 명의 코치가 아니라 카운슬입니다. 근력, 영양, 회복 전문가가 당신의 목표를 위해 함께 일합니다. 주간 프로그램, 칼로리 플랜, 식단을 함께 작성합니다.">
 <meta name="theme-color" content="#060709">
-<meta property="og:title" content="Fitly: Tek koç değil. Bir konsey.">
-<meta property="og:description" content="Güç, beslenme ve toparlanma uzmanları senin hedefin için birlikte çalışır.">
+<meta property="og:title" content="Fitly: 한 명의 코치가 아닙니다. 카운슬입니다.">
+<meta property="og:description" content="근력, 영양, 회복 전문가가 당신의 목표를 위해 함께 일합니다.">
 <meta property="og:type" content="website">
-<meta property="og:locale" content="tr_TR">
+<meta property="og:locale" content="ko_KR">
 <link rel="icon" href="/assets/logo.png">
 <style>
 @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400 700;font-display:swap;src:url(/assets/sg-1.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400 700;font-display:swap;src:url(/assets/sg-2.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}
@@ -346,52 +346,52 @@ select.lang option{background:#15171C;color:var(--text);}
 <!-- ============ HEADER ============ -->
 <header class="site-header">
   <div class="wrap header-row">
-    <a class="brand" href="#top" aria-label="Fitly ana sayfa">
+    <a class="brand" href="#top" aria-label="Fitly 홈">
       <span class="brand-mark"><img src="/assets/logo.png" alt="" width="24" height="24"></span>
       <span class="brand-name">fitly</span>
     </a>
 
-    <nav class="nav-desktop" aria-label="Ana menü">
+    <nav class="nav-desktop" aria-label="메인 메뉴">
       <div class="nav-links">
-        <a href="#konsey">Konsey</a>
-        <a href="#nasil">Nasıl çalışır</a>
-        <a href="#ozellikler">Özellikler</a>
-        <a href="#fiyatlar">Fiyatlar</a>
+        <a href="#konsey">카운슬</a>
+        <a href="#nasil">작동 방식</a>
+        <a href="#ozellikler">기능</a>
+        <a href="#fiyatlar">요금</a>
       </div>
       <div class="nav-legal">
-        <a href="gizlilik.html">Gizlilik</a>
-        <a href="kosullar.html">Kullanım Koşulları</a>
+        <a href="gizlilik.html">개인정보</a>
+        <a href="kosullar.html">이용약관</a>
         <a href="eula.html">EULA</a>
       </div>
     </nav>
 
     <div class="header-cta">
-      <select class="lang" aria-label="Dil / Language" onchange="fitlySwitchLang(this.value)"><option value="tr">TR</option><option value="en">EN</option><option value="de">DE</option><option value="es">ES</option><option value="fr">FR</option><option value="it">IT</option><option value="pt-BR">PT</option><option value="ru">RU</option><option value="ar">AR</option><option value="ja">JA</option><option value="ko">KO</option><option value="zh-Hans">ZH</option></select>
-      <a class="login" href="#">Giriş</a>
-      <a class="btn btn-primary" href="#">Ücretsiz başla</a>
+      <select class="lang" aria-label="언어 / Language" onchange="fitlySwitchLang(this.value)"><option value="tr">TR</option><option value="en">EN</option><option value="de">DE</option><option value="es">ES</option><option value="fr">FR</option><option value="it">IT</option><option value="pt-BR">PT</option><option value="ru">RU</option><option value="ar">AR</option><option value="ja">JA</option><option value="ko">KO</option><option value="zh-Hans">ZH</option></select>
+      <a class="login" href="#">로그인</a>
+      <a class="btn btn-primary" href="#">무료로 시작</a>
     </div>
 
-    <button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobileMenu">
+    <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
   </div>
 
-  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobil menü">
+  <nav class="mobile-menu" id="mobileMenu" aria-label="모바일 메뉴">
     <div class="m-group">
-      <a href="#konsey">Konsey</a>
-      <a href="#nasil">Nasıl çalışır</a>
-      <a href="#ozellikler">Özellikler</a>
-      <a href="#fiyatlar">Fiyatlar</a>
+      <a href="#konsey">카운슬</a>
+      <a href="#nasil">작동 방식</a>
+      <a href="#ozellikler">기능</a>
+      <a href="#fiyatlar">요금</a>
     </div>
     <div class="m-group m-legal">
-      <a href="gizlilik.html">Gizlilik</a>
-      <a href="kosullar.html">Kullanım Koşulları</a>
+      <a href="gizlilik.html">개인정보</a>
+      <a href="kosullar.html">이용약관</a>
       <a href="eula.html">EULA</a>
     </div>
     <div class="m-cta">
-      <select class="lang" aria-label="Dil / Language" onchange="fitlySwitchLang(this.value)"><option value="tr">TR</option><option value="en">EN</option><option value="de">DE</option><option value="es">ES</option><option value="fr">FR</option><option value="it">IT</option><option value="pt-BR">PT</option><option value="ru">RU</option><option value="ar">AR</option><option value="ja">JA</option><option value="ko">KO</option><option value="zh-Hans">ZH</option></select>
-      <a class="btn btn-outline" href="#">Giriş</a>
-      <a class="btn btn-primary" href="#">Ücretsiz başla</a>
+      <select class="lang" aria-label="언어 / Language" onchange="fitlySwitchLang(this.value)"><option value="tr">TR</option><option value="en">EN</option><option value="de">DE</option><option value="es">ES</option><option value="fr">FR</option><option value="it">IT</option><option value="pt-BR">PT</option><option value="ru">RU</option><option value="ar">AR</option><option value="ja">JA</option><option value="ko">KO</option><option value="zh-Hans">ZH</option></select>
+      <a class="btn btn-outline" href="#">로그인</a>
+      <a class="btn btn-primary" href="#">무료로 시작</a>
     </div>
   </nav>
 </header>
@@ -409,56 +409,56 @@ select.lang option{background:#15171C;color:var(--text);}
             <span class="av" style="background:#5CE58F;"></span>
             <span class="av" style="background:#8FA7FF;"></span>
           </span>
-          <span class="label">Üç uzmanlı AI Konsey</span>
+          <span class="label">3인 전문가 AI 카운슬</span>
         </div>
-        <h1>Tek koç değil.<br><span class="accent">Bir konsey.</span></h1>
-        <p class="hero-sub">Güç, beslenme ve toparlanma uzmanları senin hedefin için birlikte çalışır. Haftalık programını, kalori planını ve yemek listeni birlikte yazar.</p>
+        <h1>한 명의 코치가 아닙니다.<br><span class="accent">카운슬입니다.</span></h1>
+        <p class="hero-sub">근력, 영양, 회복 전문가가 당신의 목표를 위해 함께 일합니다. 주간 프로그램, 칼로리 플랜, 식단을 함께 작성해 드립니다.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#">7 gün ücretsiz dene</a>
+          <a class="btn btn-primary" href="#">7일 무료 체험</a>
           <a class="btn btn-ghost" href="#nasil">
             <svg width="13" height="14" viewBox="0 0 13 14" aria-hidden="true"><path d="M2 1.5v11l9-5.5z" fill="rgba(235,237,245,0.8)"></path></svg>
-            Nasıl çalışır
+            작동 방식
           </a>
         </div>
         <div class="hero-trust">
-          <span class="item"><svg width="14" height="14" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Kredi kartı yok</span>
-          <span class="item"><svg width="14" height="14" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Pazartesi hep ücretsiz</span>
+          <span class="item"><svg width="14" height="14" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>신용카드 불필요</span>
+          <span class="item"><svg width="14" height="14" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>월요일은 언제나 무료</span>
         </div>
       </div>
 
       <div class="hero-visual">
         <div class="glow" aria-hidden="true"></div>
-        <div class="phone" role="img" aria-label="Fitly uygulaması ekranı: Konsey'in bugün için ayarladığı Alt Vücut Güç antrenmanı, kalori ve uyku özetleri">
+        <div class="phone" role="img" aria-label="Fitly 앱 화면: 카운슬이 오늘을 위해 설정한 하체 근력 운동, 칼로리 및 수면 요약">
           <div class="phone-inner">
             <div class="phone-top">
               <div>
-                <div class="phone-date">SALI · BUGÜN</div>
-                <div class="phone-greet">Günaydın, Mert</div>
+                <div class="phone-date">화요일 · 오늘</div>
+                <div class="phone-greet">좋은 아침이에요, Mert</div>
               </div>
               <span class="phone-avatar"><img src="/assets/logo.png" alt="" width="22" height="22"></span>
             </div>
             <div class="council-card">
               <div class="row">
                 <span class="mono-stack" aria-hidden="true">
-                  <span class="m" style="background:#FF8A5C;color:#2A1206;">G</span>
-                  <span class="m" style="background:#5CE58F;color:#08240F;">B</span>
-                  <span class="m" style="background:#8FA7FF;color:#0B1435;">T</span>
+                  <span class="m" style="background:#FF8A5C;color:#2A1206;">근</span>
+                  <span class="m" style="background:#5CE58F;color:#08240F;">영</span>
+                  <span class="m" style="background:#8FA7FF;color:#0B1435;">회</span>
                 </span>
-                <span class="tag">KONSEY BUGÜNÜ AYARLADI</span>
+                <span class="tag">카운슬이 오늘을 정했어요</span>
               </div>
-              <div class="title">Alt Vücut Güç</div>
-              <div class="meta">5 egzersiz · ~52 dk</div>
-              <div class="go">Antrenmana başla</div>
+              <div class="title">하체 근력</div>
+              <div class="meta">운동 5개 · 약 52분</div>
+              <div class="go">운동 시작</div>
             </div>
             <div class="phone-stats">
               <div class="pstat">
-                <div class="k">KALORİ</div>
+                <div class="k">칼로리</div>
                 <div class="v">1.540</div>
                 <div class="bar"><i style="width:62%;"></i></div>
               </div>
               <div class="pstat">
-                <div class="k" style="color:#8FA7FF;">UYKU</div>
-                <div class="v">7s 20dk</div>
+                <div class="k" style="color:#8FA7FF;">수면</div>
+                <div class="v">7시간 20분</div>
                 <div class="bar"><i style="width:88%;background:#8FA7FF;"></i></div>
               </div>
             </div>
@@ -472,11 +472,11 @@ select.lang option{background:#15171C;color:var(--text);}
   <section class="stats-section">
     <div class="wrap">
       <div class="stats-bar">
-        <div class="stat"><span class="num">3</span><span class="cap">uzman konsey modeli</span></div>
+        <div class="stat"><span class="num">3</span><span class="cap">전문가 카운슬 모델</span></div>
         <span class="stat-divider" aria-hidden="true"></span>
-        <div class="stat"><span class="num">224</span><span class="cap">egzersiz kütüphanesi</span></div>
+        <div class="stat"><span class="num">224</span><span class="cap">운동 라이브러리</span></div>
         <span class="stat-divider" aria-hidden="true"></span>
-        <div class="stat"><span class="num">11</span><span class="cap">dil desteği</span></div>
+        <div class="stat"><span class="num">11</span><span class="cap">지원 언어</span></div>
       </div>
     </div>
   </section>
@@ -485,28 +485,28 @@ select.lang option{background:#15171C;color:var(--text);}
   <section class="section" id="konsey">
     <div class="wrap">
       <div class="section-head">
-        <div class="kicker">KONSEY NASIL ÇALIŞIR</div>
-        <h2>Üç uzman. Tek plan.</h2>
-        <p>Her uzman kendi alanında çalışır, sonra masaya oturup senin için tek bir öneride buluşurlar.</p>
+        <div class="kicker">카운슬 작동 방식</div>
+        <h2>세 명의 전문가. 하나의 플랜.</h2>
+        <p>각 전문가가 자기 분야에서 일한 뒤, 한자리에 모여 당신을 위한 하나의 제안으로 의견을 모읍니다.</p>
       </div>
       <div class="experts">
         <div class="expert strength">
           <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 10.5h2.4v3H2zM19.6 10.5H22v3h-2.4zM5 8h2.4v8H5zM16.6 8H19v8h-2.4zM7.4 11h9.2v2H7.4z" fill="#FF8A5C"></path></svg></div>
-          <div class="role">GÜÇ UZMANI</div>
-          <div class="name">Antrenmanı kurar</div>
-          <div class="desc">Split'ini, set-tekrar şemanı ve haftalık progresyonunu seviyene göre planlar; PR'larını takip eder.</div>
+          <div class="role">근력 전문가</div>
+          <div class="name">운동을 설계해요</div>
+          <div class="desc">당신의 스플릿, 세트·반복 구성, 주간 점진적 증가를 수준에 맞게 계획하고, 개인 기록(PR)을 추적합니다.</div>
         </div>
         <div class="expert nutrition">
           <div class="ic"><svg width="24" height="24" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 2v6M3.5 2v4M8.5 2v4M6 8v10M14.5 2c-1.7 1.5-2.5 3.5-2.5 5.5 0 1.5 1 2.5 2.5 2.5S17 9 17 7.5c0-2-.8-4-2.5-5.5zM14.5 10v8" stroke="#5CE58F" stroke-width="1.7" fill="none" stroke-linecap="round"></path></svg></div>
-          <div class="role">BESLENME UZMANI</div>
-          <div class="name">Makroyu hesaplar</div>
-          <div class="desc">Kalori ve makro hedefini belirler, haftalık yemek planı ve alışveriş listesini otomatik çıkarır.</div>
+          <div class="role">영양 전문가</div>
+          <div class="name">매크로를 계산해요</div>
+          <div class="desc">칼로리와 매크로 목표를 정하고, 주간 식단과 장보기 목록을 자동으로 만들어 줍니다.</div>
         </div>
         <div class="expert recovery">
           <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5C7.5 8 5.5 11 5.5 14a6.5 6.5 0 0013 0c0-3-2-6-6.5-10.5z" fill="none" stroke="#8FA7FF" stroke-width="1.9"></path></svg></div>
-          <div class="role">TOPARLANMA UZMANI</div>
-          <div class="name">Dengeyi korur</div>
-          <div class="desc">Uyku ve yorgunluk verini okur; yoğunluğu ayarlar, dinlenme günlerini yerleştirir, sakatlığı önler.</div>
+          <div class="role">회복 전문가</div>
+          <div class="name">균형을 지켜요</div>
+          <div class="desc">수면과 피로 데이터를 읽어 강도를 조절하고, 휴식일을 배치하며 부상을 예방합니다.</div>
         </div>
       </div>
     </div>
@@ -516,10 +516,10 @@ select.lang option{background:#15171C;color:var(--text);}
   <section class="section" id="nasil" style="padding-top:0;">
     <div class="wrap">
       <div class="steps">
-        <div class="step"><div class="n">01</div><div class="t">Hedefini söyle</div><div class="d">Yağ yakma, kas, güç: seviyeni ve müsaitliğini al.</div></div>
-        <div class="step"><div class="n">02</div><div class="t">Konsey yazsın</div><div class="d">Program, kalori ve yemek planın 1 dakikada hazır.</div></div>
-        <div class="step"><div class="n">03</div><div class="t">Uygula &amp; sor</div><div class="d">Takıldığında Konsey'e sor, plan sana göre değişsin.</div></div>
-        <div class="step"><div class="n">04</div><div class="t">İlerlemeni gör</div><div class="d">Haftalık rapor ve Wrapped kartlarıyla ilerle.</div></div>
+        <div class="step"><div class="n">01</div><div class="t">목표를 알려 주세요</div><div class="d">체지방 감량, 근육, 근력 중 무엇이든 수준과 시간 여유를 파악합니다.</div></div>
+        <div class="step"><div class="n">02</div><div class="t">카운슬이 작성해요</div><div class="d">프로그램, 칼로리, 식단이 1분 만에 준비됩니다.</div></div>
+        <div class="step"><div class="n">03</div><div class="t">실행하고 질문하세요</div><div class="d">막히면 카운슬에 물어보세요. 플랜이 당신에 맞게 바뀝니다.</div></div>
+        <div class="step"><div class="n">04</div><div class="t">진행 상황을 확인하세요</div><div class="d">주간 리포트와 Wrapped 카드로 성장하세요.</div></div>
       </div>
     </div>
   </section>
@@ -531,14 +531,14 @@ select.lang option{background:#15171C;color:var(--text);}
         <div class="cell feature">
           <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zm0 4v5l3.5 2" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
           <div>
-            <h3>Fotoğrafla yemek kaydı</h3>
-            <p>Tabağının fotoğrafını çek, Konsey yemeği tanır, porsiyonu tahmin eder, makroyu saniyede ekler.</p>
+            <h3>사진으로 식사 기록</h3>
+            <p>접시 사진을 찍으면 카운슬이 음식을 인식하고 양을 추정해 매크로를 순식간에 추가합니다.</p>
           </div>
         </div>
-        <div class="cell"><h3>Apple Health</h3><p>Uyku ve adım verin planı gerçek hayatına göre ayarlar.</p></div>
-        <div class="cell"><h3>Sınırsız sohbet</h3><p>Konsey'e istediğini sor; öneri anında güncellensin.</p></div>
-        <div class="cell"><h3>Haftalık rapor</h3><p>Konsey her hafta ilerlemeni değerlendirir, planı ilerletir.</p></div>
-        <div class="cell"><h3>Wrapped kartları</h3><p>PR, seri ve yıl özetini paylaşılabilir kartlarla göster.</p></div>
+        <div class="cell"><h3>Apple Health</h3><p>수면과 걸음 수 데이터가 플랜을 실제 생활에 맞춰 조정합니다.</p></div>
+        <div class="cell"><h3>무제한 대화</h3><p>카운슬에 무엇이든 물어보세요. 제안이 즉시 업데이트됩니다.</p></div>
+        <div class="cell"><h3>주간 리포트</h3><p>카운슬이 매주 당신의 진행 상황을 평가하고 플랜을 발전시킵니다.</p></div>
+        <div class="cell"><h3>Wrapped 카드</h3><p>개인 기록(PR), 연속 기록, 연간 요약을 공유 가능한 카드로 보여 주세요.</p></div>
       </div>
     </div>
   </section>
@@ -547,41 +547,41 @@ select.lang option{background:#15171C;color:var(--text);}
   <section class="section" id="fiyatlar">
     <div class="wrap">
       <div class="section-head">
-        <div class="kicker">FİYATLAR</div>
-        <h2>Pazartesi hep ücretsiz.</h2>
-        <p>Denemek için kart gerekmez. Hazır olduğunda Pro'ya geç.</p>
+        <div class="kicker">요금</div>
+        <h2>월요일은 언제나 무료.</h2>
+        <p>체험에 카드가 필요 없습니다. 준비되면 Pro로 전환하세요.</p>
       </div>
       <div class="price-toggle">
-        <div class="toggle-group" role="tablist" aria-label="Fatura dönemi">
-          <button id="tabMonthly" role="tab" aria-selected="true" class="active" type="button">Aylık</button>
-          <button id="tabAnnual" role="tab" aria-selected="false" type="button">Yıllık <span class="gift">2 ay hediye</span></button>
+        <div class="toggle-group" role="tablist" aria-label="결제 주기">
+          <button id="tabMonthly" role="tab" aria-selected="true" class="active" type="button">월간</button>
+          <button id="tabAnnual" role="tab" aria-selected="false" type="button">연간 <span class="gift">2개월 무료</span></button>
         </div>
       </div>
       <div class="plans">
         <div class="plan">
-          <div class="plan-name">Ücretsiz</div>
-          <div class="price"><span class="amt">₺0</span><span class="per">sonsuza dek</span></div>
+          <div class="plan-name">무료</div>
+          <div class="price"><span class="amt">₺0</span><span class="per">영원히</span></div>
           <div class="price-sub"></div>
-          <a class="btn btn-outline" href="#">Hemen başla</a>
+          <a class="btn btn-outline" href="#">지금 시작</a>
           <ul class="feat-list">
-            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="rgba(235,237,245,0.5)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Pazartesi antrenmanı</li>
-            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="rgba(235,237,245,0.5)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>5 Konsey mesajı</li>
-            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="rgba(235,237,245,0.5)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Temel takip</li>
+            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="rgba(235,237,245,0.5)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>월요일 운동</li>
+            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="rgba(235,237,245,0.5)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>카운슬 메시지 5개</li>
+            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="rgba(235,237,245,0.5)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>기본 추적</li>
           </ul>
         </div>
         <div class="plan pro">
           <div class="plan-top">
             <div class="plan-name">Fitly Pro</div>
-            <span class="badge">EN POPÜLER</span>
+            <span class="badge">가장 인기</span>
           </div>
-          <div class="price"><span class="amt" id="proPrice">₺500</span><span class="per">/ay</span></div>
-          <div class="price-sub" id="proSub">istediğin an iptal</div>
-          <a class="btn btn-primary" href="#">7 gün ücretsiz dene</a>
+          <div class="price"><span class="amt" id="proPrice">₺500</span><span class="per">/월</span></div>
+          <div class="price-sub" id="proSub">언제든 해지</div>
+          <a class="btn btn-primary" href="#">7일 무료 체험</a>
           <ul class="feat-list">
-            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Tüm hafta + set takibi</li>
-            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Sınırsız Konsey</li>
-            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Yemek planı + fotoğrafla kayıt</li>
-            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Haftalık Konsey raporu</li>
+            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>전체 주간 + 세트 추적</li>
+            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>무제한 카운슬</li>
+            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>식단 + 사진 기록</li>
+            <li><svg width="15" height="12" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5l3 3L10 1" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>주간 카운슬 리포트</li>
           </ul>
         </div>
       </div>
@@ -594,11 +594,11 @@ select.lang option{background:#15171C;color:var(--text);}
       <div class="final-cta">
         <div class="glow" aria-hidden="true"></div>
         <div class="inner">
-          <h2>Konsey seni bekliyor.</h2>
-          <p>Bugün başla, ilk programın bir dakikada hazır, Pazartesi antrenmanı hep senin.</p>
+          <h2>카운슬이 당신을 기다립니다.</h2>
+          <p>오늘 시작하세요. 첫 프로그램이 1분 만에 준비되고, 월요일 운동은 언제나 당신의 것입니다.</p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="#">Ücretsiz başla</a>
-            <a class="btn btn-ghost" href="#" aria-label="App Store'dan indir">App Store</a>
+            <a class="btn btn-primary" href="#">무료로 시작</a>
+            <a class="btn btn-ghost" href="#" aria-label="App Store에서 다운로드">App Store</a>
           </div>
         </div>
       </div>
@@ -614,11 +614,11 @@ select.lang option{background:#15171C;color:var(--text);}
       <span class="brand-name">fitly</span>
       <span class="footer-copy">© 2026 Fitly</span>
     </div>
-    <nav class="footer-links" aria-label="Yasal">
-      <a href="gizlilik.html">Gizlilik</a>
-      <a href="kosullar.html">Kullanım Koşulları</a>
+    <nav class="footer-links" aria-label="법적 고지">
+      <a href="gizlilik.html">개인정보</a>
+      <a href="kosullar.html">이용약관</a>
       <a href="eula.html">EULA</a>
-      <a href="mailto:bilgi@appfitly.com">İletişim</a>
+      <a href="mailto:bilgi@appfitly.com">연락처</a>
     </nav>
   </div>
 </footer>
@@ -632,14 +632,14 @@ select.lang option{background:#15171C;color:var(--text);}
     toggle.addEventListener('click', function(){
       var open = menu.classList.toggle('open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      toggle.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
+      toggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
     });
     // Close menu when a link is tapped
     menu.addEventListener('click', function(e){
       if(e.target.closest('a')){
         menu.classList.remove('open');
         toggle.setAttribute('aria-expanded','false');
-        toggle.setAttribute('aria-label','Menüyü aç');
+        toggle.setAttribute('aria-label','메뉴 열기');
       }
     });
   }
@@ -655,7 +655,7 @@ select.lang option{background:#15171C;color:var(--text);}
     tabM.setAttribute('aria-selected', annual ? 'false' : 'true');
     tabA.setAttribute('aria-selected', annual ? 'true' : 'false');
     price.textContent = annual ? '₺333' : '₺500';
-    sub.textContent = annual ? 'yıllık ₺4.000, 2 ay hediye' : 'istediğin an iptal';
+    sub.textContent = annual ? '연간 ₺4.000, 2개월 무료' : '언제든 해지';
   }
   if(tabM && tabA){
     tabM.addEventListener('click', function(){ setPlan(false); });

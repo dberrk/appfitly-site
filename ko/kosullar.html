@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이용약관 — Fitly</title>
+<meta name="robots" content="index,follow">
+<style>
+  :root{
+    --bg:#0B0C0F; --bg2:#060709; --surface:#15171C; --surface2:#1B1E24;
+    --border:rgba(255,255,255,.09); --text:#EDEEF1; --muted:#9A9FA8;
+    --accent:#6EE088; --accent-soft:rgba(110,224,136,.12); --warn:#F2C14E;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  header.nav{position:sticky;top:0;z-index:10;background:rgba(6,7,9,.85);
+    backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:760px;margin:0 auto;padding:14px 22px;display:flex;
+    align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.01em}
+  .brand .mark{width:26px;height:26px;border-radius:7px;background:var(--accent);
+    color:#10130A;display:grid;place-items:center;font-weight:800;font-size:16px}
+  .nav a{color:var(--muted);font-size:14px;font-weight:600;margin-left:16px}
+  .nav a.here{color:var(--text)}
+  select.lang{background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:6px 9px;font-size:13px;font-weight:600;margin-left:14px;cursor:pointer}
+  select.lang option{background:#15171C;color:var(--text)}
+  main{max-width:760px;margin:0 auto;padding:40px 22px 80px}
+  h1{font-size:30px;line-height:1.2;letter-spacing:-.02em;margin:.2em 0 .1em}
+  .sub{color:var(--muted);font-size:14.5px;margin-bottom:26px}
+  h2{font-size:20px;letter-spacing:-.01em;margin:44px 0 12px;padding-top:8px;
+    display:flex;gap:11px;align-items:baseline}
+  h2 .n{color:var(--accent);font-variant-numeric:tabular-nums;font-size:15px;
+    font-weight:700;min-width:26px}
+  h3{font-size:16.5px;margin:26px 0 8px;color:var(--text)}
+  p,li{color:#DADCE0}
+  strong{color:var(--text)}
+  .fill{background:var(--accent-soft);color:var(--accent);border:1px solid rgba(110,224,136,.3);
+    border-radius:5px;padding:1px 7px;font-size:14px;font-weight:600;white-space:nowrap}
+  .draft{background:rgba(242,193,78,.1);border:1px solid rgba(242,193,78,.4);
+    border-radius:12px;padding:16px 18px;margin:22px 0 8px;color:#F6D98A;font-size:14.5px;line-height:1.65}
+  .draft b{color:var(--warn)}
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:14px;
+    padding:20px 22px;margin:18px 0}
+  .box.danger{border-color:rgba(242,120,110,.5);background:rgba(242,120,110,.08)}
+  .box.danger h3{color:#F58C82}
+  .box h3{margin-top:0}
+  ul,ol{padding-left:22px}
+  li{margin:6px 0}
+  hr{border:0;border-top:1px solid var(--border);margin:40px 0}
+  footer{max-width:760px;margin:0 auto;padding:26px 22px 60px;color:var(--muted);
+    font-size:13.5px;border-top:1px solid var(--border)}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="nav"><div class="nav-in">
+  <span class="brand"><span class="mark">F</span> Fitly</span>
+  <nav>
+    <a href="gizlilik.html">개인정보</a>
+    <a href="kosullar.html" class="here">이용약관</a>
+    <a href="eula.html">EULA</a>
+    <select class="lang" aria-label="언어 / Language" onchange="fitlySwitchLang(this.value)">
+      <option value="tr">TR</option><option value="en">EN</option><option value="de">DE</option><option value="es">ES</option><option value="fr">FR</option><option value="it">IT</option><option value="pt-BR">PT</option><option value="ru">RU</option><option value="ar">AR</option><option value="ja">JA</option><option value="ko">KO</option><option value="zh-Hans">ZH</option>
+    </select>
+  </nav>
+</div></header>
+
+<main>
+  <h1>이용약관</h1>
+  <div class="sub">최종 업데이트: 2026년 7월 18일 · 시행일: 2026년 7월 18일</div>
+
+  <h2><span class="n">1</span> 당사자 및 동의</h2>
+  <p>본 이용약관(이하 "약관")은 Berk Demir(이하 "Fitly",
+  "당사")와 Fitly 애플리케이션(이하 "앱", "서비스")을 이용하는 귀하(이하 "사용자") 사이의
+  계약입니다. 앱을 다운로드하거나 계정을 만들거나 이용함으로써 귀하는 본 약관과
+  <a href="gizlilik.html">개인정보 처리방침</a> 및
+  <a href="eula.html">최종 사용자 라이선스 계약</a>에 동의하게 됩니다.
+  동의하지 않으시면 앱을 이용하지 마십시오.</p>
+
+  <h2><span class="n">2</span> 서비스 설명</h2>
+  <p>Fitly는 인공지능 기반의 "AI 카운슬"(근력, 영양 및 회복 전문가
+  모델)을 통해 운동 플랜, 영양 목표 및 맞춤형
+  조언을 제공하고, 운동·식사·수분·진행 상황 추적을 제공하는 피트니스 및
+  라이프스타일 애플리케이션입니다.</p>
+
+  <div class="box danger">
+    <h3>⚠ 중요한 건강 및 의료 면책 고지</h3>
+    <p><strong>Fitly는 의료기기나 의료 서비스가 아니며, 제공하는 콘텐츠는 의료
+    조언, 진단 또는 치료를 대체하지 않습니다.</strong> 앱의 운동, 영양 및
+    회복 관련 제안은 일반적인 정보 제공을 목적으로 합니다. 어떠한 운동이나 영양
+    프로그램을 시작하기 전에, 특히 건강 상태나 부상, 임신이
+    있거나 약을 복용 중인 경우에는 의사 또는 전문가와 상담하십시오.</p>
+    <p style="margin-bottom:0">운동 중 통증, 어지럼증, 호흡 곤란 또는
+    불편함을 느끼면 즉시 중단하고 의료 도움을 받으십시오. 앱의 이용은
+    <strong>전적으로 귀하 자신의 책임</strong>입니다.</p>
+  </div>
+
+  <h2><span class="n">3</span> 인공지능 콘텐츠</h2>
+  <p>카운슬의 조언, 플랜 및 제안은 대규모 언어 모델에 의해 자동으로
+  생성됩니다. 인공지능 출력은 <strong>부정확하거나 불완전하거나 귀하의 상황에 맞지 않을 수 있습니다</strong>.
+  이러한 콘텐츠는 전문가를 대체하지 않으므로, 중요한 결정에서는 스스로 판단하시고
+  필요할 때 전문가와 상담하십시오. 카운슬과 공유한 콘텐츠가 국외 모델
+  제공업체로 이전되는 것에 관한 정보는 <a href="gizlilik.html">개인정보 처리방침</a>을 참조하십시오.</p>
+
+  <h2><span class="n">4</span> 이용 자격 및 연령</h2>
+  <p>서비스를 이용하려면 <strong>만 18세 이상</strong>이어야 합니다. 앱을
+  이용함으로써 귀하는 이 요건을 충족함과 귀하가 제공한 정보가 정확함을 진술합니다.</p>
+
+  <h2><span class="n">5</span> 계정</h2>
+  <p>Fitly는 먼저 익명으로 시작할 수 있으며, 이후 데이터를 기기와 무관하게
+  유지하기 위해 이메일 또는 Apple로 계정을 연결할 수 있습니다. 귀하의 계정과 로그인
+  링크의 보안은 귀하의 책임입니다. 계정은 언제든지
+  설정에서 삭제할 수 있습니다.</p>
+
+  <h2><span class="n">6</span> 구독 (Fitly Pro)</h2>
+  <ul>
+    <li>Fitly Pro는 <strong>Apple App Store를 통해</strong> 구매하는 갱신형 구독이며,
+    결제는 귀하의 Apple 계정에서 청구됩니다.</li>
+    <li><strong>무료 체험 기간</strong>이 있는 경우, 체험 종료 시 구독은 자동으로 유료 기간으로 전환되며,
+    종료 전에 알림이 전송됩니다.</li>
+    <li>구독은 기간 종료 최소 24시간 전에 해지하지 않으면 <strong>자동으로 갱신</strong>됩니다.</li>
+    <li>해지 및 관리는 <strong>Apple ID → 구독</strong>에서 이루어지며, 해지는 현재 기간이 끝날 때 효력이 발생합니다.</li>
+    <li>최신 가격 및 기간 정보는 구매 화면(페이월)에 표시됩니다. 가격은 변경될 수 있으나, 변경은 진행 중인 귀하의 기간에는 영향을 미치지 않습니다.</li>
+    <li>구독 인프라에는 RevenueCat이 사용되며, 가명 사용자 ID만 공유됩니다(이메일/건강 정보는 절대 아님).</li>
+    <li>환불은 Apple의 정책을 따르며, 소비자 관련 법령에서 발생하는 귀하의 권리는 그대로 유지됩니다.</li>
+  </ul>
+
+  <h2><span class="n">7</span> 허용되는 이용</h2>
+  <p>귀하는 앱을 불법적인 목적으로 이용할 수 없으며, 역설계를 하거나 보안
+  조치를 우회하거나 서비스를 오용(예: 자동화된/과도한 요청)하거나 타인의
+  권리를 침해하거나 카운슬이 유해한 출력을 생성하도록 유도할 수 없습니다.
+  이러한 규칙을 위반하면 계정이 정지될 수 있습니다.</p>
+
+  <h2><span class="n">8</span> 지식재산권</h2>
+  <p>앱과 그 디자인, 브랜드, 소프트웨어 및 콘텐츠는 Berk Demir에게
+  귀속되며 지식재산권은 보호됩니다. 귀하에게는 본 약관에 따라 제한적이고 개인적인
+  사용 권리가 부여됩니다(<a href="eula.html">EULA</a> 참조).</p>
+
+  <h2><span class="n">9</span> 사용자 콘텐츠</h2>
+  <p>귀하가 입력한 데이터(기록, 대화 내용 등)는 귀하에게 귀속됩니다. 당사는 오직 귀하에게
+  서비스를 제공하기 위해서만 이를 처리합니다. 자세한 내용은 <a href="gizlilik.html">개인정보 처리방침</a>을 참조하십시오.
+  귀하는 언제든지 데이터를 다운로드하거나 삭제할 수 있습니다.</p>
+
+  <h2><span class="n">10</span> 책임의 제한</h2>
+  <p>서비스는 "있는 그대로(as is)" 제공됩니다. 관련 법률이 허용하는 최대 범위 내에서 Fitly는
+  앱 사용으로 인해 발생하는 간접적, 부수적 또는 결과적 손해,
+  인공지능 출력의 정확성 또는 건강상의 결과에 대해 책임을 지지 않습니다.
+  소비자 관련 법령에서 발생하는 귀하의 강행적 권리는 그대로 유지됩니다.</p>
+
+  <h2><span class="n">11</span> 계약의 해지</h2>
+  <p>귀하는 언제든지 계정을 삭제하여 본 계약을 종료할 수 있습니다. 약관
+  위반 시 당사는 귀하의 접근을 정지하거나 종료할 수 있습니다.</p>
+
+  <h2><span class="n">12</span> 준거법 및 분쟁</h2>
+  <p>본 약관은 <strong>튀르키예 공화국 법률</strong>의 적용을 받습니다. 분쟁에 대해서는
+  Nevşehir 법원 및 집행 사무소가 관할권을 가지며, 소비자
+  거래의 경우 소비자 중재 위원회 및 소비자 법원에 신청할 귀하의 권리는 그대로 유지됩니다.</p>
+
+  <h2><span class="n">13</span> 변경</h2>
+  <p>당사는 본 약관을 업데이트할 수 있으며, 중요한 변경 사항은 귀하에게 안내합니다. 변경
+  후에도 계속 이용하시는 것은 최신 약관에 동의하는 것으로 간주됩니다.</p>
+
+  <h2><span class="n">14</span> 연락처</h2>
+  <p>destek@appfitly.com · Berk Demir,
+  Nevşehir / Merkez, Türkiye.</p>
+
+  <hr>
+  <p style="color:var(--muted);font-size:14px">관련 문서:
+    <a href="gizlilik.html">개인정보 처리방침</a> ·
+    <a href="eula.html">최종 사용자 라이선스 계약(EULA)</a></p>
+</main>
+
+<footer>
+  © 2026 Berk Demir · Fitly ·
+  <a href="gizlilik.html">개인정보</a> · <a href="kosullar.html">약관</a> · <a href="eula.html">EULA</a>
+
+</footer>
+<script>
+(function(){
+  var L=["tr","en","de","es","fr","it","pt-BR","ru","ar","ja","ko","zh-Hans"];
+  var seg=location.pathname.replace(/^\/+/,'').split('/');
+  var cur="tr",page;
+  if(L.indexOf(seg[0])>-1){cur=seg[0];page=seg.slice(1).join('/')||'index.html';}
+  else{page=seg.join('/')||'index.html';}
+  window.fitlySwitchLang=function(l){location.href=(l==='tr'?'/':'/'+l+'/')+page;};
+  document.addEventListener('DOMContentLoaded',function(){var s=document.querySelector('select.lang');if(s)s.value=cur;});
+})();
+</script>
+</body>
+</html>

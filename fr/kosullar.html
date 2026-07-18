@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditions d'utilisation — Fitly</title>
+<meta name="robots" content="index,follow">
+<style>
+  :root{
+    --bg:#0B0C0F; --bg2:#060709; --surface:#15171C; --surface2:#1B1E24;
+    --border:rgba(255,255,255,.09); --text:#EDEEF1; --muted:#9A9FA8;
+    --accent:#6EE088; --accent-soft:rgba(110,224,136,.12); --warn:#F2C14E;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  header.nav{position:sticky;top:0;z-index:10;background:rgba(6,7,9,.85);
+    backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:760px;margin:0 auto;padding:14px 22px;display:flex;
+    align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.01em}
+  .brand .mark{width:26px;height:26px;border-radius:7px;background:var(--accent);
+    color:#10130A;display:grid;place-items:center;font-weight:800;font-size:16px}
+  .nav a{color:var(--muted);font-size:14px;font-weight:600;margin-left:16px}
+  .nav a.here{color:var(--text)}
+  select.lang{background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:6px 9px;font-size:13px;font-weight:600;margin-left:14px;cursor:pointer}
+  select.lang option{background:#15171C;color:var(--text)}
+  main{max-width:760px;margin:0 auto;padding:40px 22px 80px}
+  h1{font-size:30px;line-height:1.2;letter-spacing:-.02em;margin:.2em 0 .1em}
+  .sub{color:var(--muted);font-size:14.5px;margin-bottom:26px}
+  h2{font-size:20px;letter-spacing:-.01em;margin:44px 0 12px;padding-top:8px;
+    display:flex;gap:11px;align-items:baseline}
+  h2 .n{color:var(--accent);font-variant-numeric:tabular-nums;font-size:15px;
+    font-weight:700;min-width:26px}
+  h3{font-size:16.5px;margin:26px 0 8px;color:var(--text)}
+  p,li{color:#DADCE0}
+  strong{color:var(--text)}
+  .fill{background:var(--accent-soft);color:var(--accent);border:1px solid rgba(110,224,136,.3);
+    border-radius:5px;padding:1px 7px;font-size:14px;font-weight:600;white-space:nowrap}
+  .draft{background:rgba(242,193,78,.1);border:1px solid rgba(242,193,78,.4);
+    border-radius:12px;padding:16px 18px;margin:22px 0 8px;color:#F6D98A;font-size:14.5px;line-height:1.65}
+  .draft b{color:var(--warn)}
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:14px;
+    padding:20px 22px;margin:18px 0}
+  .box.danger{border-color:rgba(242,120,110,.5);background:rgba(242,120,110,.08)}
+  .box.danger h3{color:#F58C82}
+  .box h3{margin-top:0}
+  ul,ol{padding-left:22px}
+  li{margin:6px 0}
+  hr{border:0;border-top:1px solid var(--border);margin:40px 0}
+  footer{max-width:760px;margin:0 auto;padding:26px 22px 60px;color:var(--muted);
+    font-size:13.5px;border-top:1px solid var(--border)}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="nav"><div class="nav-in">
+  <span class="brand"><span class="mark">F</span> Fitly</span>
+  <nav>
+    <a href="gizlilik.html">Confidentialité</a>
+    <a href="kosullar.html" class="here">Conditions d'utilisation</a>
+    <a href="eula.html">EULA</a>
+    <select class="lang" aria-label="Dil / Language" onchange="fitlySwitchLang(this.value)">
+      <option value="tr">TR</option><option value="en">EN</option><option value="de">DE</option><option value="es">ES</option><option value="fr">FR</option><option value="it">IT</option><option value="pt-BR">PT</option><option value="ru">RU</option><option value="ar">AR</option><option value="ja">JA</option><option value="ko">KO</option><option value="zh-Hans">ZH</option>
+    </select>
+  </nav>
+</div></header>
+
+<main>
+  <h1>Conditions d'utilisation</h1>
+  <div class="sub">Dernière mise à jour : 18 juillet 2026 · Entrée en vigueur : 18 juillet 2026</div>
+
+  <h2><span class="n">1</span> Parties et acceptation</h2>
+  <p>Les présentes Conditions d'utilisation (« Conditions ») constituent le contrat conclu entre
+  Berk Demir (« Fitly », « nous ») et vous (« Utilisateur »), qui utilisez l'application Fitly
+  (« l'Application », « le Service »). En téléchargeant, en créant un compte ou en utilisant
+  l'Application, vous acceptez les présentes Conditions ainsi que la
+  <a href="gizlilik.html">Politique de confidentialité</a> et le
+  <a href="eula.html">Contrat de licence utilisateur final</a>.
+  Si vous ne les acceptez pas, n'utilisez pas l'Application.</p>
+
+  <h2><span class="n">2</span> Description du service</h2>
+  <p>Fitly est une application de fitness et de style de vie qui, par l'intermédiaire d'un
+  « Conseil IA » assisté par intelligence artificielle (modèles d'experts en force, nutrition
+  et récupération), propose un plan d'entraînement, des objectifs nutritionnels et des
+  recommandations personnalisées, et assure le suivi des entraînements, des repas, de
+  l'hydratation et de la progression.</p>
+
+  <div class="box danger">
+    <h3>⚠ Avertissement important en matière de santé et clause médicale</h3>
+    <p><strong>Fitly n'est pas un dispositif médical ni un service de santé ; le contenu qu'elle
+    propose ne remplace pas un avis médical, un diagnostic ou un traitement.</strong> Les
+    recommandations d'entraînement, de nutrition et de récupération de l'Application ont un but
+    d'information générale. Avant de commencer tout programme d'exercice ou de nutrition, en
+    particulier si vous avez un problème de santé, une blessure, si vous êtes enceinte ou si vous
+    prenez des médicaments, consultez un médecin ou un professionnel.</p>
+    <p style="margin-bottom:0">Si vous ressentez une douleur, des vertiges, un essoufflement ou
+    une gêne pendant l'exercice, arrêtez et cherchez une aide médicale. L'utilisation de
+    l'Application relève <strong>entièrement de votre propre responsabilité</strong>.</p>
+  </div>
+
+  <h2><span class="n">3</span> Contenu généré par l'intelligence artificielle</h2>
+  <p>Les recommandations, plans et suggestions du Conseil sont générés automatiquement par de
+  grands modèles de langage. Les résultats de l'intelligence artificielle
+  <strong>peuvent être erronés, incomplets ou inadaptés à votre situation</strong>.
+  Ces contenus ne remplacent pas un professionnel ; pour les décisions importantes, faites usage
+  de votre propre jugement et consultez un expert si nécessaire. Pour toute information sur le
+  transfert vers des fournisseurs de modèles situés à l'étranger du contenu que vous partagez
+  avec le Conseil, consultez la <a href="gizlilik.html">Politique de confidentialité</a>.</p>
+
+  <h2><span class="n">4</span> Éligibilité et âge</h2>
+  <p>Pour utiliser le Service, vous devez être <strong>âgé d'au moins 18 ans</strong>. En
+  utilisant l'Application, vous déclarez remplir cette condition et attester de l'exactitude des
+  informations que vous fournissez.</p>
+
+  <h2><span class="n">5</span> Compte</h2>
+  <p>Vous pouvez d'abord commencer à utiliser Fitly de façon anonyme, puis lier votre compte par
+  e-mail ou avec Apple afin de rendre vos données indépendantes de l'appareil. Vous êtes
+  responsable de la sécurité de votre compte et de vos liens de connexion. Vous pouvez supprimer
+  votre compte à tout moment depuis les Réglages.</p>
+
+  <h2><span class="n">6</span> Abonnement (Fitly Pro)</h2>
+  <ul>
+    <li>Fitly Pro est un abonnement renouvelable acheté <strong>via l'Apple App Store</strong> ;
+    les paiements sont prélevés sur votre compte Apple.</li>
+    <li>Le cas échéant, à la fin de la <strong>période d'essai gratuite</strong>, l'abonnement passe
+    automatiquement à la période payante ; un rappel est envoyé avant l'échéance.</li>
+    <li>L'abonnement <strong>se renouvelle automatiquement</strong> s'il n'est pas annulé au moins 24 heures avant la fin de la période.</li>
+    <li>L'annulation et la gestion se font via <strong>Identifiant Apple → Abonnements</strong> ; l'annulation prend effet à la fin de la période en cours.</li>
+    <li>Le prix actuel et les informations sur la période sont affichés sur l'écran d'achat (paywall). Les prix peuvent changer ; toute modification n'affecte pas votre période en cours.</li>
+    <li>RevenueCat est utilisé pour l'infrastructure d'abonnement ; seul un identifiant utilisateur pseudonymisé est partagé (jamais d'e-mail/de donnée de santé).</li>
+    <li>Les remboursements sont soumis aux politiques d'Apple ; vos droits découlant de la législation sur la consommation sont réservés.</li>
+  </ul>
+
+  <h2><span class="n">7</span> Utilisation acceptable</h2>
+  <p>Vous ne pouvez pas utiliser l'Application à des fins illégales ; procéder à de la
+  rétro-ingénierie, contourner les mesures de sécurité, abuser du Service (par ex. requêtes
+  automatisées/excessives), porter atteinte aux droits d'autrui ou amener le Conseil à produire
+  des résultats nuisibles. Tout manquement à ces règles peut entraîner la suspension de votre compte.</p>
+
+  <h2><span class="n">8</span> Propriété intellectuelle</h2>
+  <p>L'Application, sa conception, sa marque, son logiciel et son contenu appartiennent à
+  Berk Demir, et les droits de propriété intellectuelle sont réservés. Un droit d'utilisation
+  limité et personnel vous est accordé dans le cadre des présentes Conditions (voir
+  <a href="eula.html">EULA</a>).</p>
+
+  <h2><span class="n">9</span> Contenu de l'utilisateur</h2>
+  <p>Les données que vous saisissez (enregistrements, contenu du chat, etc.) vous appartiennent.
+  Nous ne les traitons que pour vous fournir le Service ; pour plus de détails, voir la
+  <a href="gizlilik.html">Politique de confidentialité</a>.
+  Vous pouvez télécharger ou supprimer vos données à tout moment.</p>
+
+  <h2><span class="n">10</span> Limitation de responsabilité</h2>
+  <p>Le Service est fourni « en l'état ». Dans toute la mesure permise par le droit applicable,
+  Fitly ne saurait être tenu responsable des dommages indirects, accessoires ou consécutifs
+  résultant de l'utilisation de l'Application, de l'exactitude des résultats de l'intelligence
+  artificielle ou d'un quelconque résultat en matière de santé.
+  Vos droits impératifs découlant de la législation sur la consommation sont réservés.</p>
+
+  <h2><span class="n">11</span> Résiliation</h2>
+  <p>Vous pouvez mettre fin à ce contrat à tout moment en supprimant votre compte. En cas de
+  manquement aux Conditions, nous pouvons suspendre ou résilier votre accès.</p>
+
+  <h2><span class="n">12</span> Droit applicable et litiges</h2>
+  <p>Les présentes Conditions sont régies par le <strong>droit de la République de Turquie</strong>.
+  En cas de litige, les tribunaux et bureaux d'exécution de Nevşehir sont compétents ; pour les
+  opérations de consommation, votre droit de saisir les commissions arbitrales de consommation et
+  les tribunaux de consommation est réservé.</p>
+
+  <h2><span class="n">13</span> Modifications</h2>
+  <p>Nous pouvons mettre à jour les présentes Conditions ; en cas de changement important, nous
+  vous en informons. Le fait de continuer à utiliser le Service après une modification vaut
+  acceptation des Conditions en vigueur.</p>
+
+  <h2><span class="n">14</span> Contact</h2>
+  <p>destek@appfitly.com · Berk Demir,
+  Nevşehir / Merkez, Türkiye.</p>
+
+  <hr>
+  <p style="color:var(--muted);font-size:14px">Documents connexes :
+    <a href="gizlilik.html">Politique de confidentialité</a> ·
+    <a href="eula.html">Contrat de licence utilisateur final (EULA)</a></p>
+</main>
+
+<footer>
+  © 2026 Berk Demir · Fitly ·
+  <a href="gizlilik.html">Confidentialité</a> · <a href="kosullar.html">Conditions</a> · <a href="eula.html">EULA</a>
+
+</footer>
+<script>
+(function(){
+  var L=["tr","en","de","es","fr","it","pt-BR","ru","ar","ja","ko","zh-Hans"];
+  var seg=location.pathname.replace(/^\/+/,'').split('/');
+  var cur="tr",page;
+  if(L.indexOf(seg[0])>-1){cur=seg[0];page=seg.slice(1).join('/')||'index.html';}
+  else{page=seg.join('/')||'index.html';}
+  window.fitlySwitchLang=function(l){location.href=(l==='tr'?'/':'/'+l+'/')+page;};
+  document.addEventListener('DOMContentLoaded',function(){var s=document.querySelector('select.lang');if(s)s.value=cur;});
+})();
+</script>
+</body>
+</html>
