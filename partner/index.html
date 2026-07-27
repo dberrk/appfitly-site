@@ -170,7 +170,9 @@
           '<td class="num">' + esc(r.sales) + "</td>" +
           '<td class="num">' + esc(r.refunds) + "</td>" +
           '<td class="num">' + esc(money(r.pendingAmount, r.currency)) + "</td>" +
-          '<td class="num">' + esc(money(r.payableAmount, r.currency)) + "</td>" +
+          '<td class="num">' + esc(money(r.payableAmount, r.currency)) +
+            (r.unknownAmounts ? ' <span style="opacity:.6">(+' + esc(r.unknownAmounts) +
+              " " + esc(t("amountUnknown")) + ")</span>" : "") + "</td>" +
           "<td>" + esc(dateLabel(r.payableAt)) + "</td>" +
         "</tr>";
       }).join("") +
