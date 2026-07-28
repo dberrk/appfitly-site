@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fitly Partner Admin</title>
+<meta name="theme-color" content="#060709">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/logo.png">
+<link rel="stylesheet" href="/partner/panel.css">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand"><img src="/assets/logo.png" alt=""> <span id="brandTitle">Fitly Partner Admin</span></div>
+    <div class="spacer"></div>
+    <div class="lang" id="langToggle"></div>
+    <button type="button" class="btn btn-ghost btn-sm hidden" id="signOutBtn">Çıkış</button>
+  </div>
+
+  <div class="card hidden" id="notConfigured"><div class="msg msg-error" id="notConfiguredMsg"></div></div>
+
+  <section class="auth hidden" id="authView">
+    <div class="card">
+      <h2 id="signInTitle">Giriş yap</h2>
+      <p class="sub">appfitly.com</p>
+      <div class="msg msg-error hidden" id="authError"></div>
+      <form id="authForm" novalidate>
+        <label class="field"><span id="lblEmail">E-posta</span>
+          <input type="email" id="email" autocomplete="username" required></label>
+        <label class="field"><span id="lblPassword">Parola</span>
+          <input type="password" id="password" autocomplete="current-password" required></label>
+        <button type="submit" class="btn" id="signInBtn" style="width:100%">Giriş yap</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="hidden" id="deniedView">
+    <div class="card"><div class="msg msg-error" id="deniedMsg"></div></div>
+  </section>
+
+  <section class="hidden" id="adminView">
+
+    <div class="card">
+      <h2 id="newAffTitle">Yeni partner</h2>
+      <p class="sub" id="newAffSub"></p>
+      <div class="msg msg-error hidden" id="affError"></div>
+      <div class="msg msg-ok hidden" id="affOk">
+        <strong id="tempPwTitle"></strong>
+        <div class="secret" id="tempPwValue"></div>
+        <div id="tempPwHint" style="font-size:13px;opacity:.85"></div>
+        <button type="button" class="btn btn-ghost btn-sm" id="tempPwDone" style="margin-top:10px"></button>
+      </div>
+      <form id="affForm" novalidate>
+        <label class="field"><span id="lblName">Ad</span>
+          <input type="text" id="affName" required></label>
+        <label class="field"><span id="lblContact">İletişim e-postası</span>
+          <input type="email" id="affEmail" required></label>
+        <button type="submit" class="btn" id="affBtn">Oluştur</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2 id="newCodeTitle">Yeni kod</h2>
+      <div class="msg msg-error hidden" id="codeError"></div>
+      <div class="msg msg-ok hidden" id="codeOk"></div>
+      <form id="codeForm" novalidate>
+        <label class="field"><span id="lblAffiliate">Partner</span>
+          <select id="codeAffiliate" required></select></label>
+        <label class="field"><span id="lblCode">Kod</span>
+          <input type="text" id="codeValue" maxlength="16" autocapitalize="characters"
+                 spellcheck="false" placeholder="AYSE20" required></label>
+        <label class="field"><span id="lblMax">Kullanım sınırı</span>
+          <input type="number" id="codeMax" min="1" step="1"></label>
+        <label class="field"><span id="lblExpires">Son kullanma</span>
+          <input type="date" id="codeExpires"></label>
+        <button type="submit" class="btn" id="codeBtn">Oluştur</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2 id="affListTitle">Partnerler</h2>
+      <div id="affListBody"><p class="empty" id="loadingText">Yükleniyor...</p></div>
+    </div>
+
+  </section>
+</div>
+
+<script src="/partner/vendor/supabase.js"></script>
+<script src="/partner/config.js"></script>
+<script src="/partner/i18n.js"></script>
+<script src="/partner/panel.js"></script>
+<script>
+(function () {
+  "use strict";
+  var P = window.FitlyPanel, t = P.t, esc = P.escapeHtml;
+  var $ = function (id) { return document.getElementById(id); };
+  var show = function (el, on) { el.classList.toggle("hidden", !on); };
+  // Null-safe: loadingText is replaced once the affiliate table renders, and
+  // the language toggle must keep working after that.
+  var txt = function (id, value) { var el = $(id); if (el) el.textContent = value; };
+
+  var state = { affiliates: [] };
+
+  P.mountLangToggle($("langToggle"));
+
+  function paintStatic() {
+    document.title = t("adminTitle");
+    txt("brandTitle", t("adminTitle"));
+    txt("signInTitle", t("signIn"));
+    txt("lblEmail", t("email"));
+    txt("lblPassword", t("password"));
+    txt("signInBtn", t("signIn"));
+    txt("signOutBtn", t("signOut"));
+    txt("deniedMsg", t("adminRequired"));
+    txt("newAffTitle", t("adminNewAffiliate"));
+    txt("lblName", t("displayName"));
+    txt("lblContact", t("contactEmail"));
+    txt("affBtn", t("create"));
+    txt("newCodeTitle", t("adminNewCode"));
+    txt("lblAffiliate", t("affiliate"));
+    txt("lblCode", t("code"));
+    txt("lblMax", t("maxRedemptions"));
+    txt("lblExpires", t("expiresAt"));
+    txt("codeBtn", t("create"));
+    txt("affListTitle", t("adminAffiliates"));
+    txt("loadingText", t("loading"));
+    txt("tempPwTitle", t("tempPasswordTitle"));
+    txt("tempPwHint", t("tempPasswordHint"));
+    txt("tempPwDone", t("done"));
+    txt("notConfiguredMsg", t("notConfigured"));
+    if (state.affiliates.length) renderAffiliates();
+  }
+  window.addEventListener("fitly:lang", paintStatic);
+
+  if (!P.isConfigured) { paintStatic(); show($("notConfigured"), true); return; }
+
+  function renderAffiliates() {
+    var list = state.affiliates;
+    var sel = $("codeAffiliate");
+    sel.innerHTML = list.map(function (a) {
+      return '<option value="' + esc(a.affiliate_id) + '">' + esc(a.display_name) + "</option>";
+    }).join("");
+
+    if (!list.length) { $("affListBody").innerHTML = '<p class="empty">-</p>'; return; }
+    $("affListBody").innerHTML =
+      '<div class="table-scroll"><table><thead><tr>' +
+        "<th>" + esc(t("displayName")) + "</th><th>" + esc(t("contactEmail")) + "</th>" +
+        "<th>" + esc(t("status")) + "</th>" +
+        '<th class="num">' + esc(t("codes")) + "</th>" +
+        '<th class="num">' + esc(t("claims")) + "</th>" +
+        '<th class="num">' + esc(t("conversions")) + "</th>" +
+      "</tr></thead><tbody>" +
+      list.map(function (a) {
+        var on = a.status === "active";
+        return "<tr><td>" + esc(a.display_name) + "</td><td>" + esc(a.contact_email) + "</td>" +
+          '<td><span class="pill ' + (on ? "pill-on" : "pill-off") + '">' +
+            esc(t(on ? "statusActive" : "statusDisabled")) + "</span></td>" +
+          '<td class="num">' + esc(a.codes) + "</td>" +
+          '<td class="num">' + esc(a.claims) + "</td>" +
+          '<td class="num">' + esc(a.conversions) + "</td></tr>";
+      }).join("") + "</tbody></table></div>";
+  }
+
+  async function loadAffiliates() {
+    var res = await P.callFunction("affiliate-admin", { action: "list_affiliates" });
+    if (res.status === 403) { show($("adminView"), false); show($("deniedView"), true); return false; }
+    if (!res.ok) { $("affListBody").innerHTML = '<div class="msg msg-error">' + esc(t("genericError")) + "</div>"; return true; }
+    state.affiliates = (res.data && res.data.affiliates) || [];
+    renderAffiliates();
+    return true;
+  }
+
+  async function route() {
+    var s = await P.client.auth.getSession();
+    if (!s.data.session) {
+      show($("authView"), true); show($("adminView"), false);
+      show($("deniedView"), false); show($("signOutBtn"), false);
+      return;
+    }
+    show($("authView"), false); show($("signOutBtn"), true);
+    // The server decides. We show the admin surface only after a 200 here,
+    // and a 403 flips to the denied view.
+    show($("adminView"), true); show($("deniedView"), false);
+    await loadAffiliates();
+  }
+
+  $("authForm").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var btn = $("signInBtn"); btn.disabled = true; btn.textContent = t("signingIn");
+    show($("authError"), false);
+    var res = await P.client.auth.signInWithPassword({
+      email: $("email").value.trim(), password: $("password").value,
+    });
+    btn.disabled = false; btn.textContent = t("signIn");
+    if (res.error) { $("authError").textContent = t("badCredentials"); show($("authError"), true); return; }
+    $("password").value = "";
+    route();
+  });
+
+  $("affForm").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    show($("affError"), false); show($("affOk"), false);
+    var btn = $("affBtn"); btn.disabled = true; btn.textContent = t("creating");
+    var res = await P.callFunction("affiliate-admin", {
+      action: "create_affiliate",
+      displayName: $("affName").value,
+      email: $("affEmail").value,
+    });
+    btn.disabled = false; btn.textContent = t("create");
+    if (!res.ok) {
+      var m = (res.data && res.data.error && res.data.error.message) || t("genericError");
+      $("affError").textContent = m; show($("affError"), true);
+      return;
+    }
+    $("tempPwValue").textContent = res.data.tempPassword;
+    show($("affOk"), true);
+    $("affName").value = ""; $("affEmail").value = "";
+    loadAffiliates();
+  });
+
+  $("tempPwDone").addEventListener("click", function () {
+    $("tempPwValue").textContent = "";
+    show($("affOk"), false);
+  });
+
+  $("codeForm").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    show($("codeError"), false); show($("codeOk"), false);
+    var code = $("codeValue").value.trim().toUpperCase();
+    if (!/^[A-Z0-9]{4,16}$/.test(code)) {
+      $("codeError").textContent = t("invalidCodeFormat"); show($("codeError"), true); return;
+    }
+    var btn = $("codeBtn"); btn.disabled = true; btn.textContent = t("creating");
+    var expires = $("codeExpires").value;
+    var res = await P.callFunction("affiliate-admin", {
+      action: "create_code",
+      affiliateId: $("codeAffiliate").value,
+      code: code,
+      maxRedemptions: $("codeMax").value === "" ? null : Number($("codeMax").value),
+      // A bare date means end of that day, so the code stays usable all day.
+      expiresAt: expires ? new Date(expires + "T23:59:59Z").toISOString() : null,
+    });
+    btn.disabled = false; btn.textContent = t("create");
+    if (!res.ok) {
+      var code409 = res.data && res.data.error && res.data.error.code === "CODE_TAKEN";
+      $("codeError").textContent = code409 ? t("codeTaken")
+        : ((res.data && res.data.error && res.data.error.message) || t("genericError"));
+      show($("codeError"), true);
+      return;
+    }
+    $("codeOk").textContent = code;
+    show($("codeOk"), true);
+    $("codeValue").value = ""; $("codeMax").value = ""; $("codeExpires").value = "";
+    loadAffiliates();
+  });
+
+  $("signOutBtn").addEventListener("click", async function () {
+    await P.client.auth.signOut();
+    state.affiliates = [];
+    route();
+  });
+
+  paintStatic();
+  route();
+})();
+</script>
+</body>
+</html>
