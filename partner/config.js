@@ -15,5 +15,5 @@
  */
 window.FITLY_CONFIG = {
     SUPABASE_URL: "https://ayjyxoemxrzjvuvwlxcv.supabase.co",
-    PUBLISHABLE_KEY: "REPLACE_ME_sb_publishable_key",
+    PUBLISHABLE_KEY: "sb_publishable_BkqZRB8HVmYKtuqBIyzO3A_5dpPHG4d",
 };
