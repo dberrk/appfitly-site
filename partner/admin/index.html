@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#060709">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="/assets/logo.png">
-<link rel="stylesheet" href="/partner/panel.css?v=20260729c">
+<link rel="stylesheet" href="/partner/panel.css?v=20260729d">
 </head>
 <body>
 <div class="wrap">
@@ -91,6 +91,9 @@
       <div class="msg msg-error hidden" id="detailError"></div>
       <h3 class="subhead" id="detailCodesTitle">Kod</h3>
       <div id="detailCodes"></div>
+      <h3 class="subhead" id="detailClaimsTitle">Kullanımlar</h3>
+      <p class="sub" id="claimsHint"></p>
+      <div id="detailClaims"></div>
       <h3 class="subhead" id="detailPayoutsTitle">Ödeme kaydı</h3>
       <p class="sub" id="payoutHint"></p>
       <div id="detailEarnings"></div>
@@ -100,9 +103,9 @@
 </div>
 
 <script src="/partner/vendor/supabase.js"></script>
-<script src="/partner/config.js?v=20260729c"></script>
-<script src="/partner/i18n.js?v=20260729c"></script>
-<script src="/partner/panel.js?v=20260729c"></script>
+<script src="/partner/config.js?v=20260729d"></script>
+<script src="/partner/i18n.js?v=20260729d"></script>
+<script src="/partner/panel.js?v=20260729d"></script>
 <script>
 (function () {
   "use strict";
@@ -142,6 +145,8 @@
     txt("leaveTitle", t("adminLeaveRequests"));
     txt("detailTitle", t("adminOpenDetail"));
     txt("detailCodesTitle", t("codes"));
+    txt("detailClaimsTitle", t("adminClaims"));
+    txt("claimsHint", t("adminClaimsHint"));
     txt("detailPayoutsTitle", t("adminPayouts"));
     txt("payoutHint", t("adminPayoutHint"));
     if (state.affiliates.length) renderAffiliates();
@@ -261,6 +266,25 @@
       { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" }).format(d);
   }
 
+  /// Four situations look identical as "0 sales" and mean opposite things. The
+  /// one that matters is a subscription with no conversion: that is money not
+  /// being recorded, not the system declining to record it.
+  function claimOutcome(r) {
+    if (r.claimedWhilePro) {
+      return '<span class="pill pill-off">' + esc(t("outcomeAlreadyPro")) + "</span>";
+    }
+    if (r.conversionStatus) {
+      var sandbox = (r.environment || "").toUpperCase() === "SANDBOX";
+      return '<span class="pill pill-on">' + esc(t("outcomeConverted")) + "</span>" +
+        (sandbox ? ' <span class="pill pill-warn">' + esc(t("outcomeSandbox")) +
+                   "</span>" : "");
+    }
+    if (r.hasSubscription) {
+      return '<span class="pill pill-warn">' + esc(t("outcomeMissingLedger")) + "</span>";
+    }
+    return '<span class="pill pill-off">' + esc(t("outcomeNoPurchase")) + "</span>";
+  }
+
   function renderDetail() {
     var d = state.detail;
     show($("detailCard"), !!d);
@@ -290,6 +314,21 @@
               'data-code="' + esc(c.codeId) + '" data-code-status="' +
               (on ? "disabled" : "active") + '">' +
               esc(t(on ? "adminDisableCode" : "adminEnableCode")) + "</button></td></tr>";
+        }).join("") + "</tbody></table></div>";
+
+    var claims = d.claims || [];
+    $("detailClaims").innerHTML = !claims.length
+      ? '<p class="empty">-</p>'
+      : '<div class="table-scroll"><table><thead><tr>' +
+          "<th>" + esc(t("code")) + "</th><th>" + esc(t("claimedAt")) + "</th>" +
+          "<th>" + esc(t("outcome")) + "</th>" +
+        "</tr></thead><tbody>" +
+        claims.map(function (r) {
+          return "<tr>" +
+            '<td class="codecell">' + esc(r.code) + "</td>" +
+            "<td>" + esc(dateLabel(r.claimedAt)) + "</td>" +
+            "<td>" + claimOutcome(r) + "</td>" +
+          "</tr>";
         }).join("") + "</tbody></table></div>";
 
     var earnings = d.earnings || [];
