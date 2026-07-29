@@ -56,6 +56,13 @@
 
   <!-- Dashboard -->
   <section class="hidden" id="dashView">
+    <div class="card" id="profileCard">
+      <h2 id="profileTitle">Partner bilgilerin</h2>
+      <div class="msg msg-error hidden" id="suspendedMsg"></div>
+      <div class="facts" id="profileFacts"></div>
+      <p class="sub" id="commissionNote" style="margin:12px 0 0"></p>
+    </div>
+
     <div class="totals" id="totals"></div>
     <div class="card">
       <h2 id="earningsTitle">Kazanç</h2>
@@ -68,6 +75,42 @@
       <h2 id="codesTitle">Kodların</h2>
       <p class="sub" id="privacyNote"></p>
       <div id="codesBody"><p class="empty" id="loadingText">Yükleniyor...</p></div>
+    </div>
+
+    <div class="card">
+      <h2 id="accountTitle">Hesap</h2>
+      <div class="msg msg-ok hidden" id="accountOk"></div>
+
+      <details id="pwDetails">
+        <summary id="changePwSummary">Parolanı değiştir</summary>
+        <div class="msg msg-error hidden" id="pwError2"></div>
+        <form id="pwForm2" novalidate>
+          <label class="field"><span id="lblNewPwA">Yeni parola</span>
+            <input type="password" id="newPwA" autocomplete="new-password" required></label>
+          <label class="field"><span id="lblNewPwB">Yeni parola (tekrar)</span>
+            <input type="password" id="newPwB" autocomplete="new-password" required></label>
+          <button type="submit" class="btn btn-sm" id="pwBtn2">Parolayı kaydet</button>
+        </form>
+      </details>
+
+      <details id="leaveDetails">
+        <summary id="leaveSummary">Programdan ayrılma</summary>
+        <p class="sub" id="leaveNote"></p>
+        <div class="msg msg-error hidden" id="leaveError"></div>
+        <div id="leavePendingBox" class="hidden">
+          <div class="msg msg-ok" id="leavePendingMsg"></div>
+          <button type="button" class="btn btn-ghost btn-sm" id="leaveWithdrawBtn"></button>
+        </div>
+        <form id="leaveForm" novalidate>
+          <label class="field"><span id="lblLeaveReason">Sebep (isteğe bağlı)</span>
+            <input type="text" id="leaveReason" maxlength="500"></label>
+          <button type="submit" class="btn btn-ghost btn-sm" id="leaveBtn"></button>
+        </form>
+      </details>
+
+      <p class="sub" style="margin:16px 0 0">
+        <a id="termsLink" href="/partner-terms/">Partner sözleşmesi</a>
+      </p>
     </div>
   </section>
 
@@ -113,7 +156,30 @@
     txt("privacyNote", t("privacyNote"));
     txt("loadingText", t("loading"));
     txt("notConfiguredMsg", t("notConfigured"));
-    if (state.stats) { renderStats(state.stats); renderEarnings(state.stats); }
+    txt("profileTitle", t("profileTitle"));
+    txt("commissionNote", t("commissionNote"));
+    txt("accountTitle", t("account"));
+    txt("changePwSummary", t("changePasswordCta"));
+    txt("lblNewPwA", t("newPassword"));
+    txt("lblNewPwB", t("newPasswordAgain"));
+    txt("pwBtn2", t("savePassword"));
+    txt("leaveSummary", t("leaveTitle"));
+    txt("leaveNote", t("leaveNote"));
+    txt("lblLeaveReason", t("leaveReasonLabel"));
+    txt("leaveBtn", t("leaveCta"));
+    txt("leaveWithdrawBtn", t("leaveWithdraw"));
+    txt("leavePendingMsg", t("leavePending"));
+    txt("termsLink", t("termsLink"));
+    // The agreement exists in TR and EN only, mirroring the panel's own two
+    // languages, so the link follows whichever the partner is reading in.
+    $("termsLink").href = P.lang === "tr"
+      ? "/partner-sozlesmesi.html"
+      : "/en/partner-sozlesmesi.html";
+    if (state.stats) {
+      renderProfile(state.stats.profile);
+      renderStats(state.stats);
+      renderEarnings(state.stats);
+    }
   }
 
   /// Amounts are estimates and may legitimately be unknown (the store did not
@@ -149,6 +215,50 @@
       { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" }).format(d);
   }
 
+  /// The partner's own contract facts. `profile` is null when a signed-in
+  /// account is not an affiliate: affiliate-stats deliberately answers that with
+  /// an empty payload rather than a 403, so the card simply stays hidden.
+  function renderProfile(profile) {
+    show($("profileCard"), !!profile);
+    if (!profile) return;
+
+    var suspended = profile.status === "suspended";
+    show($("suspendedMsg"), suspended);
+    $("suspendedMsg").textContent = t("suspendedNote");
+
+    // A rate is shown only when we actually have one. Rendering a missing rate
+    // as "0%" would tell a partner they earn nothing, which is a very different
+    // claim from "not set yet".
+    var rate = profile.commissionBps === null || profile.commissionBps === undefined
+      ? null
+      : (profile.commissionBps / 100);
+
+    $("profileFacts").innerHTML = [
+      [t("displayName"), esc(profile.displayName)],
+      [t("contactEmail"), esc(profile.contactEmail)],
+      [t("accountStatus"), esc(t(suspended ? "statusSuspended" : "statusActive"))],
+      [t("commissionRate"), rate === null ? "-" : esc(percent(rate))],
+      [t("memberSince"), esc(dateLabel(profile.memberSince))],
+    ].map(function (row) {
+      return '<div class="fact"><div class="k">' + esc(row[0]) + "</div>" +
+             '<div class="v">' + row[1] + "</div></div>";
+    }).join("");
+
+    // Asking to leave and having already asked are mutually exclusive states.
+    show($("leavePendingBox"), profile.pendingLeave);
+    show($("leaveForm"), !profile.pendingLeave);
+  }
+
+  function percent(value) {
+    try {
+      return new Intl.NumberFormat(P.lang === "tr" ? "tr-TR" : "en-US", {
+        style: "percent", maximumFractionDigits: 2,
+      }).format(value / 100);
+    } catch (e) {
+      return value + "%";
+    }
+  }
+
   function renderEarnings(stats) {
     var rows = (stats && stats.earnings) || [];
     if (!rows.length) {
@@ -162,6 +272,7 @@
         '<th class="num">' + esc(t("refunds")) + "</th>" +
         '<th class="num">' + esc(t("pending")) + "</th>" +
         '<th class="num">' + esc(t("payable")) + "</th>" +
+        '<th class="num">' + esc(t("paid")) + "</th>" +
         "<th>" + esc(t("payableOn")) + "</th>" +
       "</tr></thead><tbody>" +
       rows.map(function (r) {
@@ -173,6 +284,10 @@
           '<td class="num">' + esc(money(r.payableAmount, r.currency)) +
             (r.unknownAmounts ? ' <span style="opacity:.6">(+' + esc(r.unknownAmounts) +
               " " + esc(t("amountUnknown")) + ")</span>" : "") + "</td>" +
+          // money() renders null as a dash, which is what "we have not paid this
+          // month yet" must look like. A 0 here would read as "we paid you
+          // nothing", and that difference is the whole point of the column.
+          '<td class="num">' + esc(money(r.paidAmount, r.currency)) + "</td>" +
           "<td>" + esc(dateLabel(r.payableAt)) + "</td>" +
         "</tr>";
       }).join("") +
@@ -205,6 +320,7 @@
         '<th class="num">' + esc(t("claims")) + "</th>" +
         '<th class="num">' + esc(t("conversions")) + "</th>" +
         '<th class="num">' + esc(t("activeConversions")) + "</th>" +
+        "<th></th>" +
       "</tr></thead><tbody>" +
       codes.map(function (c) {
         var on = c.status === "active";
@@ -215,10 +331,40 @@
           '<td class="num">' + esc(c.claims) + "</td>" +
           '<td class="num">' + esc(c.conversions) + "</td>" +
           '<td class="num">' + esc(c.activeConversions) + "</td>" +
+          '<td class="nowrap">' +
+            '<button type="button" class="btn btn-ghost btn-sm" data-copy="' +
+              esc(c.code) + '">' + esc(t("copyCode")) + "</button> " +
+            '<button type="button" class="btn btn-ghost btn-sm" data-share="' +
+              esc(c.code) + '">' + esc(t("copyShare")) + "</button>" +
+          "</td>" +
         "</tr>";
       }).join("") +
       "</tbody></table></div>";
   }
+
+  /// Clipboard writes can be refused (permissions, insecure context, older
+  /// Safari), so the button reports what actually happened rather than
+  /// optimistically claiming success.
+  async function copyText(button, text) {
+    var original = button.textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      button.textContent = t("copied");
+    } catch (e) {
+      button.textContent = t("genericError");
+    }
+    setTimeout(function () { button.textContent = original; }, 1600);
+  }
+
+  $("codesBody").addEventListener("click", function (ev) {
+    var copyBtn = ev.target.closest("button[data-copy]");
+    if (copyBtn) return copyText(copyBtn, copyBtn.getAttribute("data-copy"));
+    var shareBtn = ev.target.closest("button[data-share]");
+    if (shareBtn) {
+      copyText(shareBtn,
+        t("shareTemplate").replace("{code}", shareBtn.getAttribute("data-share")));
+    }
+  });
 
   async function loadStats() {
     var res = await P.callFunction("affiliate-stats", {});
@@ -227,6 +373,7 @@
       return;
     }
     state.stats = res.data;
+    renderProfile(res.data.profile);
     renderStats(res.data);
     renderEarnings(res.data);
   }
@@ -285,6 +432,69 @@
     btn.disabled = false;
     $("newPw").value = ""; $("newPw2").value = "";
     route();
+  });
+
+  function flash(message) {
+    var box = $("accountOk");
+    box.textContent = message;
+    show(box, true);
+    setTimeout(function () { show(box, false); }, 4000);
+  }
+
+  // Changing the password later, not only when forced on first sign-in. Same
+  // validation as the forced form; kept separate so the forced flow cannot be
+  // skipped by scrolling past it.
+  $("pwForm2").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    show($("pwError2"), false);
+    var a = $("newPwA").value, b = $("newPwB").value;
+    if (a.length < 8) {
+      $("pwError2").textContent = t("passwordTooShort"); show($("pwError2"), true); return;
+    }
+    if (a !== b) {
+      $("pwError2").textContent = t("passwordMismatch"); show($("pwError2"), true); return;
+    }
+    var btn = $("pwBtn2"); btn.disabled = true;
+    var res = await P.client.auth.updateUser({ password: a });
+    btn.disabled = false;
+    if (res.error) {
+      $("pwError2").textContent = res.error.message || t("genericError");
+      show($("pwError2"), true);
+      return;
+    }
+    $("newPwA").value = ""; $("newPwB").value = "";
+    $("pwDetails").open = false;
+    flash(t("passwordSaved"));
+  });
+
+  $("leaveForm").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    show($("leaveError"), false);
+    var btn = $("leaveBtn"); btn.disabled = true;
+    var res = await P.callFunction("affiliate-leave", {
+      action: "request", reason: $("leaveReason").value,
+    });
+    btn.disabled = false;
+    if (!res.ok) {
+      $("leaveError").textContent = t("genericError"); show($("leaveError"), true); return;
+    }
+    $("leaveReason").value = "";
+    flash(t("leaveSent"));
+    // Re-read rather than assuming: the pending flag is server state, and the
+    // request can legitimately be a no-op if one was already open.
+    loadStats();
+  });
+
+  $("leaveWithdrawBtn").addEventListener("click", async function () {
+    show($("leaveError"), false);
+    this.disabled = true;
+    var res = await P.callFunction("affiliate-leave", { action: "withdraw" });
+    this.disabled = false;
+    if (!res.ok) {
+      $("leaveError").textContent = t("genericError"); show($("leaveError"), true); return;
+    }
+    if (res.data && res.data.withdrawn) flash(t("leaveWithdrawn"));
+    loadStats();
   });
 
   $("signOutBtn").addEventListener("click", async function () {

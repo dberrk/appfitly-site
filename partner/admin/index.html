@@ -80,8 +80,25 @@
     </div>
 
     <div class="card">
+      <h2 id="leaveTitle">Ayrılma talepleri</h2>
+      <div class="msg msg-error hidden" id="leaveError"></div>
+      <div id="leaveBody"></div>
+    </div>
+
+    <div class="card">
       <h2 id="affListTitle">Partnerler</h2>
+      <div class="msg msg-error hidden" id="affActionError"></div>
       <div id="affListBody"><p class="empty" id="loadingText">Yükleniyor...</p></div>
+    </div>
+
+    <div class="card hidden" id="detailCard">
+      <h2 id="detailTitle">Detay</h2>
+      <div class="msg msg-error hidden" id="detailError"></div>
+      <h3 class="subhead" id="detailCodesTitle">Kod</h3>
+      <div id="detailCodes"></div>
+      <h3 class="subhead" id="detailPayoutsTitle">Ödeme kaydı</h3>
+      <p class="sub" id="payoutHint"></p>
+      <div id="detailEarnings"></div>
     </div>
 
   </section>
@@ -101,7 +118,7 @@
   // the language toggle must keep working after that.
   var txt = function (id, value) { var el = $(id); if (el) el.textContent = value; };
 
-  var state = { affiliates: [] };
+  var state = { affiliates: [], leaveRequests: null, detail: null, detailFor: null };
 
   P.mountLangToggle($("langToggle"));
 
@@ -130,7 +147,14 @@
     txt("tempPwHint", t("tempPasswordHint"));
     txt("tempPwDone", t("done"));
     txt("notConfiguredMsg", t("notConfigured"));
+    txt("leaveTitle", t("adminLeaveRequests"));
+    txt("detailTitle", t("adminOpenDetail"));
+    txt("detailCodesTitle", t("codes"));
+    txt("detailPayoutsTitle", t("adminPayouts"));
+    txt("payoutHint", t("adminPayoutHint"));
     if (state.affiliates.length) renderAffiliates();
+    if (state.leaveRequests) renderLeaveRequests();
+    if (state.detail) renderDetail();
   }
   window.addEventListener("fitly:lang", paintStatic);
 
@@ -151,16 +175,160 @@
         '<th class="num">' + esc(t("codes")) + "</th>" +
         '<th class="num">' + esc(t("claims")) + "</th>" +
         '<th class="num">' + esc(t("conversions")) + "</th>" +
+        '<th class="num">' + esc(t("commission")) + "</th>" +
+        "<th></th>" +
       "</tr></thead><tbody>" +
       list.map(function (a) {
         var on = a.status === "active";
-        return "<tr><td>" + esc(a.display_name) + "</td><td>" + esc(a.contact_email) + "</td>" +
+        return "<tr><td>" + esc(a.display_name) +
+          (a.pending_leave
+            ? ' <span class="pill pill-warn">' + esc(t("pendingLeaveFlag")) + "</span>"
+            : "") +
+          "</td><td>" + esc(a.contact_email) + "</td>" +
           '<td><span class="pill ' + (on ? "pill-on" : "pill-off") + '">' +
-            esc(t(on ? "statusActive" : "statusDisabled")) + "</span></td>" +
+            esc(t(on ? "statusActive" : "statusSuspended")) + "</span></td>" +
           '<td class="num">' + esc(a.codes) + "</td>" +
           '<td class="num">' + esc(a.claims) + "</td>" +
-          '<td class="num">' + esc(a.conversions) + "</td></tr>";
+          '<td class="num">' + esc(a.conversions) + "</td>" +
+          '<td class="num">' + esc(percent(a.commission_bps)) + "</td>" +
+          '<td class="nowrap">' +
+            '<button type="button" class="btn btn-ghost btn-sm" data-detail="' +
+              esc(a.affiliate_id) + '">' + esc(t("adminOpenDetail")) + "</button> " +
+            '<button type="button" class="btn btn-ghost btn-sm" data-aff="' +
+              esc(a.affiliate_id) + '" data-status="' + (on ? "suspended" : "active") + '">' +
+              esc(t(on ? "adminSuspend" : "adminActivate")) + "</button>" +
+          "</td></tr>";
       }).join("") + "</tbody></table></div>";
+  }
+
+  /// Basis points to a localised percentage. A missing rate is a dash, never
+  /// "0%": one says "not set", the other says "this partner earns nothing".
+  function percent(bps) {
+    if (bps === null || bps === undefined || bps === "") return "-";
+    var n = Number(bps);
+    if (!isFinite(n)) return "-";
+    try {
+      return new Intl.NumberFormat(P.lang === "tr" ? "tr-TR" : "en-US", {
+        style: "percent", maximumFractionDigits: 2,
+      }).format(n / 10000);
+    } catch (e) {
+      return (n / 100) + "%";
+    }
+  }
+
+  function money(amount, currency) {
+    if (amount === null || amount === undefined) return "-";
+    var value = Number(amount);
+    if (!isFinite(value)) return "-";
+    try {
+      return new Intl.NumberFormat(P.lang === "tr" ? "tr-TR" : "en-US", {
+        style: currency ? "currency" : "decimal",
+        currency: currency || undefined,
+        maximumFractionDigits: 2,
+      }).format(value);
+    } catch (e) {
+      return value.toFixed(2) + (currency ? " " + currency : "");
+    }
+  }
+
+  function monthLabel(iso) {
+    var d = new Date(iso + "T00:00:00Z");
+    if (isNaN(d.getTime())) return iso;
+    return new Intl.DateTimeFormat(P.lang === "tr" ? "tr-TR" : "en-US",
+      { year: "numeric", month: "long", timeZone: "UTC" }).format(d);
+  }
+
+  function renderLeaveRequests() {
+    var rows = state.leaveRequests || [];
+    if (!rows.length) {
+      $("leaveBody").innerHTML = '<p class="empty">' + esc(t("adminNoLeaveRequests")) + "</p>";
+      return;
+    }
+    $("leaveBody").innerHTML =
+      '<div class="table-scroll"><table><thead><tr>' +
+        "<th>" + esc(t("displayName")) + "</th><th>" + esc(t("contactEmail")) + "</th>" +
+        "<th>" + esc(t("reason")) + "</th><th>" + esc(t("requestedAt")) + "</th><th></th>" +
+      "</tr></thead><tbody>" +
+      rows.map(function (r) {
+        return "<tr><td>" + esc(r.displayName) + "</td><td>" + esc(r.contactEmail) + "</td>" +
+          "<td>" + esc(r.reason || t("noReason")) + "</td>" +
+          "<td>" + esc(dateLabel(r.requestedAt)) + "</td>" +
+          '<td class="nowrap"><button type="button" class="btn btn-ghost btn-sm" ' +
+            'data-accept="' + esc(r.requestId) + '">' + esc(t("adminAccept")) +
+          "</button></td></tr>";
+      }).join("") + "</tbody></table></div>";
+  }
+
+  function dateLabel(iso) {
+    if (!iso) return "-";
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return "-";
+    return new Intl.DateTimeFormat(P.lang === "tr" ? "tr-TR" : "en-US",
+      { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" }).format(d);
+  }
+
+  function renderDetail() {
+    var d = state.detail;
+    show($("detailCard"), !!d);
+    if (!d) return;
+
+    var affiliate = state.affiliates.filter(function (a) {
+      return a.affiliate_id === state.detailFor;
+    })[0];
+    txt("detailTitle", affiliate ? affiliate.display_name : t("adminOpenDetail"));
+
+    var codes = d.codes || [];
+    $("detailCodes").innerHTML = !codes.length
+      ? '<p class="empty">-</p>'
+      : '<div class="table-scroll"><table><thead><tr>' +
+          "<th>" + esc(t("code")) + "</th><th>" + esc(t("status")) + "</th>" +
+          '<th class="num">' + esc(t("claims")) + "</th>" +
+          '<th class="num">' + esc(t("conversions")) + "</th><th></th>" +
+        "</tr></thead><tbody>" +
+        codes.map(function (c) {
+          var on = c.status === "active";
+          return '<tr><td class="codecell">' + esc(c.code) + "</td>" +
+            '<td><span class="pill ' + (on ? "pill-on" : "pill-off") + '">' +
+              esc(t(on ? "statusActive" : "statusDisabled")) + "</span></td>" +
+            '<td class="num">' + esc(c.claims) + "</td>" +
+            '<td class="num">' + esc(c.conversions) + "</td>" +
+            '<td class="nowrap"><button type="button" class="btn btn-ghost btn-sm" ' +
+              'data-code="' + esc(c.codeId) + '" data-code-status="' +
+              (on ? "disabled" : "active") + '">' +
+              esc(t(on ? "adminDisableCode" : "adminEnableCode")) + "</button></td></tr>";
+        }).join("") + "</tbody></table></div>";
+
+    var earnings = d.earnings || [];
+    $("detailEarnings").innerHTML = !earnings.length
+      ? '<p class="empty">-</p>'
+      : '<div class="table-scroll"><table><thead><tr>' +
+          "<th>" + esc(t("month")) + "</th>" +
+          '<th class="num">' + esc(t("payable")) + "</th>" +
+          '<th class="num">' + esc(t("paid")) + "</th><th></th>" +
+        "</tr></thead><tbody>" +
+        earnings.map(function (r) {
+          // The amount box is pre-filled with what is payable, because that is
+          // the figure the owner almost always settles. It stays editable: a
+          // partial or corrected payment has to be recordable as what it was.
+          var prefill = r.paidAmount !== null && r.paidAmount !== undefined
+            ? r.paidAmount
+            : (r.payableAmount === null || r.payableAmount === undefined ? "" : r.payableAmount);
+          return "<tr><td>" + esc(monthLabel(r.month)) + "</td>" +
+            '<td class="num">' + esc(money(r.payableAmount, r.currency)) + "</td>" +
+            '<td class="num">' + esc(money(r.paidAmount, r.currency)) + "</td>" +
+            '<td class="nowrap">' +
+              '<input class="mini" type="number" step="0.0001" min="0" value="' +
+                esc(prefill) + '" data-amount-for="' + esc(r.month) + "|" +
+                esc(r.currency || "") + '"> ' +
+              '<button type="button" class="btn btn-ghost btn-sm" data-pay="' +
+                esc(r.month) + "|" + esc(r.currency || "") + '">' +
+                esc(t("adminMarkPaid")) + "</button>" +
+              (r.paidAmount === null || r.paidAmount === undefined ? "" :
+                ' <button type="button" class="btn btn-ghost btn-sm" data-unpay="' +
+                esc(r.month) + "|" + esc(r.currency || "") + '">' +
+                esc(t("adminClearPayout")) + "</button>") +
+            "</td></tr>";
+        }).join("") + "</tbody></table></div>";
   }
 
   async function loadAffiliates() {
@@ -171,6 +339,141 @@
     renderAffiliates();
     return true;
   }
+
+  async function loadLeaveRequests() {
+    var res = await P.callFunction("affiliate-admin", { action: "list_leave_requests" });
+    if (!res.ok) return;
+    state.leaveRequests = (res.data && res.data.requests) || [];
+    renderLeaveRequests();
+  }
+
+  async function loadDetail(affiliateId) {
+    show($("detailError"), false);
+    state.detailFor = affiliateId;
+    var res = await P.callFunction("affiliate-admin", {
+      action: "affiliate_detail", affiliateId: affiliateId,
+    });
+    if (!res.ok) {
+      state.detail = null;
+      show($("detailCard"), true);
+      $("detailError").textContent = t("genericError");
+      show($("detailError"), true);
+      return;
+    }
+    state.detail = res.data;
+    renderDetail();
+    $("detailCard").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function actionError(message) {
+    $("affActionError").textContent = message || t("genericError");
+    show($("affActionError"), true);
+  }
+
+  $("affListBody").addEventListener("click", async function (ev) {
+    show($("affActionError"), false);
+
+    var detailBtn = ev.target.closest("button[data-detail]");
+    if (detailBtn) return loadDetail(detailBtn.getAttribute("data-detail"));
+
+    var statusBtn = ev.target.closest("button[data-aff]");
+    if (!statusBtn) return;
+    statusBtn.disabled = true;
+    var res = await P.callFunction("affiliate-admin", {
+      action: "set_affiliate_status",
+      affiliateId: statusBtn.getAttribute("data-aff"),
+      status: statusBtn.getAttribute("data-status"),
+    });
+    statusBtn.disabled = false;
+    if (!res.ok) return actionError();
+    loadAffiliates();
+  });
+
+  $("leaveBody").addEventListener("click", async function (ev) {
+    var btn = ev.target.closest("button[data-accept]");
+    if (!btn) return;
+    // Accepting suspends the partner, which is not obvious from the word
+    // "accept", so it is spelled out before it happens.
+    if (!window.confirm(t("adminAcceptConfirm"))) return;
+    show($("leaveError"), false);
+    btn.disabled = true;
+    var res = await P.callFunction("affiliate-admin", {
+      action: "accept_leave_request", requestId: btn.getAttribute("data-accept"),
+    });
+    btn.disabled = false;
+    if (!res.ok) {
+      $("leaveError").textContent = t("genericError"); show($("leaveError"), true); return;
+    }
+    loadLeaveRequests();
+    loadAffiliates();
+  });
+
+  $("detailCard").addEventListener("click", async function (ev) {
+    show($("detailError"), false);
+
+    var codeBtn = ev.target.closest("button[data-code]");
+    if (codeBtn) {
+      codeBtn.disabled = true;
+      var codeRes = await P.callFunction("affiliate-admin", {
+        action: "set_code_status",
+        codeId: codeBtn.getAttribute("data-code"),
+        status: codeBtn.getAttribute("data-code-status"),
+      });
+      codeBtn.disabled = false;
+      if (!codeRes.ok) {
+        $("detailError").textContent = t("genericError");
+        show($("detailError"), true);
+        return;
+      }
+      return loadDetail(state.detailFor);
+    }
+
+    var payBtn = ev.target.closest("button[data-pay]");
+    var unpayBtn = ev.target.closest("button[data-unpay]");
+    if (!payBtn && !unpayBtn) return;
+
+    var key = (payBtn || unpayBtn).getAttribute(payBtn ? "data-pay" : "data-unpay");
+    var parts = key.split("|");
+    var periodMonth = parts[0], currency = parts[1];
+    if (!currency) {
+      // A month with no currency has no settled money to record against it.
+      $("detailError").textContent = t("genericError");
+      show($("detailError"), true);
+      return;
+    }
+
+    var body;
+    if (payBtn) {
+      var input = $("detailEarnings").querySelector('input[data-amount-for="' +
+        key.replace(/"/g, '\\"') + '"]');
+      var amount = input ? input.value : "";
+      if (amount === "") {
+        $("detailError").textContent = t("genericError");
+        show($("detailError"), true);
+        return;
+      }
+      body = {
+        action: "mark_payout", affiliateId: state.detailFor,
+        periodMonth: periodMonth, currency: currency, amount: Number(amount),
+      };
+    } else {
+      body = {
+        action: "clear_payout", affiliateId: state.detailFor,
+        periodMonth: periodMonth, currency: currency,
+      };
+    }
+
+    var btn = payBtn || unpayBtn;
+    btn.disabled = true;
+    var payRes = await P.callFunction("affiliate-admin", body);
+    btn.disabled = false;
+    if (!payRes.ok) {
+      $("detailError").textContent = t("genericError");
+      show($("detailError"), true);
+      return;
+    }
+    loadDetail(state.detailFor);
+  });
 
   async function route() {
     var s = await P.client.auth.getSession();
@@ -183,7 +486,9 @@
     // The server decides. We show the admin surface only after a 200 here,
     // and a 403 flips to the denied view.
     show($("adminView"), true); show($("deniedView"), false);
-    await loadAffiliates();
+    // Leave requests only after list_affiliates has confirmed admin: a 403 there
+    // flips to the denied view, and a second call would race that decision.
+    if (await loadAffiliates()) await loadLeaveRequests();
   }
 
   $("authForm").addEventListener("submit", async function (ev) {
@@ -258,7 +563,9 @@
 
   $("signOutBtn").addEventListener("click", async function () {
     await P.client.auth.signOut();
-    state.affiliates = [];
+    state.affiliates = []; state.leaveRequests = null;
+    state.detail = null; state.detailFor = null;
+    show($("detailCard"), false);
     route();
   });
 

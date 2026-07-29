@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Sözleşmesi — Fitly</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  :root{
+    --bg:#0B0C0F; --bg2:#060709; --surface:#15171C; --surface2:#1B1E24;
+    --border:rgba(255,255,255,.09); --text:#EDEEF1; --muted:#9A9FA8;
+    --accent:#6EE088; --accent-soft:rgba(110,224,136,.12); --warn:#F2C14E;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  header.nav{position:sticky;top:0;z-index:10;background:rgba(6,7,9,.85);
+    backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:760px;margin:0 auto;padding:14px 22px;display:flex;
+    align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.01em}
+  .brand .mark{width:26px;height:26px;border-radius:7px;background:var(--accent);
+    color:#10130A;display:grid;place-items:center;font-weight:800;font-size:16px}
+  .nav a{color:var(--muted);font-size:14px;font-weight:600;margin-left:16px}
+  .nav a.here{color:var(--text)}
+  select.lang{background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:6px 9px;font-size:13px;font-weight:600;margin-left:14px;cursor:pointer}
+  select.lang option{background:#15171C;color:var(--text)}
+  main{max-width:760px;margin:0 auto;padding:40px 22px 80px}
+  h1{font-size:30px;line-height:1.2;letter-spacing:-.02em;margin:.2em 0 .1em}
+  .sub{color:var(--muted);font-size:14.5px;margin-bottom:26px}
+  h2{font-size:20px;letter-spacing:-.01em;margin:44px 0 12px;padding-top:8px;
+    display:flex;gap:11px;align-items:baseline}
+  h2 .n{color:var(--accent);font-variant-numeric:tabular-nums;font-size:15px;
+    font-weight:700;min-width:26px}
+  h3{font-size:16.5px;margin:26px 0 8px;color:var(--text)}
+  p,li{color:#DADCE0}
+  strong{color:var(--text)}
+  .fill{background:var(--accent-soft);color:var(--accent);border:1px solid rgba(110,224,136,.3);
+    border-radius:5px;padding:1px 7px;font-size:14px;font-weight:600;white-space:nowrap}
+  .draft{background:rgba(242,193,78,.1);border:1px solid rgba(242,193,78,.4);
+    border-radius:12px;padding:16px 18px;margin:22px 0 8px;color:#F6D98A;font-size:14.5px;line-height:1.65}
+  .draft b{color:var(--warn)}
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:14px;
+    padding:20px 22px;margin:18px 0}
+  .box.danger{border-color:rgba(242,120,110,.5);background:rgba(242,120,110,.08)}
+  .box.danger h3{color:#F58C82}
+  .box h3{margin-top:0}
+  ul,ol{padding-left:22px}
+  li{margin:6px 0}
+  hr{border:0;border-top:1px solid var(--border);margin:40px 0}
+  footer{max-width:760px;margin:0 auto;padding:26px 22px 60px;color:var(--muted);
+    font-size:13.5px;border-top:1px solid var(--border)}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="nav"><div class="nav-in">
+  <span class="brand"><span class="mark">F</span> Fitly</span>
+  <nav>
+    <a href="gizlilik.html">Gizlilik</a>
+    <a href="kosullar.html">Kullanım Koşulları</a>
+    <a href="partner-sozlesmesi.html" class="here">Partner Sözleşmesi</a>
+    <select class="lang" aria-label="Dil / Language" onchange="fitlySwitchLang(this.value)">
+      <option value="tr">TR</option><option value="en">EN</option>
+    </select>
+  </nav>
+</div></header>
+
+<main>
+  <h1>Fitly Partner Programı Sözleşmesi</h1>
+  <div class="sub">Son güncelleme: 29 Temmuz 2026 · Sürüm 1.0</div>
+
+  <div class="draft">
+    <b>TASLAK.</b> Bu metin, programın işleyişini ve tarafların yükümlülüklerini
+    yansıtacak şekilde hazırlanmış bir taslaktır ve <b>hukuki görüş değildir</b>.
+    Yürürlüğe konmadan önce bir avukat tarafından incelenmelidir. Fatura ve vergi
+    hükümleri, mali müşavir görüşü alınana kadar bilerek boş bırakılmıştır ve
+    <span class="fill">[…]</span> ile işaretlenmiştir.
+  </div>
+
+  <h2><span class="n">1</span> Taraflar ve Kabul</h2>
+  <p>Bu Partner Programı Sözleşmesi ("Sözleşme"), Nevşehir'de mukim
+  <strong>Berk Demir</strong> ("Fitly", "biz") ile Fitly Partner Programı'na katılan
+  gerçek veya tüzel kişi ("Partner", "siz") arasındadır. Partner paneline giriş yapmanız,
+  size tanımlanan kodu paylaşmanız veya program kapsamında komisyon talep etmeniz bu
+  Sözleşmeyi kabul ettiğiniz anlamına gelir.</p>
+  <p>Bu Sözleşme, Fitly <a href="kosullar.html">Kullanım Koşulları</a> ve
+  <a href="gizlilik.html">Gizlilik Politikası</a> ile birlikte uygulanır. Çelişki halinde,
+  program ilişkisine dair konularda bu Sözleşme önceliklidir.</p>
+
+  <h2><span class="n">2</span> Statü: Bağımsız Taraf</h2>
+  <p>Partner, <strong>bağımsız bir taraftır</strong>. Bu Sözleşme taraflar arasında
+  iş akdi, işçi işveren ilişkisi, ortaklık, adi ortaklık, acentelik, distribütörlük veya
+  temsilcilik ilişkisi kurmaz. Partner'ın Fitly adına beyanda bulunma, taahhüt verme,
+  sözleşme imzalama veya Fitly'yi bağlayıcı herhangi bir işlem yapma yetkisi yoktur.</p>
+  <p>Partner, kendi faaliyetine ilişkin her türlü vergi, sosyal güvenlik ve mevzuat
+  yükümlülüğünden bizzat sorumludur. Partner, kendi ekipmanı, ekibi ve giderlerinden
+  sorumludur; Fitly bu kalemler için herhangi bir ödeme yapmaz.</p>
+
+  <h2><span class="n">3</span> Partner Kodu</h2>
+  <p>Fitly, Partner'a bir veya birden fazla indirim kodu tanımlar. Kodlar
+  <strong>Fitly'nin mülkiyetindedir</strong>; Partner'a yalnızca bu Sözleşme süresince,
+  program kapsamında kullanma hakkı verilir.</p>
+  <ul>
+    <li>Kod <strong>devredilemez</strong>, satılamaz, alt lisansa konu edilemez.</li>
+    <li>Partner, kodu <strong>kendi satın alımında veya kendi hane halkı adına</strong>
+        kullanamaz; bu davranış komisyon hakkını düşürür.</li>
+    <li>Fitly, kodun kullanım sayısını sınırlayabilir, süresini belirleyebilir, kodu
+        herhangi bir zamanda kapatabilir veya değiştirebilir.</li>
+    <li>Kodun üçüncü kişilerce ele geçirilmesi veya kötüye kullanılması halinde Partner
+        derhal Fitly'yi bilgilendirir.</li>
+  </ul>
+
+  <h2><span class="n">4</span> Komisyon</h2>
+  <p>Partner, kodunu uygulamaya girmiş bir kullanıcının gerçekleştirdiği
+  <strong>ücretli abonelik satışları</strong> üzerinden komisyon hak eder. Komisyon oranı
+  Partner paneline yazılır ve orada gösterilen oran esastır.</p>
+  <p>Komisyon, satışın <strong>net gelirinden</strong> hesaplanır. Net gelir; kullanıcının
+  ödediği tutardan uygulama mağazasının komisyonu ve ilgili vergiler düşüldükten sonra
+  Fitly'ye fiilen kalan tutardır. Komisyon, kullanıcının ödediği brüt tutar üzerinden
+  hesaplanmaz.</p>
+  <p>Komisyon oranı Fitly tarafından değiştirilebilir. <strong>Oran değişikliği yalnızca
+  ileriye etkilidir</strong>; değişiklik tarihinden önce gerçekleşmiş satışların komisyonu
+  yeniden hesaplanmaz.</p>
+  <p>Komisyon yalnızca <strong>gerçek ve ücretli</strong> işlemler için doğar. Deneme
+  süresi, ücretsiz dönem, test ortamı (sandbox) işlemleri, promosyon olarak verilen
+  erişimler ve bedelsiz kullanımlar komisyona konu değildir.</p>
+
+  <h2><span class="n">5</span> Hakediş ve Ödeme</h2>
+  <p>Bir satışın komisyonu, satışın gerçekleştiği <strong>takvim ayının sonundan itibaren
+  45 gün</strong> geçtikten sonra ödenebilir hale gelir. Bu süre, uygulama mağazasının
+  iade penceresi ve gelir aktarım takvimi ile uyumludur; Fitly, henüz kendisine ulaşmamış
+  bir gelirin komisyonunu ödemekle yükümlü değildir.</p>
+  <p>Ödemeler, Partner panelinde ilgili aya işlenir. Panelde "Ödendi" olarak görünen tutar,
+  o ay için yapılmış ödemeyi ifade eder.</p>
+  <div class="box">
+    <h3>Fatura ve vergi</h3>
+    <p style="margin-bottom:0">Ödemenin belgelendirilmesi, fatura düzenleme yükümlülüğü,
+    stopaj ve KDV uygulaması ile yurt dışı yerleşik Partner'lara ilişkin usul:
+    <span class="fill">[mali müşavir görüşü alınacak]</span>. Bu bölüm netleşene kadar
+    ödeme, tarafların yazılı olarak mutabık kaldığı usulle yapılır.</p>
+  </div>
+  <p>Ödeme eşiği ve ödeme yöntemi: <span class="fill">[…]</span>.</p>
+
+  <h2><span class="n">6</span> İade, İptal ve Geri Alım</h2>
+  <p>Kullanıcının aboneliği iade edilir, iptal edilir veya ödeme itiraz (chargeback)
+  yoluyla geri alınırsa, o satışa ait komisyon <strong>doğmamış sayılır</strong>.</p>
+  <ul>
+    <li>Komisyon henüz ödenmemişse, hakedişten düşülür.</li>
+    <li>Komisyon ödenmişse, izleyen dönem hakedişlerinden mahsup edilir. Mahsup edilecek
+        hakediş yoksa Partner, ilgili tutarı iade eder.</li>
+    <li>Hile, sahte işlem veya bu Sözleşmenin ihlali yoluyla doğduğu tespit edilen
+        komisyonlar, ödenmiş olsalar dahi geri alınır.</li>
+  </ul>
+
+  <h2><span class="n">7</span> Panelde Gösterilen Tutarların Niteliği</h2>
+  <p>Partner panelindeki tutarlar <strong>tahmini</strong> niteliktedir. Uygulama mağazası,
+  komisyon ve vergi oranlarını işlem bazında ve gecikmeli olarak raporlar. Kesin tutar,
+  mağazanın Fitly'ye ilettiği <strong>aylık gelir raporu</strong> ile netleşir ve
+  uyuşmazlık halinde bu rapor esas alınır.</p>
+  <p>Panel, gizlilik gereği yalnızca <strong>sayısal toplamlar</strong> gösterir. Kodu
+  kullanan kişilerin kimliği, e-postası, satın alma zamanı veya sağlık verisi Partner ile
+  hiçbir koşulda paylaşılmaz.</p>
+
+  <h2><span class="n">8</span> Açıklama (Reklam Etiketi) Yükümlülüğü</h2>
+  <p>Partner, Fitly ile aralarında <strong>maddi bir bağlantı</strong> bulunduğunu, kodu
+  paylaştığı <strong>her</strong> içerikte, ortalama bir izleyicinin kolayca fark edeceği
+  şekilde açıklamakla yükümlüdür.</p>
+  <ul>
+    <li>Türkiye'de: Ticaret Bakanlığı Ticari Reklam ve Haksız Ticari Uygulamalar
+        Yönetmeliği ile Sosyal Medya Etkileyicileri Kılavuzu uyarınca
+        <strong>#reklam</strong> veya <strong>#işbirliği</strong> gibi açık bir ibare.</li>
+    <li>Amerika Birleşik Devletleri'ne yönelik içeriklerde: FTC 16 CFR Part 255
+        (Endorsement Guides) uyarınca açık ve göze çarpan bir açıklama.</li>
+    <li>Açıklama; içeriğin başında, "daha fazla göster" ile gizlenmeyen bir konumda ve
+        içeriğin diliyle aynı dilde yapılır.</li>
+  </ul>
+  <p>Bu yükümlülüğün ihlalinden doğan idari para cezaları ve talepler Partner'a aittir.
+  Fitly, açıklama içermeyen bir içeriğin kaldırılmasını veya düzeltilmesini talep edebilir.</p>
+
+  <h2><span class="n">9</span> Yasaklı Davranışlar</h2>
+  <p>Partner aşağıdakileri yapmamayı taahhüt eder:</p>
+  <ul>
+    <li>Kendi kodunu kendi satın alımında kullanmak veya bu amaçla hesap açtırmak.</li>
+    <li>Sahte hesap, bot, otomatik indirme veya teşvik edilmiş sahte kayıt üretmek.</li>
+    <li>İstenmeyen toplu mesaj (spam), yorum çöplüğü veya yanıltıcı bildirim yoluyla
+        kod dağıtmak.</li>
+    <li>"Fitly", "appfitly" ve benzer ibareler üzerinden <strong>marka anahtar kelime
+        reklamı</strong> vermek veya Fitly'nin resmi kanalı gibi görünen hesap, alan adı
+        ya da uygulama oluşturmak.</li>
+    <li>Kodu, izinsiz kupon ve indirim toplayıcı sitelerinde yayımlamak.</li>
+    <li>Fitly'nin fiyatları, özellikleri, indirim oranı veya sonuçları hakkında
+        <strong>gerçeğe aykırı beyanda</strong> bulunmak.</li>
+    <li>Yasa dışı, nefret içerikli, müstehcen veya üçüncü kişilerin haklarını ihlal eden
+        bir içerik yanında Fitly'yi tanıtmak.</li>
+  </ul>
+
+  <h2><span class="n">10</span> Sağlık İddiaları</h2>
+  <div class="box danger">
+    <h3>⚠ Bu bölüm programın en kritik kuralıdır</h3>
+    <p>Fitly tıbbi bir cihaz veya sağlık hizmeti değildir. Partner, Fitly'yi tanıtırken
+    <strong>tedavi, teşhis, hastalık iyileştirme veya garanti edilmiş sonuç</strong>
+    iddiasında bulunamaz.</p>
+    <p style="margin-bottom:0">Özellikle: "şu kadar kilo verdirir", "hastalığı geçirir",
+    "ilaç yerine geçer", "kesin sonuç" gibi ifadeler ve gerçek olmayan öncesi sonrası
+    görselleri yasaktır. Kişisel deneyim aktarılıyorsa, bunun <strong>kişisel deneyim
+    olduğu ve herkes için aynı sonucu vermeyeceği</strong> belirtilir.</p>
+  </div>
+
+  <h2><span class="n">11</span> Marka Kullanımı</h2>
+  <p>Fitly, Partner'a yalnızca bu Sözleşme süresince geçerli, <strong>münhasır olmayan,
+  devredilemez ve her zaman geri alınabilir</strong> bir lisansla; Fitly adını, logosunu
+  ve tanıtım görsellerini program kapsamında kullanma hakkı verir.</p>
+  <p>Logo ve görseller değiştirilemez, başka markalarla karıştırılacak biçimde kullanılamaz.
+  Lisans, Sözleşmenin sona ermesiyle kendiliğinden ortadan kalkar ve Partner mevcut
+  içeriklerdeki kullanımı makul sürede kaldırır.</p>
+
+  <h2><span class="n">12</span> İçerik ve Fikri Mülkiyet</h2>
+  <p>Partner'ın ürettiği tanıtım içeriğinin hakları Partner'a aittir. Partner, Fitly'ye;
+  bu içerikleri <strong>Fitly'nin kendi kanallarında yeniden paylaşma</strong> konusunda
+  ücretsiz, dünya çapında ve devredilebilir bir kullanım hakkı verir. Fitly, içeriği
+  Partner'ın adını belirterek paylaşır ve Partner'ın talebi üzerine makul sürede kaldırır.</p>
+
+  <h2><span class="n">13</span> Kişisel Veriler</h2>
+  <p>Fitly, program kapsamında Partner'ın <strong>adı, iletişim e-postası, panel hesabı
+  ve kod performans kayıtlarını</strong> işler. Hukuki dayanak, bu Sözleşmenin kurulması
+  ve ifasıdır (KVKK m.5/2-c). Veriler Supabase altyapısında Avrupa Birliği (İrlanda)
+  bölgesinde barındırılır.</p>
+  <p>Fitly, Partner'a <strong>banka, IBAN veya vergi kimliği bilgisi tutmaz</strong>;
+  ödeme bilgileri Sözleşmenin 5. bölümünde belirtilen usulle, panel dışında yürütülür.
+  Partner'ın KVKK m.11 kapsamındaki hakları için
+  <a href="gizlilik.html">Gizlilik Politikası</a>'ndaki başvuru yolu geçerlidir.</p>
+  <p>Partner, program vesilesiyle öğrendiği ticari bilgileri (henüz duyurulmamış
+  özellikler, fiyat planları, satış rakamları) gizli tutar.</p>
+
+  <h2><span class="n">14</span> Askıya Alma, Fesih ve Ayrılma</h2>
+  <p>Taraflardan her biri bu Sözleşmeyi <strong>dilediği zaman</strong> feshedebilir.
+  Partner, ayrılma talebini panelden iletir; talep onaylandığında kodları yeni kullanıma
+  kapanır.</p>
+  <p><strong>Ayrılma, hak edilmiş komisyonu düşürmez.</strong> Fesih tarihinden önce
+  gerçekleşmiş ve iade edilmemiş satışların komisyonu, 5. bölümdeki normal vade takvimine
+  göre ödenir.</p>
+  <p>Fitly; bu Sözleşmenin ihlali, hile şüphesi, marka zararı veya hukuka aykırı kullanım
+  halinde Partner'ı <strong>bildirimde bulunmaksızın askıya alabilir</strong>. Hile veya
+  ihlal tespit edilirse, ilgili komisyonlar 6. bölüm uyarınca geri alınır.</p>
+  <p>Sözleşmenin sona ermesinden sonra da 6, 10, 11, 12, 13, 15, 16 ve 18. bölümler
+  yürürlükte kalır.</p>
+
+  <h2><span class="n">15</span> Sorumluluğun Sınırlandırılması</h2>
+  <p>Fitly, program kapsamında Partner'a herhangi bir <strong>kazanç, satış hacmi,
+  görüntülenme veya süreklilik garantisi vermez</strong>. Program bir gelir taahhüdü
+  değildir.</p>
+  <p>Fitly'nin bu Sözleşmeden doğan toplam sorumluluğu, <strong>talebin doğduğu tarihten
+  önceki on iki ayda Partner'a fiilen ödenen komisyon toplamını</strong> aşamaz. Fitly,
+  dolaylı zararlardan, kâr kaybından, itibar kaybından ve veri kaybından sorumlu değildir.</p>
+  <p>Fitly, uygulama mağazasının fiyat, komisyon, iade veya raporlama politikasındaki
+  değişikliklerden sorumlu tutulamaz.</p>
+
+  <h2><span class="n">16</span> Tazminat</h2>
+  <p>Partner; bu Sözleşmeyi ihlal etmesi, açıklama yükümlülüğüne uymaması, gerçeğe aykırı
+  veya sağlık iddiası içeren tanıtım yapması ya da üçüncü kişilerin haklarını ihlal etmesi
+  nedeniyle Fitly'ye yöneltilen talep, dava, idari para cezası ve makul avukatlık
+  giderlerini <strong>karşılamayı kabul eder</strong>.</p>
+
+  <h2><span class="n">17</span> Devir, Değişiklik ve Bölünebilirlik</h2>
+  <p>Partner bu Sözleşmeyi Fitly'nin yazılı onayı olmadan devredemez. Fitly, Sözleşmeyi
+  bir işletme devri kapsamında devredebilir.</p>
+  <p>Fitly bu Sözleşmeyi güncelleyebilir. Esaslı değişiklikler Partner'a panel hesabındaki
+  e-posta adresine bildirilir ve bildirimden <strong>15 gün</strong> sonra yürürlüğe girer.
+  Partner bu süre içinde ayrılabilir; ayrılma halinde hak edilmiş komisyon 14. bölüm
+  uyarınca ödenir.</p>
+  <p>Bir hükmün geçersiz sayılması diğer hükümleri etkilemez.</p>
+
+  <h2><span class="n">18</span> Uygulanacak Hukuk ve Uyuşmazlıklar</h2>
+  <p>Bu Sözleşme <strong>Türkiye Cumhuriyeti hukukuna</strong> tabidir. Uyuşmazlıklarda
+  <strong>Nevşehir mahkemeleri ve icra daireleri</strong> yetkilidir.</p>
+
+  <h2><span class="n">19</span> İletişim</h2>
+  <p>Program ve bu Sözleşme hakkındaki sorular için:
+  <a href="mailto:destek@appfitly.com">destek@appfitly.com</a></p>
+
+  <hr>
+  <p style="color:var(--muted);font-size:14px">İlgili belgeler:
+    <a href="kosullar.html">Kullanım Koşulları</a> ·
+    <a href="gizlilik.html">Gizlilik Politikası</a></p>
+</main>
+
+<footer>
+  © 2026 Berk Demir · Fitly ·
+  <a href="gizlilik.html">Gizlilik</a> · <a href="kosullar.html">Koşullar</a> ·
+  <a href="partner-sozlesmesi.html">Partner Sözleşmesi</a>
+</footer>
+<script>
+(function(){
+  // Partner belgesi yalnızca TR ve EN olarak yayımlanır; dil seçici bu iki
+  // dille sınırlı tutulur, aksi halde çevrilmemiş dizinlere 404 verilirdi.
+  var seg=location.pathname.replace(/^\/+/,'').split('/');
+  var cur=(seg[0]==='en')?'en':'tr';
+  window.fitlySwitchLang=function(l){location.href=(l==='tr'?'/':'/en/')+'partner-sozlesmesi.html';};
+  document.addEventListener('DOMContentLoaded',function(){var s=document.querySelector('select.lang');if(s)s.value=cur;});
+})();
+</script>
+</body>
+</html>
