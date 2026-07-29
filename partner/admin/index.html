@@ -186,6 +186,8 @@
           '<td class="nowrap">' +
             '<button type="button" class="btn btn-ghost btn-sm" data-detail="' +
               esc(a.affiliate_id) + '">' + esc(t("adminOpenDetail")) + "</button> " +
+            '<button type="button" class="btn btn-ghost btn-sm" data-resend="' +
+              esc(a.affiliate_id) + '">' + esc(t("adminResendInvite")) + "</button> " +
             '<button type="button" class="btn btn-ghost btn-sm" data-aff="' +
               esc(a.affiliate_id) + '" data-status="' + (on ? "suspended" : "active") + '">' +
               esc(t(on ? "adminSuspend" : "adminActivate")) + "</button>" +
@@ -358,6 +360,10 @@
   }
 
   function actionError(message) {
+    // The same strip doubles as the success line for a re-sent invite, so the
+    // error styling has to be put back or a failure would render as green.
+    $("affActionError").classList.add("msg-error");
+    $("affActionError").classList.remove("msg-ok");
     $("affActionError").textContent = message || t("genericError");
     show($("affActionError"), true);
   }
@@ -367,6 +373,23 @@
 
     var detailBtn = ev.target.closest("button[data-detail]");
     if (detailBtn) return loadDetail(detailBtn.getAttribute("data-detail"));
+
+    var resendBtn = ev.target.closest("button[data-resend]");
+    if (resendBtn) {
+      resendBtn.disabled = true;
+      var rr = await P.callFunction("affiliate-admin", {
+        action: "resend_invite",
+        affiliateId: resendBtn.getAttribute("data-resend"),
+        locale: P.lang,
+      });
+      resendBtn.disabled = false;
+      if (!rr.ok) return actionError();
+      $("affActionError").textContent = t("adminInviteSent");
+      $("affActionError").classList.remove("msg-error");
+      $("affActionError").classList.add("msg-ok");
+      show($("affActionError"), true);
+      return;
+    }
 
     var statusBtn = ev.target.closest("button[data-aff]");
     if (!statusBtn) return;
