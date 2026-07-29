@@ -46,12 +46,7 @@
       <h2 id="newAffTitle">Yeni partner</h2>
       <p class="sub" id="newAffSub"></p>
       <div class="msg msg-error hidden" id="affError"></div>
-      <div class="msg msg-ok hidden" id="affOk">
-        <strong id="tempPwTitle"></strong>
-        <div class="secret" id="tempPwValue"></div>
-        <div id="tempPwHint" style="font-size:13px;opacity:.85"></div>
-        <button type="button" class="btn btn-ghost btn-sm" id="tempPwDone" style="margin-top:10px"></button>
-      </div>
+      <div class="msg msg-ok hidden" id="affOk"></div>
       <form id="affForm" novalidate>
         <label class="field"><span id="lblName">Ad</span>
           <input type="text" id="affName" required></label>
@@ -143,9 +138,6 @@
     txt("codeBtn", t("create"));
     txt("affListTitle", t("adminAffiliates"));
     txt("loadingText", t("loading"));
-    txt("tempPwTitle", t("tempPasswordTitle"));
-    txt("tempPwHint", t("tempPasswordHint"));
-    txt("tempPwDone", t("done"));
     txt("notConfiguredMsg", t("notConfigured"));
     txt("leaveTitle", t("adminLeaveRequests"));
     txt("detailTitle", t("adminOpenDetail"));
@@ -519,15 +511,11 @@
       $("affError").textContent = m; show($("affError"), true);
       return;
     }
-    $("tempPwValue").textContent = res.data.tempPassword;
+    // No secret to display: the partner sets their own password from the invite.
+    $("affOk").textContent = t("adminInviteSent");
     show($("affOk"), true);
     $("affName").value = ""; $("affEmail").value = "";
     loadAffiliates();
-  });
-
-  $("tempPwDone").addEventListener("click", function () {
-    $("tempPwValue").textContent = "";
-    show($("affOk"), false);
   });
 
   $("codeForm").addEventListener("submit", async function (ev) {

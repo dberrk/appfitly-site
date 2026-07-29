@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fitly Partner</title>
+<meta name="theme-color" content="#060709">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/logo.png">
+<link rel="stylesheet" href="/partner/panel.css">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand"><img src="/assets/logo.png" alt=""> <span id="brandTitle">Fitly Partner</span></div>
+    <div class="spacer"></div>
+    <div class="lang" id="langToggle"></div>
+  </div>
+
+  <div class="card hidden" id="notConfigured"><div class="msg msg-error" id="notConfiguredMsg"></div></div>
+
+  <section class="auth" id="inviteView">
+    <div class="card">
+      <h2 id="inviteTitle">Parolanı belirle</h2>
+      <p class="sub" id="inviteSub"></p>
+
+      <div class="msg msg-error hidden" id="inviteError"></div>
+      <p class="empty" id="checking">Yükleniyor...</p>
+
+      <form id="inviteForm" class="hidden" novalidate>
+        <label class="field"><span id="lblPw">Parola</span>
+          <input type="password" id="pw" autocomplete="new-password" required></label>
+        <label class="field"><span id="lblPw2">Parola (tekrar)</span>
+          <input type="password" id="pw2" autocomplete="new-password" required></label>
+        <button type="submit" class="btn" id="saveBtn" style="width:100%">Parolayı kaydet</button>
+      </form>
+
+      <p class="sub hidden" id="expiredHelp" style="margin-top:16px"></p>
+    </div>
+  </section>
+
+</div>
+
+<script src="/partner/vendor/supabase.js"></script>
+<script src="/partner/config.js"></script>
+<script src="/partner/i18n.js"></script>
+<script src="/partner/panel.js"></script>
+<script>
+(function () {
+  "use strict";
+  var P = window.FitlyPanel, t = P.t;
+  var $ = function (id) { return document.getElementById(id); };
+  var show = function (el, on) { el.classList.toggle("hidden", !on); };
+  var txt = function (id, v) { var el = $(id); if (el) el.textContent = v; };
+
+  P.mountLangToggle($("langToggle"));
+
+  function paintStatic() {
+    document.title = t("panelTitle");
+    txt("brandTitle", t("panelTitle"));
+    txt("inviteTitle", t("inviteTitle"));
+    txt("inviteSub", t("inviteSub"));
+    txt("lblPw", t("newPassword"));
+    txt("lblPw2", t("newPasswordAgain"));
+    txt("saveBtn", t("savePassword"));
+    txt("checking", t("loading"));
+    txt("expiredHelp", t("inviteExpiredHelp"));
+    txt("notConfiguredMsg", t("notConfigured"));
+  }
+  window.addEventListener("fitly:lang", paintStatic);
+  paintStatic();
+
+  if (!P.isConfigured) { show($("notConfigured"), true); show($("inviteView"), false); return; }
+
+  // The token arrives in the URL FRAGMENT, which browsers never send to the
+  // host (ADR-013). Read it, then strip it from the address bar so it does not
+  // survive in history or get pasted into a support chat by accident.
+  function readFragment() {
+    var raw = (location.hash || "").replace(/^#/, "");
+    var out = {};
+    raw.split("&").forEach(function (pair) {
+      if (!pair) return;
+      var i = pair.indexOf("=");
+      var k = i < 0 ? pair : pair.slice(0, i);
+      out[decodeURIComponent(k)] = i < 0 ? "" : decodeURIComponent(pair.slice(i + 1));
+    });
+    return out;
+  }
+
+  function fail(messageKey, showHelp) {
+    show($("checking"), false);
+    show($("inviteForm"), false);
+    $("inviteError").textContent = t(messageKey);
+    show($("inviteError"), true);
+    show($("expiredHelp"), !!showHelp);
+  }
+
+  async function verify() {
+    var frag = readFragment();
+    if (!frag.token_hash) return fail("inviteMissing", true);
+
+    var res = await P.client.auth.verifyOtp({
+      token_hash: frag.token_hash,
+      type: frag.type === "recovery" ? "recovery" : "invite",
+    });
+
+    // Clear the fragment whether or not it worked: a spent or invalid token is
+    // still a token, and leaving it in the URL serves no purpose.
+    history.replaceState(null, "", location.pathname + location.search);
+
+    if (res.error || !res.data || !res.data.session) return fail("inviteExpired", true);
+
+    show($("checking"), false);
+    show($("inviteForm"), true);
+  }
+
+  $("inviteForm").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    show($("inviteError"), false);
+    var a = $("pw").value, b = $("pw2").value;
+    if (a.length < 8) {
+      $("inviteError").textContent = t("passwordTooShort"); show($("inviteError"), true); return;
+    }
+    if (a !== b) {
+      $("inviteError").textContent = t("passwordMismatch"); show($("inviteError"), true); return;
+    }
+
+    var btn = $("saveBtn"); btn.disabled = true;
+    var res = await P.client.auth.updateUser({ password: a });
+    if (res.error) {
+      btn.disabled = false;
+      $("inviteError").textContent = res.error.message || t("genericError");
+      show($("inviteError"), true);
+      return;
+    }
+    // Only now is the account fully set up, so the panel stops forcing a change.
+    await P.clearMustChangePassword();
+    location.href = "/partner/";
+  });
+
+  verify();
+})();
+</script>
+</body>
+</html>
