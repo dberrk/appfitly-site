@@ -45,20 +45,20 @@
          background:#6EE088; color:#0B0C0F; font-size:16px; font-weight:700;
          text-decoration:none; }
   .hint { font-size:12.5px; line-height:1.6; color:rgba(235,237,245,.38); margin-top:14px; }
-  .spin { width:22px; height:22px; margin:20px auto 0; border:2.5px solid rgba(255,255,255,.12);
-          border-top-color:#6EE088; border-radius:50%; animation:s .8s linear infinite; }
-  @keyframes s { to { transform:rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .spin { animation:none; } }
+  .alt { display:inline-block; margin-top:16px; font-size:14px; font-weight:600;
+         color:#6EE088; background:none; border:0; border-bottom:1px solid rgba(110,224,136,.35);
+         padding:0 0 2px; font-family:inherit; cursor:pointer; }
   [hidden] { display:none !important; }
 </style>
 </head>
 <body>
   <div class="card">
     <div class="tile">F</div>
-    <h1 id="h"></h1>
-    <p id="sub"></p>
-    <a id="btn" class="btn" href="https://apps.apple.com/app/id6790693710" hidden></a>
-    <div id="spin" class="spin" aria-hidden="true" hidden></div>
+    <!-- Metin ve bağlantı JS'siz de doğru: varsayılan Türkçe, href tam. -->
+    <h1 id="h">Fitly'yi indir</h1>
+    <p id="sub">App Store'da aç, kurulum bir dokunuş.</p>
+    <a id="btn" class="btn" href="https://apps.apple.com/app/id6790693710?l=tr">App Store'da aç</a>
+    <button id="alt" class="alt" hidden></button>
     <p id="hint" class="hint" hidden></p>
   </div>
 <script>
@@ -70,41 +70,53 @@
   var PROVIDER_TOKEN = "";
 
   var COPY = {
-    tr:{h:"Fitly'yi indir",s:"App Store'da açılıyor.",b:"App Store'da aç",
-        n:"Açılmazsa sağ üstteki ••• menüsünden “Safari'de aç” seçeneğini kullan.",
+    tr:{h:"Fitly'yi indir",s:"App Store'da aç, kurulum bir dokunuş.",b:"App Store'da aç",
+        a:"Safari'de aç",
+        n:"App Store açılmadıysa “Safari'de aç”a dokun, ya da sağ üstteki ••• menüsünü kullan.",
         o:"Fitly şu an yalnızca iPhone için. Bu sayfayı iPhone'undan aç."},
-    en:{h:"Download Fitly",s:"Opening in the App Store.",b:"Open in the App Store",
-        n:"If nothing opens, use the ••• menu at the top right and choose “Open in Safari”.",
+    en:{h:"Download Fitly",s:"Open it in the App Store, one tap to install.",b:"Open in the App Store",
+        a:"Open in Safari",
+        n:"If the App Store did not open, tap “Open in Safari”, or use the ••• menu at the top right.",
         o:"Fitly is iPhone only for now. Open this page on your iPhone."},
-    de:{h:"Fitly laden",s:"Wird im App Store geöffnet.",b:"Im App Store öffnen",
-        n:"Falls sich nichts öffnet, wähle im Menü ••• oben rechts „In Safari öffnen“.",
+    de:{h:"Fitly laden",s:"Im App Store öffnen, Installation mit einem Tipp.",b:"Im App Store öffnen",
+        a:"In Safari öffnen",
+        n:"Wenn der App Store nicht geöffnet wurde, tippe auf „In Safari öffnen“ oder nutze das Menü ••• oben rechts.",
         o:"Fitly gibt es derzeit nur für iPhone. Öffne diese Seite auf deinem iPhone."},
-    es:{h:"Descarga Fitly",s:"Abriendo en el App Store.",b:"Abrir en el App Store",
-        n:"Si no se abre, usa el menú ••• arriba a la derecha y elige “Abrir en Safari”.",
+    es:{h:"Descarga Fitly",s:"Ábrelo en el App Store, se instala con un toque.",b:"Abrir en el App Store",
+        a:"Abrir en Safari",
+        n:"Si el App Store no se abrió, toca “Abrir en Safari” o usa el menú ••• arriba a la derecha.",
         o:"Por ahora Fitly solo está disponible para iPhone. Abre esta página en tu iPhone."},
-    fr:{h:"Télécharger Fitly",s:"Ouverture dans l'App Store.",b:"Ouvrir dans l'App Store",
-        n:"Si rien ne s'ouvre, utilisez le menu ••• en haut à droite et choisissez « Ouvrir dans Safari ».",
+    fr:{h:"Télécharger Fitly",s:"Ouvrez-le dans l'App Store, installation en un geste.",b:"Ouvrir dans l'App Store",
+        a:"Ouvrir dans Safari",
+        n:"Si l'App Store ne s'est pas ouvert, touchez « Ouvrir dans Safari » ou utilisez le menu ••• en haut à droite.",
         o:"Fitly est disponible uniquement sur iPhone pour le moment. Ouvrez cette page sur votre iPhone."},
-    it:{h:"Scarica Fitly",s:"Apertura nell'App Store.",b:"Apri nell'App Store",
-        n:"Se non si apre, usa il menu ••• in alto a destra e scegli “Apri in Safari”.",
+    it:{h:"Scarica Fitly",s:"Aprilo nell'App Store, si installa con un tocco.",b:"Apri nell'App Store",
+        a:"Apri in Safari",
+        n:"Se l'App Store non si è aperto, tocca “Apri in Safari” oppure usa il menu ••• in alto a destra.",
         o:"Per ora Fitly è disponibile solo per iPhone. Apri questa pagina dal tuo iPhone."},
-    ja:{h:"Fitly をダウンロード",s:"App Store を開いています。",b:"App Store で開く",
-        n:"開かない場合は、右上の ••• メニューから「Safariで開く」を選んでください。",
+    ja:{h:"Fitly をダウンロード",s:"App Store で開くと、ワンタップでインストールできます。",b:"App Store で開く",
+        a:"Safariで開く",
+        n:"App Store が開かない場合は「Safariで開く」をタップするか、右上の ••• メニューをお使いください。",
         o:"Fitly は現在 iPhone のみ対応です。iPhone でこのページを開いてください。"},
-    ko:{h:"Fitly 다운로드",s:"App Store를 여는 중입니다.",b:"App Store에서 열기",
-        n:"열리지 않으면 오른쪽 위 ••• 메뉴에서 “Safari로 열기”를 선택하세요.",
+    ko:{h:"Fitly 다운로드",s:"App Store에서 열면 한 번의 탭으로 설치됩니다.",b:"App Store에서 열기",
+        a:"Safari로 열기",
+        n:"App Store가 열리지 않으면 “Safari로 열기”를 누르거나 오른쪽 위 ••• 메뉴를 사용하세요.",
         o:"Fitly는 현재 iPhone에서만 사용할 수 있습니다. iPhone에서 이 페이지를 열어 주세요."},
-    "pt-BR":{h:"Baixar o Fitly",s:"Abrindo na App Store.",b:"Abrir na App Store",
-        n:"Se não abrir, use o menu ••• no canto superior direito e escolha “Abrir no Safari”.",
+    "pt-BR":{h:"Baixar o Fitly",s:"Abra na App Store, instala com um toque.",b:"Abrir na App Store",
+        a:"Abrir no Safari",
+        n:"Se a App Store não abriu, toque em “Abrir no Safari” ou use o menu ••• no canto superior direito.",
         o:"No momento o Fitly está disponível apenas para iPhone. Abra esta página no seu iPhone."},
-    ru:{h:"Скачать Fitly",s:"Открываем App Store.",b:"Открыть в App Store",
-        n:"Если ничего не открылось, нажмите ••• в правом верхнем углу и выберите «Открыть в Safari».",
+    ru:{h:"Скачать Fitly",s:"Откройте в App Store, установка в одно касание.",b:"Открыть в App Store",
+        a:"Открыть в Safari",
+        n:"Если App Store не открылся, нажмите «Открыть в Safari» или используйте меню ••• в правом верхнем углу.",
         o:"Сейчас Fitly доступен только для iPhone. Откройте эту страницу на iPhone."},
-    "zh-Hans":{h:"下载 Fitly",s:"正在打开 App Store。",b:"在 App Store 中打开",
-        n:"如果没有打开，请点按右上角的 ••• 菜单，选择“在 Safari 中打开”。",
+    "zh-Hans":{h:"下载 Fitly",s:"在 App Store 中打开，一键安装。",b:"在 App Store 中打开",
+        a:"在 Safari 中打开",
+        n:"如果 App Store 没有打开，请点按“在 Safari 中打开”，或使用右上角的 ••• 菜单。",
         o:"Fitly 目前仅支持 iPhone。请在 iPhone 上打开此页面。"},
-    ar:{h:"تنزيل Fitly",s:"جارٍ الفتح في App Store.",b:"الفتح في App Store",
-        n:"إذا لم يفتح، افتح قائمة ••• في الأعلى واختر “فتح في Safari”.",
+    ar:{h:"تنزيل Fitly",s:"افتحه في App Store، والتثبيت بلمسة واحدة.",b:"الفتح في App Store",
+        a:"الفتح في Safari",
+        n:"إذا لم يفتح App Store، المس “الفتح في Safari” أو استخدم قائمة ••• في الأعلى.",
         o:"‏Fitly متاح حاليًا على iPhone فقط. افتح هذه الصفحة على iPhone."}
   };
 
@@ -149,51 +161,38 @@
   var inApp = /Instagram|FBAN|FBAV|FB_IAB|Line\/|Twitter|TikTok|Snapchat|Pinterest/i.test(ua);
 
   var h = document.getElementById("h"), sub = document.getElementById("sub"),
-      btn = document.getElementById("btn"), spin = document.getElementById("spin"),
+      btn = document.getElementById("btn"), alt = document.getElementById("alt"),
       hint = document.getElementById("hint");
 
   h.textContent = t.h;
-  btn.href = store;
+  sub.textContent = t.s;
   btn.textContent = t.b;
+  btn.href = store;                 // birincil yol: DÜZ bağlantı, JS karışmaz
 
   if (!isIOS) {
-    // Android/masaüstü: dürüst mesaj. Kullanıcıyı satın alamayacağı bir
-    // mağazaya atmaktansa neden olmadığını söylemek iyidir.
+    // Android/masaüstü: dürüst mesaj, satın alınamayacak vitrine yollamak yok.
     sub.textContent = t.o;
-    btn.hidden = false;
     return;
   }
 
-  if (!inApp) {
-    // Gerçek tarayıcı: bekletmeye gerek yok, doğrudan git. Buton yine
-    // görünür kalır ki yönlendirme engellenirse elde bir şey olsun.
-    sub.textContent = t.s;
-    spin.hidden = false;
-    btn.hidden = false;
-    location.href = store;
-    return;
-  }
+  if (!inApp) return;               // gerçek tarayıcıda butondan fazlası gerekmiyor
 
-  // In-app browser: otomatik yönlendirme YOK. Kaçış kullanıcı dokunuşuna
-  // bağlı olmak zorunda, ve otomatik hop Instagram'ın spam filtresini
-  // besliyor. Dokunuşta önce Safari'ye kaçmayı dener, olmazsa anchor'ın
-  // kendi navigasyonu devreye girer.
-  sub.textContent = t.s;
-  btn.hidden = false;
+  // In-app browser: Safari kaçışı AYRI ve açıkça etiketli İKİNCİ seçenek.
+  // Denemek kullanıcının kararı; boş sekme açılırsa bunu kendi seçtiği için
+  // görür ve birincil buton hâlâ arkasında durur. Boş sekmeyi kapatmayı da
+  // deneriz (best-effort: bazı in-app browser'lar buna izin vermez).
+  alt.textContent = t.a;
+  alt.hidden = false;
   hint.textContent = t.n;
   hint.hidden = false;
 
-  btn.addEventListener("click", function (e) {
-    var escaped = false;
-    try {
-      // Instagram iOS bu şemayı YALNIZCA window.open ile kabul ediyor.
-      escaped = !!window.open("x-safari-" + store, "_blank");
-    } catch (err) {
-      escaped = false;
-    }
-    if (escaped) e.preventDefault();
-    // escaped false ise anchor'ın normal navigasyonu engellenmez: kullanıcı
-    // en azından App Store web sayfasına düşer, ölü butonla kalmaz.
+  alt.addEventListener("click", function () {
+    var popup = null;
+    try { popup = window.open("x-safari-" + store, "_blank"); } catch (err) { popup = null; }
+    if (!popup) return;
+    setTimeout(function () {
+      try { if (popup && !popup.closed) popup.close(); } catch (err) {}
+    }, 1500);
   });
 })();
 </script>
