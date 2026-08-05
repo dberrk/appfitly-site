@@ -83,6 +83,8 @@
     <!-- Düz anchor, JS dokunmuyor. Instagram bu şemayı sisteme devrederse
          doğrudan App Store açılır; devretmezse hiçbir şey olmaz ve yukarıdaki
          yönerge zaten ekranda durmaya devam eder. -->
+    <button id="trySafari" class="alt" hidden></button>
+    <button id="tryChrome" class="alt" hidden></button>
     <a id="alt" class="alt" href="itms-apps://apps.apple.com/app/id6790693710" hidden></a>
   </div>
 <script>
@@ -96,61 +98,85 @@
     tr:{h:"Fitly'yi indir",s:"App Store'da aç, kurulum bir dokunuş.",b:"App Store'da aç",
         st:"Instagram bu bağlantıyı kendi içinde açıyor",
         sb:"Sağ üstteki ••• menüsüne dokun, “Safari'de aç” ya da “Sistem tarayıcısında aç” seçeneğini seç. Sayfa Safari'de açılınca aşağıdaki buton App Store'a götürür.",
+        ts:"Safari'de açmayı dene",
+        tc:"Chrome'da açmayı dene",
         d:"Doğrudan App Store'u dene",
         o:"Fitly şu an yalnızca iPhone için. Bu sayfayı iPhone'undan aç."},
     en:{h:"Download Fitly",s:"Open it in the App Store, one tap to install.",b:"Open in the App Store",
         st:"Instagram is opening this link inside itself",
         sb:"Tap the ••• menu at the top right and choose “Open in Safari” or “Open in system browser”. Once the page is in Safari, the button below takes you to the App Store.",
+        ts:"Try opening in Safari",
+        tc:"Try opening in Chrome",
         d:"Try the App Store directly",
         o:"Fitly is iPhone only for now. Open this page on your iPhone."},
     de:{h:"Fitly laden",s:"Im App Store öffnen, Installation mit einem Tipp.",b:"Im App Store öffnen",
         st:"Instagram öffnet diesen Link in seinem eigenen Browser",
         sb:"Tippe oben rechts auf das Menü ••• und wähle „In Safari öffnen“ oder „Im Systembrowser öffnen“. Sobald die Seite in Safari ist, führt dich die Schaltfläche unten zum App Store.",
+        ts:"In Safari öffnen versuchen",
+        tc:"In Chrome öffnen versuchen",
         d:"App Store direkt versuchen",
         o:"Fitly gibt es derzeit nur für iPhone. Öffne diese Seite auf deinem iPhone."},
     es:{h:"Descarga Fitly",s:"Ábrelo en el App Store, se instala con un toque.",b:"Abrir en el App Store",
         st:"Instagram está abriendo este enlace dentro de la app",
         sb:"Toca el menú ••• arriba a la derecha y elige “Abrir en Safari” o “Abrir en el navegador del sistema”. Cuando la página esté en Safari, el botón de abajo te lleva al App Store.",
+        ts:"Probar a abrir en Safari",
+        tc:"Probar a abrir en Chrome",
         d:"Probar el App Store directamente",
         o:"Por ahora Fitly solo está disponible para iPhone. Abre esta página en tu iPhone."},
     fr:{h:"Télécharger Fitly",s:"Ouvrez-le dans l'App Store, installation en un geste.",b:"Ouvrir dans l'App Store",
         st:"Instagram ouvre ce lien dans son propre navigateur",
         sb:"Touchez le menu ••• en haut à droite et choisissez « Ouvrir dans Safari » ou « Ouvrir dans le navigateur du système ». Une fois la page dans Safari, le bouton ci-dessous vous mène à l'App Store.",
+        ts:"Essayer d'ouvrir dans Safari",
+        tc:"Essayer d'ouvrir dans Chrome",
         d:"Essayer l'App Store directement",
         o:"Fitly est disponible uniquement sur iPhone pour le moment. Ouvrez cette page sur votre iPhone."},
     it:{h:"Scarica Fitly",s:"Aprilo nell'App Store, si installa con un tocco.",b:"Apri nell'App Store",
         st:"Instagram sta aprendo questo link al suo interno",
         sb:"Tocca il menu ••• in alto a destra e scegli “Apri in Safari” oppure “Apri nel browser di sistema”. Quando la pagina è in Safari, il pulsante qui sotto porta all'App Store.",
+        ts:"Prova ad aprire in Safari",
+        tc:"Prova ad aprire in Chrome",
         d:"Prova l'App Store direttamente",
         o:"Per ora Fitly è disponibile solo per iPhone. Apri questa pagina dal tuo iPhone."},
     ja:{h:"Fitly をダウンロード",s:"App Store で開くと、ワンタップでインストールできます。",b:"App Store で開く",
         st:"Instagram がこのリンクをアプリ内で開いています",
         sb:"右上の ••• メニューをタップして「Safariで開く」または「システムブラウザで開く」を選んでください。Safari で開いたあと、下のボタンから App Store に進めます。",
+        ts:"Safariで開いてみる",
+        tc:"Chromeで開いてみる",
         d:"App Store を直接開いてみる",
         o:"Fitly は現在 iPhone のみ対応です。iPhone でこのページを開いてください。"},
     ko:{h:"Fitly 다운로드",s:"App Store에서 열면 한 번의 탭으로 설치됩니다.",b:"App Store에서 열기",
         st:"Instagram이 이 링크를 앱 안에서 열고 있습니다",
         sb:"오른쪽 위 ••• 메뉴를 눌러 “Safari로 열기” 또는 “시스템 브라우저로 열기”를 선택하세요. Safari에서 열리면 아래 버튼으로 App Store에 갈 수 있습니다.",
+        ts:"Safari로 열어 보기",
+        tc:"Chrome으로 열어 보기",
         d:"App Store 바로 열어 보기",
         o:"Fitly는 현재 iPhone에서만 사용할 수 있습니다. iPhone에서 이 페이지를 열어 주세요."},
     "pt-BR":{h:"Baixar o Fitly",s:"Abra na App Store, instala com um toque.",b:"Abrir na App Store",
         st:"O Instagram está abrindo este link dentro do app",
         sb:"Toque no menu ••• no canto superior direito e escolha “Abrir no Safari” ou “Abrir no navegador do sistema”. Com a página no Safari, o botão abaixo leva à App Store.",
+        ts:"Tentar abrir no Safari",
+        tc:"Tentar abrir no Chrome",
         d:"Tentar a App Store direto",
         o:"No momento o Fitly está disponível apenas para iPhone. Abra esta página no seu iPhone."},
     ru:{h:"Скачать Fitly",s:"Откройте в App Store, установка в одно касание.",b:"Открыть в App Store",
         st:"Instagram открывает эту ссылку внутри себя",
         sb:"Нажмите меню ••• в правом верхнем углу и выберите «Открыть в Safari» или «Открыть в системном браузере». Когда страница откроется в Safari, кнопка ниже приведёт вас в App Store.",
+        ts:"Попробовать открыть в Safari",
+        tc:"Попробовать открыть в Chrome",
         d:"Попробовать App Store напрямую",
         o:"Сейчас Fitly доступен только для iPhone. Откройте эту страницу на iPhone."},
     "zh-Hans":{h:"下载 Fitly",s:"在 App Store 中打开，一键安装。",b:"在 App Store 中打开",
         st:"Instagram 正在其内置浏览器中打开此链接",
         sb:"请点按右上角的 ••• 菜单，选择“在 Safari 中打开”或“在系统浏览器中打开”。页面在 Safari 中打开后，下方按钮即可进入 App Store。",
+        ts:"尝试在 Safari 中打开",
+        tc:"尝试在 Chrome 中打开",
         d:"直接尝试打开 App Store",
         o:"Fitly 目前仅支持 iPhone。请在 iPhone 上打开此页面。"},
     ar:{h:"تنزيل Fitly",s:"افتحه في App Store، والتثبيت بلمسة واحدة.",b:"الفتح في App Store",
         st:"‏Instagram يفتح هذا الرابط داخل التطبيق",
         sb:"المس قائمة ••• في الأعلى واختر “الفتح في Safari” أو “الفتح في متصفح النظام”. بعد فتح الصفحة في Safari، يأخذك الزر أدناه إلى App Store.",
+        ts:"جرّب الفتح في Safari",
+        tc:"جرّب الفتح في Chrome",
         d:"جرّب فتح App Store مباشرة",
         o:"‏Fitly متاح حاليًا على iPhone فقط. افتح هذه الصفحة على iPhone."}
   };
@@ -187,6 +213,12 @@
   }
   var store = "https://apps.apple.com/app/id" + APP_ID + query;
   var storeScheme = "itms-apps://apps.apple.com/app/id" + APP_ID + query;
+  // Kaynak "location.href engellenir, KULLANICI DOKUNUŞUNA bağlı değilse"
+  // diyordu. İlk sürüm window.open denedi (beyaz ekran); location.href hiç
+  // denenmedi. Şema açılamazsa hiçbir şey olmaz ve sayfa yerinde kalır, yani
+  // bu denemenin çıkmaz sokak riski yok.
+  var safariEscape = "x-safari-" + store;
+  var chromeEscape = store.replace(/^https:/, "googlechromes:");
 
   var ua = navigator.userAgent || "";
   var isIOS = /iPhone|iPad|iPod/.test(ua) ||
@@ -221,6 +253,17 @@
   alt.textContent = t.d;
   alt.href = storeScheme;
   alt.hidden = false;
+
+  // İki açık deneme. Anchor değil BUTON: iptal edilecek bir navigasyon yok,
+  // dolayısıyla ilk sürümün hatası burada tekrarlanamaz.
+  var trySafari = document.getElementById("trySafari");
+  var tryChrome = document.getElementById("tryChrome");
+  trySafari.textContent = t.ts;
+  tryChrome.textContent = t.tc;
+  trySafari.hidden = false;
+  tryChrome.hidden = false;
+  trySafari.onclick = function () { location.href = safariEscape; };
+  tryChrome.onclick = function () { location.href = chromeEscape; };
 })();
 </script>
 </body>
