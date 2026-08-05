@@ -286,7 +286,38 @@
   btn.removeAttribute("href");
   btn.setAttribute("role", "button");
   btn.style.cursor = "pointer";
-  btn.onclick = function () { location.href = storeScheme; };
+
+  // ÖLÇÜLEN DESEN (owner cihazı, 2026-08-05): Instagram App Store'a giden HER
+  // şemayı düşürüyor (https://apps.apple.com ve itms-apps://), ama tarayıcı
+  // şemalarını sisteme DEVREDİYOR. Cihaz sağlam: aynı link Safari'de açılıyor,
+  // Chrome şeması App Store'u modal olarak getiriyor.
+  //
+  // O yüzden butonun işi App Store'u açmak değil, KURULU TARAYICIYI bulmak.
+  // iOS kurulu uygulamaları sorgulamaya izin vermiyor (parmak izi koruması),
+  // ve "varsayılan tarayıcıda aç" diye bir şema yok. Geriye tek yol kalıyor:
+  // sırayla denemek. Tutmayan şema hiçbir şey yapmıyor, yani her adımın
+  // başarısızlığı sessiz ve zararsız.
+  //
+  // Zincir, sayfadan AYRILDIĞIMIZ anda durur. Bu şart: bir tarayıcı açıldıktan
+  // sonra zincir sürerse, kullanıcı Instagram'a döndüğünde kendini bir başka
+  // tarayıcıda bulur. Üç sinyal birden dinleniyor çünkü in-app browser'ların
+  // hangisini verdiği garanti değil.
+  var left = false;
+  function markLeft() { left = true; }
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) markLeft();
+  });
+  window.addEventListener("pagehide", markLeft);
+  window.addEventListener("blur", markLeft);
+
+  btn.onclick = function () {
+    var i = 0;
+    (function step() {
+      if (left || document.hidden || i >= BROWSERS.length) return;
+      location.href = BROWSERS[i++].url;
+      setTimeout(step, 700);
+    })();
+  };
 
   fbLead.textContent = t.fl;
   fbManual.textContent = t.fm;
