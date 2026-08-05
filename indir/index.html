@@ -64,6 +64,15 @@
          border-bottom:1px solid rgba(110,224,136,.3); padding:0 0 2px;
          font-family:inherit; cursor:pointer; }
   .fb-lead { margin-top:20px; font-size:13px; }
+  /* Safari-only kullanıcı: otomatik yol YOK (Apple izin vermiyor), o yüzden
+     iki garantili seçenek burada ve göz ardı edilemeyecek şekilde duruyor. */
+  .safari-box { margin-top:20px; padding:14px 16px; border-radius:14px;
+                background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09);
+                text-align:start; }
+  .manual { font-size:13px; line-height:1.65; }
+  .copy { margin-top:10px; width:100%; padding:11px 14px; border-radius:999px;
+          background:rgba(110,224,136,.14); color:#6EE088; border:1px solid rgba(110,224,136,.35);
+          font-size:14px; font-weight:700; font-family:inherit; cursor:pointer; }
   .hint { font-size:12.5px; line-height:1.6; color:rgba(235,237,245,.38); margin-top:16px; }
   [hidden] { display:none !important; }
 </style>
@@ -87,7 +96,10 @@
       <button id="tryFirefox" class="alt"></button>
       <button id="tryEdge" class="alt"></button>
       <button id="tryOpera" class="alt"></button>
-      <p id="fbManual" class="hint"></p>
+      <div class="safari-box">
+        <p id="fbManual" class="manual"></p>
+        <button id="copyLink" class="copy"></button>
+      </div>
     </div>
   </div>
 <script>
@@ -104,7 +116,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"Hiçbiri olmadıysa sağ üstteki ••• menüsünden “Safari'de aç”ı seç, sayfa Safari'de açılınca buton çalışır.",
+        fm:"Yalnız Safari kullanıyorsan: sağ üstteki ••• menüsünden “Sistem tarayıcısında aç”ı seç, ya da linki kopyalayıp Safari'ye yapıştır.",
+        cp:"Linki kopyala",
+        cpOk:"Kopyalandı, Safari'ye yapıştır",
         o:"Fitly şu an yalnızca iPhone için. Bu sayfayı iPhone'undan aç."},
     en:{h:"Download Fitly",s:"Open it in the App Store, one tap to install.",b:"Open in the App Store",
         fl:"If it did not open, try one of these browsers:",
@@ -112,7 +126,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"If none of them work, use the ••• menu at the top right and choose “Open in Safari”. The button works once the page is in Safari.",
+        fm:"If you only use Safari: open the ••• menu at the top right and choose “Open in system browser”, or copy the link and paste it in Safari.",
+        cp:"Copy the link",
+        cpOk:"Copied, paste it in Safari",
         o:"Fitly is iPhone only for now. Open this page on your iPhone."},
     de:{h:"Fitly laden",s:"Im App Store öffnen, Installation mit einem Tipp.",b:"Im App Store öffnen",
         fl:"Falls es nicht geöffnet wurde, versuche einen dieser Browser:",
@@ -120,7 +136,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"Wenn nichts davon klappt, wähle im Menü ••• oben rechts „In Safari öffnen“. In Safari funktioniert die Schaltfläche.",
+        fm:"Wenn du nur Safari nutzt: öffne oben rechts das Menü ••• und wähle „Im Systembrowser öffnen“, oder kopiere den Link und füge ihn in Safari ein.",
+        cp:"Link kopieren",
+        cpOk:"Kopiert, in Safari einfügen",
         o:"Fitly gibt es derzeit nur für iPhone. Öffne diese Seite auf deinem iPhone."},
     es:{h:"Descarga Fitly",s:"Ábrelo en el App Store, se instala con un toque.",b:"Abrir en el App Store",
         fl:"Si no se abrió, prueba con uno de estos navegadores:",
@@ -128,7 +146,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"Si ninguno funciona, usa el menú ••• arriba a la derecha y elige “Abrir en Safari”. En Safari el botón funciona.",
+        fm:"Si solo usas Safari: abre el menú ••• arriba a la derecha y elige “Abrir en el navegador del sistema”, o copia el enlace y pégalo en Safari.",
+        cp:"Copiar el enlace",
+        cpOk:"Copiado, pégalo en Safari",
         o:"Por ahora Fitly solo está disponible para iPhone. Abre esta página en tu iPhone."},
     fr:{h:"Télécharger Fitly",s:"Ouvrez-le dans l'App Store, installation en un geste.",b:"Ouvrir dans l'App Store",
         fl:"Si rien ne s'est ouvert, essayez l'un de ces navigateurs :",
@@ -136,7 +156,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"Si aucun ne fonctionne, utilisez le menu ••• en haut à droite et choisissez « Ouvrir dans Safari ». Le bouton fonctionne dans Safari.",
+        fm:"Si vous n'utilisez que Safari : ouvrez le menu ••• en haut à droite et choisissez « Ouvrir dans le navigateur du système », ou copiez le lien et collez-le dans Safari.",
+        cp:"Copier le lien",
+        cpOk:"Copié, collez-le dans Safari",
         o:"Fitly est disponible uniquement sur iPhone pour le moment. Ouvrez cette page sur votre iPhone."},
     it:{h:"Scarica Fitly",s:"Aprilo nell'App Store, si installa con un tocco.",b:"Apri nell'App Store",
         fl:"Se non si è aperto, prova con uno di questi browser:",
@@ -144,7 +166,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"Se nessuno funziona, usa il menu ••• in alto a destra e scegli “Apri in Safari”. In Safari il pulsante funziona.",
+        fm:"Se usi solo Safari: apri il menu ••• in alto a destra e scegli “Apri nel browser di sistema”, oppure copia il link e incollalo in Safari.",
+        cp:"Copia il link",
+        cpOk:"Copiato, incollalo in Safari",
         o:"Per ora Fitly è disponibile solo per iPhone. Apri questa pagina dal tuo iPhone."},
     ja:{h:"Fitly をダウンロード",s:"App Store で開くと、ワンタップでインストールできます。",b:"App Store で開く",
         fl:"開かない場合は、次のブラウザで試してください:",
@@ -152,7 +176,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"どれも開かない場合は、右上の ••• メニューから「Safariで開く」を選んでください。Safari ではボタンが機能します。",
+        fm:"Safari だけをお使いの場合: 右上の ••• メニューから「システムブラウザで開く」を選ぶか、リンクをコピーして Safari に貼り付けてください。",
+        cp:"リンクをコピー",
+        cpOk:"コピーしました。Safari に貼り付けてください",
         o:"Fitly は現在 iPhone のみ対応です。iPhone でこのページを開いてください。"},
     ko:{h:"Fitly 다운로드",s:"App Store에서 열면 한 번의 탭으로 설치됩니다.",b:"App Store에서 열기",
         fl:"열리지 않으면 다음 브라우저로 시도해 보세요:",
@@ -160,7 +186,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"모두 안 되면 오른쪽 위 ••• 메뉴에서 “Safari로 열기”를 선택하세요. Safari에서는 버튼이 작동합니다.",
+        fm:"Safari만 사용한다면: 오른쪽 위 ••• 메뉴에서 “시스템 브라우저로 열기”를 선택하거나, 링크를 복사해 Safari에 붙여넣으세요.",
+        cp:"링크 복사",
+        cpOk:"복사됨, Safari에 붙여넣기",
         o:"Fitly는 현재 iPhone에서만 사용할 수 있습니다. iPhone에서 이 페이지를 열어 주세요."},
     "pt-BR":{h:"Baixar o Fitly",s:"Abra na App Store, instala com um toque.",b:"Abrir na App Store",
         fl:"Se não abriu, tente um destes navegadores:",
@@ -168,7 +196,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"Se nenhum funcionar, use o menu ••• no canto superior direito e escolha “Abrir no Safari”. No Safari o botão funciona.",
+        fm:"Se você usa só o Safari: abra o menu ••• no canto superior direito e escolha “Abrir no navegador do sistema”, ou copie o link e cole no Safari.",
+        cp:"Copiar o link",
+        cpOk:"Copiado, cole no Safari",
         o:"No momento o Fitly está disponível apenas para iPhone. Abra esta página no seu iPhone."},
     ru:{h:"Скачать Fitly",s:"Откройте в App Store, установка в одно касание.",b:"Открыть в App Store",
         fl:"Если не открылось, попробуйте один из этих браузеров:",
@@ -176,7 +206,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"Если ничего не помогло, откройте меню ••• в правом верхнем углу и выберите «Открыть в Safari». В Safari кнопка работает.",
+        fm:"Если вы пользуетесь только Safari: откройте меню ••• в правом верхнем углу и выберите «Открыть в системном браузере», либо скопируйте ссылку и вставьте её в Safari.",
+        cp:"Скопировать ссылку",
+        cpOk:"Скопировано, вставьте в Safari",
         o:"Сейчас Fitly доступен только для iPhone. Откройте эту страницу на iPhone."},
     "zh-Hans":{h:"下载 Fitly",s:"在 App Store 中打开，一键安装。",b:"在 App Store 中打开",
         fl:"如果没有打开，请尝试以下浏览器:",
@@ -184,7 +216,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"如果都不行，请点按右上角的 ••• 菜单，选择“在 Safari 中打开”。在 Safari 中按钮即可正常使用。",
+        fm:"如果你只用 Safari: 请点按右上角的 ••• 菜单，选择“在系统浏览器中打开”，或复制链接后粘贴到 Safari。",
+        cp:"复制链接",
+        cpOk:"已复制，请粘贴到 Safari",
         o:"Fitly 目前仅支持 iPhone。请在 iPhone 上打开此页面。"},
     ar:{h:"تنزيل Fitly",s:"افتحه في App Store، والتثبيت بلمسة واحدة.",b:"الفتح في App Store",
         fl:"إذا لم يفتح، جرّب أحد هذه المتصفحات:",
@@ -192,7 +226,9 @@
         ff:"Firefox",
         fe:"Edge",
         fo:"Opera",
-        fm:"إذا لم ينجح أي منها، استخدم قائمة ••• في الأعلى واختر “الفتح في Safari”. يعمل الزر داخل Safari.",
+        fm:"‏إذا كنت تستخدم Safari فقط: افتح قائمة ••• في الأعلى واختر “الفتح في متصفح النظام”، أو انسخ الرابط والصقه في Safari.",
+        cp:"نسخ الرابط",
+        cpOk:"‏تم النسخ، الصقه في Safari",
         o:"‏Fitly متاح حاليًا على iPhone فقط. افتح هذه الصفحة على iPhone."}
   };
 
@@ -258,6 +294,7 @@
       fallbacks = document.getElementById("fallbacks"),
       fbLead = document.getElementById("fbLead"),
       fbManual = document.getElementById("fbManual"),
+      copyLink = document.getElementById("copyLink"),
       tryChrome = document.getElementById("tryChrome"),
       tryFirefox = document.getElementById("tryFirefox"),
       tryEdge = document.getElementById("tryEdge"),
@@ -321,6 +358,36 @@
 
   fbLead.textContent = t.fl;
   fbManual.textContent = t.fm;
+
+  // Safari-only yol. Araştırma (2026-08-05): Apple, in-app browser'ın linki
+  // Safari'ye OTOMATİK devretmesine izin vermiyor; Safari'nin güvenilir bir
+  // URL şeması da yok. Yani bu kullanıcı için otomatik çözüm YOK, yapısal.
+  // Geriye iki garantili yol kalıyor ve ikisi de burada: ••• menüsü, ve
+  // linki panoya kopyalayıp Safari'ye yapıştırmak. Kopyalanan şey App Store
+  // adresi, sayfamız değil: yapıştırınca doğrudan uygulamaya düşsün.
+  copyLink.textContent = t.cp;
+  copyLink.onclick = function () {
+    function done() { copyLink.textContent = t.cpOk; }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(store).then(done, legacy);
+        return;
+      }
+    } catch (err) { /* aşağıdaki eski yola düş */ }
+    legacy();
+    function legacy() {
+      var ta = document.createElement("textarea");
+      ta.value = store;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "absolute";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, store.length);
+      try { document.execCommand("copy"); done(); } catch (err2) { /* sessiz */ }
+      document.body.removeChild(ta);
+    }
+  };
   fallbacks.hidden = false;
   BROWSERS.forEach(function (b, i) {
     var el = [tryChrome, tryFirefox, tryEdge, tryOpera][i];
