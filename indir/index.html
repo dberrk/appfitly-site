@@ -7,27 +7,34 @@
 <title>Fitly</title>
 <link rel="icon" href="/assets/logo.png">
 <!--
-  Fitly indirme köprüsü — Instagram/Facebook in-app browser'ından App Store'a.
+  Fitly indirme köprüsü.
 
-  NEDEN VAR: Instagram linkleri kendi WKWebView'ında açıyor. apps.apple.com o
-  pencerede App Store uygulamasına devredilemiyor, kullanıcı ölü bir sayfada
-  kalıyor. Düz 302 yönlendirme ÇÖZMEZ: aynı WebView'ın içinde kalır, sadece bir
-  hop ekler, üstelik Instagram çok adımlı yönlendirmeleri spam sayabiliyor.
+  CANLI ÖLÇÜM (owner, iPhone + Instagram, 2026-08-05). İki otomatik yol da
+  ÖLÜ çıktı, ikisi de bu sayfada denendi ve ikisi de başarısız oldu:
 
-  ÇALIŞAN KAÇIŞ (shalanah/inapp-debugger test matrisi, 2026): Instagram iOS
-  x-safari-https şemasını YALNIZCA window.open ile kabul ediyor. location.href
-  ile aynı şema engelleniyor, ve her iki durumda da kaçış bir KULLANICI
-  DOKUNUŞUNA bağlı olmak zorunda. Bu yüzden in-app browser'da otomatik
-  yönlendirme yok, büyük bir buton var.
+    1. Düz <a href="https://apps.apple.com/...">  → hiçbir tepki yok.
+       Apple bu adresi iOS'ta itms-appss:// şemasına yönlendiriyor ve
+       Instagram'ın WKWebView'ı o şemayı devredemiyor, sessizce düşüyor.
+    2. window.open("x-safari-https://...")        → beyaz ekran, sonra geri.
+       Şema açılamıyor; window.open yine de bir Window döndürüyor, yani
+       dönüş değeri başarıyı ÖLÇMÜYOR. (İlk sürüm bu değere bakıp
+       e.preventDefault() çağırdığı için buton hiçbir şey yapmıyordu.)
 
-  MAĞAZA URL'İ: ülke segmenti (/tr/) BİLEREK yok. O segment dili değil
-  STOREFRONT'u seçer; Alman bir kullanıcıyı /tr/'ye göndermek onu satın
-  alamayacağı bir vitrine sokar. Segmentsiz biçimde Apple ziyaretçiyi kendi
-  vitrinine yönlendirir. ?l= yalnız web sayfasının dilini seçer; App Store
-  uygulamasına devredildiğinde zaten cihaz dili geçerli olur.
+  Bu yüzden sayfa artık HİÇBİR otomatik kaçış denemiyor. In-app browser'da
+  GARANTİLİ tek yol öne alındı: ••• menüsünden sistem tarayıcısında açmak.
+  Diğer seçenekler altında, hepsi DÜZ ANCHOR olarak duruyor.
 
-  ATIF (ADR-016 §4): ?c=<creator> → ct=<creator>. App Analytics kampanya
-  raporu bunu okur. SDK yok, yeni vendor yok, tracking etiketi None kalır.
+  İKİ SERT KURAL (ikisi de canlıda ihlal edildiği için yazılı):
+    · JS hiçbir koşulda navigasyonu iptal etmez. Tek bir click dinleyicisi
+      yok; window.open hiç kullanılmıyor.
+    · Sayfanın okunabilirliği JS'e bağlı değil. Metin ve çalışan bağlantı
+      HTML'de; JS yalnız dili değiştirir ve in-app bölümünü açar.
+
+  MAĞAZA URL'İ: ülke segmenti (/tr/) bilerek yok. O segment dili değil
+  STOREFRONT'u seçer ve Alman bir ziyaretçiyi satın alamayacağı vitrine
+  sokar. ?l= yalnız web sayfasının dilini seçer.
+
+  ATIF (ADR-016 §4): ?c=<creator> → ct=<creator>. SDK yok, vendor yok.
 -->
 <style>
   :root { color-scheme: dark; }
@@ -35,7 +42,7 @@
          font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
          min-height:100vh; display:flex; align-items:center; justify-content:center;
          padding:24px; box-sizing:border-box; }
-  .card { text-align:center; max-width:340px; }
+  .card { text-align:center; max-width:340px; width:100%; }
   .tile { width:56px; height:56px; border-radius:16px; background:#171B0D; color:#6EE088;
           font-size:28px; font-weight:700; display:flex; align-items:center;
           justify-content:center; margin:0 auto 16px; }
@@ -44,86 +51,112 @@
   .btn { display:block; margin:22px 0 0; padding:15px 22px; border-radius:999px;
          background:#6EE088; color:#0B0C0F; font-size:16px; font-weight:700;
          text-decoration:none; }
-  .hint { font-size:12.5px; line-height:1.6; color:rgba(235,237,245,.38); margin-top:14px; }
-  .alt { display:inline-block; margin-top:16px; font-size:14px; font-weight:600;
-         color:#6EE088; background:none; border:0; border-bottom:1px solid rgba(110,224,136,.35);
-         padding:0 0 2px; font-family:inherit; cursor:pointer; }
+  /* In-app browser yönergesi: garantili yol, o yüzden görsel olarak birincil. */
+  .steps { margin:22px 0 0; padding:16px 18px; border-radius:16px;
+           background:rgba(110,224,136,.07); border:1px solid rgba(110,224,136,.28);
+           text-align:start; }
+  .steps b { display:block; font-size:14.5px; margin-bottom:6px; color:#F5F6F8; }
+  .steps p { font-size:13.5px; line-height:1.65; }
+  .dots { display:inline-block; padding:1px 7px; border-radius:6px;
+          background:rgba(255,255,255,.12); font-weight:700; letter-spacing:1px; }
+  .alt { display:inline-block; margin-top:14px; font-size:13.5px; font-weight:600;
+         color:rgba(110,224,136,.85); text-decoration:none;
+         border-bottom:1px solid rgba(110,224,136,.3); padding-bottom:2px; }
   [hidden] { display:none !important; }
 </style>
 </head>
 <body>
   <div class="card">
     <div class="tile">F</div>
-    <!-- Metin ve bağlantı JS'siz de doğru: varsayılan Türkçe, href tam. -->
+    <!-- JS'siz de doğru ve çalışır: varsayılan Türkçe, href tam. -->
     <h1 id="h">Fitly'yi indir</h1>
     <p id="sub">App Store'da aç, kurulum bir dokunuş.</p>
+
+    <!-- Yalnız in-app browser'da açılır. Garantili yol. -->
+    <div id="steps" class="steps" hidden>
+      <b id="stepsTitle"></b>
+      <p id="stepsBody"></p>
+    </div>
+
     <a id="btn" class="btn" href="https://apps.apple.com/app/id6790693710?l=tr">App Store'da aç</a>
-    <button id="alt" class="alt" hidden></button>
-    <p id="hint" class="hint" hidden></p>
+
+    <!-- Düz anchor, JS dokunmuyor. Instagram bu şemayı sisteme devrederse
+         doğrudan App Store açılır; devretmezse hiçbir şey olmaz ve yukarıdaki
+         yönerge zaten ekranda durmaya devam eder. -->
+    <a id="alt" class="alt" href="itms-apps://apps.apple.com/app/id6790693710" hidden></a>
   </div>
 <script>
 (function () {
   var APP_ID = "6790693710";
-  // Sağlayıcı token'ı (ASC → App Analytics kampanya linkleri). Owner ASC'den
-  // üretip buraya koyunca kampanya raporu creator kırılımı verir; boşken link
-  // yine çalışır, sadece Apple tarafı atıf yapmaz.
+  // ASC → App Analytics kampanya linklerinin sağlayıcı token'ı. Boşken link
+  // yine çalışır, sadece Apple tarafı creator kırılımı vermez.
   var PROVIDER_TOKEN = "";
 
   var COPY = {
     tr:{h:"Fitly'yi indir",s:"App Store'da aç, kurulum bir dokunuş.",b:"App Store'da aç",
-        a:"Safari'de aç",
-        n:"App Store açılmadıysa “Safari'de aç”a dokun, ya da sağ üstteki ••• menüsünü kullan.",
+        st:"Instagram bu bağlantıyı kendi içinde açıyor",
+        sb:"Sağ üstteki ••• menüsüne dokun, “Safari'de aç” ya da “Sistem tarayıcısında aç” seçeneğini seç. Sayfa Safari'de açılınca aşağıdaki buton App Store'a götürür.",
+        d:"Doğrudan App Store'u dene",
         o:"Fitly şu an yalnızca iPhone için. Bu sayfayı iPhone'undan aç."},
     en:{h:"Download Fitly",s:"Open it in the App Store, one tap to install.",b:"Open in the App Store",
-        a:"Open in Safari",
-        n:"If the App Store did not open, tap “Open in Safari”, or use the ••• menu at the top right.",
+        st:"Instagram is opening this link inside itself",
+        sb:"Tap the ••• menu at the top right and choose “Open in Safari” or “Open in system browser”. Once the page is in Safari, the button below takes you to the App Store.",
+        d:"Try the App Store directly",
         o:"Fitly is iPhone only for now. Open this page on your iPhone."},
     de:{h:"Fitly laden",s:"Im App Store öffnen, Installation mit einem Tipp.",b:"Im App Store öffnen",
-        a:"In Safari öffnen",
-        n:"Wenn der App Store nicht geöffnet wurde, tippe auf „In Safari öffnen“ oder nutze das Menü ••• oben rechts.",
+        st:"Instagram öffnet diesen Link in seinem eigenen Browser",
+        sb:"Tippe oben rechts auf das Menü ••• und wähle „In Safari öffnen“ oder „Im Systembrowser öffnen“. Sobald die Seite in Safari ist, führt dich die Schaltfläche unten zum App Store.",
+        d:"App Store direkt versuchen",
         o:"Fitly gibt es derzeit nur für iPhone. Öffne diese Seite auf deinem iPhone."},
     es:{h:"Descarga Fitly",s:"Ábrelo en el App Store, se instala con un toque.",b:"Abrir en el App Store",
-        a:"Abrir en Safari",
-        n:"Si el App Store no se abrió, toca “Abrir en Safari” o usa el menú ••• arriba a la derecha.",
+        st:"Instagram está abriendo este enlace dentro de la app",
+        sb:"Toca el menú ••• arriba a la derecha y elige “Abrir en Safari” o “Abrir en el navegador del sistema”. Cuando la página esté en Safari, el botón de abajo te lleva al App Store.",
+        d:"Probar el App Store directamente",
         o:"Por ahora Fitly solo está disponible para iPhone. Abre esta página en tu iPhone."},
     fr:{h:"Télécharger Fitly",s:"Ouvrez-le dans l'App Store, installation en un geste.",b:"Ouvrir dans l'App Store",
-        a:"Ouvrir dans Safari",
-        n:"Si l'App Store ne s'est pas ouvert, touchez « Ouvrir dans Safari » ou utilisez le menu ••• en haut à droite.",
+        st:"Instagram ouvre ce lien dans son propre navigateur",
+        sb:"Touchez le menu ••• en haut à droite et choisissez « Ouvrir dans Safari » ou « Ouvrir dans le navigateur du système ». Une fois la page dans Safari, le bouton ci-dessous vous mène à l'App Store.",
+        d:"Essayer l'App Store directement",
         o:"Fitly est disponible uniquement sur iPhone pour le moment. Ouvrez cette page sur votre iPhone."},
     it:{h:"Scarica Fitly",s:"Aprilo nell'App Store, si installa con un tocco.",b:"Apri nell'App Store",
-        a:"Apri in Safari",
-        n:"Se l'App Store non si è aperto, tocca “Apri in Safari” oppure usa il menu ••• in alto a destra.",
+        st:"Instagram sta aprendo questo link al suo interno",
+        sb:"Tocca il menu ••• in alto a destra e scegli “Apri in Safari” oppure “Apri nel browser di sistema”. Quando la pagina è in Safari, il pulsante qui sotto porta all'App Store.",
+        d:"Prova l'App Store direttamente",
         o:"Per ora Fitly è disponibile solo per iPhone. Apri questa pagina dal tuo iPhone."},
     ja:{h:"Fitly をダウンロード",s:"App Store で開くと、ワンタップでインストールできます。",b:"App Store で開く",
-        a:"Safariで開く",
-        n:"App Store が開かない場合は「Safariで開く」をタップするか、右上の ••• メニューをお使いください。",
+        st:"Instagram がこのリンクをアプリ内で開いています",
+        sb:"右上の ••• メニューをタップして「Safariで開く」または「システムブラウザで開く」を選んでください。Safari で開いたあと、下のボタンから App Store に進めます。",
+        d:"App Store を直接開いてみる",
         o:"Fitly は現在 iPhone のみ対応です。iPhone でこのページを開いてください。"},
     ko:{h:"Fitly 다운로드",s:"App Store에서 열면 한 번의 탭으로 설치됩니다.",b:"App Store에서 열기",
-        a:"Safari로 열기",
-        n:"App Store가 열리지 않으면 “Safari로 열기”를 누르거나 오른쪽 위 ••• 메뉴를 사용하세요.",
+        st:"Instagram이 이 링크를 앱 안에서 열고 있습니다",
+        sb:"오른쪽 위 ••• 메뉴를 눌러 “Safari로 열기” 또는 “시스템 브라우저로 열기”를 선택하세요. Safari에서 열리면 아래 버튼으로 App Store에 갈 수 있습니다.",
+        d:"App Store 바로 열어 보기",
         o:"Fitly는 현재 iPhone에서만 사용할 수 있습니다. iPhone에서 이 페이지를 열어 주세요."},
     "pt-BR":{h:"Baixar o Fitly",s:"Abra na App Store, instala com um toque.",b:"Abrir na App Store",
-        a:"Abrir no Safari",
-        n:"Se a App Store não abriu, toque em “Abrir no Safari” ou use o menu ••• no canto superior direito.",
+        st:"O Instagram está abrindo este link dentro do app",
+        sb:"Toque no menu ••• no canto superior direito e escolha “Abrir no Safari” ou “Abrir no navegador do sistema”. Com a página no Safari, o botão abaixo leva à App Store.",
+        d:"Tentar a App Store direto",
         o:"No momento o Fitly está disponível apenas para iPhone. Abra esta página no seu iPhone."},
     ru:{h:"Скачать Fitly",s:"Откройте в App Store, установка в одно касание.",b:"Открыть в App Store",
-        a:"Открыть в Safari",
-        n:"Если App Store не открылся, нажмите «Открыть в Safari» или используйте меню ••• в правом верхнем углу.",
+        st:"Instagram открывает эту ссылку внутри себя",
+        sb:"Нажмите меню ••• в правом верхнем углу и выберите «Открыть в Safari» или «Открыть в системном браузере». Когда страница откроется в Safari, кнопка ниже приведёт вас в App Store.",
+        d:"Попробовать App Store напрямую",
         o:"Сейчас Fitly доступен только для iPhone. Откройте эту страницу на iPhone."},
     "zh-Hans":{h:"下载 Fitly",s:"在 App Store 中打开，一键安装。",b:"在 App Store 中打开",
-        a:"在 Safari 中打开",
-        n:"如果 App Store 没有打开，请点按“在 Safari 中打开”，或使用右上角的 ••• 菜单。",
+        st:"Instagram 正在其内置浏览器中打开此链接",
+        sb:"请点按右上角的 ••• 菜单，选择“在 Safari 中打开”或“在系统浏览器中打开”。页面在 Safari 中打开后，下方按钮即可进入 App Store。",
+        d:"直接尝试打开 App Store",
         o:"Fitly 目前仅支持 iPhone。请在 iPhone 上打开此页面。"},
     ar:{h:"تنزيل Fitly",s:"افتحه في App Store، والتثبيت بلمسة واحدة.",b:"الفتح في App Store",
-        a:"الفتح في Safari",
-        n:"إذا لم يفتح App Store، المس “الفتح في Safari” أو استخدم قائمة ••• في الأعلى.",
+        st:"‏Instagram يفتح هذا الرابط داخل التطبيق",
+        sb:"المس قائمة ••• في الأعلى واختر “الفتح في Safari” أو “الفتح في متصفح النظام”. بعد فتح الصفحة في Safari، يأخذك الزر أدناه إلى App Store.",
+        d:"جرّب فتح App Store مباشرة",
         o:"‏Fitly متاح حاليًا على iPhone فقط. افتح هذه الصفحة على iPhone."}
   };
 
   var params = new URLSearchParams(location.search);
 
-  // Dil: ?lang= zorlaması → tarayıcı tercihleri → tr. Sitenin kendi klasör
-  // adlarıyla aynı kodlar kullanılıyor (pt-BR, zh-Hans).
   function pickLang() {
     var forced = params.get("lang");
     var prefs = (forced ? [forced] : []).concat(
@@ -132,7 +165,7 @@
         : [navigator.language || "tr"]);
     for (var i = 0; i < prefs.length; i++) {
       var tag = String(prefs[i]);
-      if (COPY[tag]) return tag;                                  // pt-BR
+      if (COPY[tag]) return tag;
       var base = tag.toLowerCase().split("-")[0];
       if (base === "pt") return "pt-BR";
       if (base === "zh") return "zh-Hans";
@@ -146,14 +179,14 @@
   document.documentElement.lang = lang;
   if (lang === "ar") document.documentElement.dir = "rtl";
 
-  // Mağaza URL'i: ülke segmenti YOK (yukarıdaki nota bak). Apple ziyaretçiyi
-  // kendi vitrinine yönlendirir; ?l yalnız web sayfasının dilini seçer.
-  var store = "https://apps.apple.com/app/id" + APP_ID + "?l=" + encodeURIComponent(lang);
+  var query = "?l=" + encodeURIComponent(lang);
   var creator = (params.get("c") || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
   if (creator) {
-    store += "&ct=" + encodeURIComponent(creator);
-    if (PROVIDER_TOKEN) store += "&pt=" + encodeURIComponent(PROVIDER_TOKEN);
+    query += "&ct=" + encodeURIComponent(creator);
+    if (PROVIDER_TOKEN) query += "&pt=" + encodeURIComponent(PROVIDER_TOKEN);
   }
+  var store = "https://apps.apple.com/app/id" + APP_ID + query;
+  var storeScheme = "itms-apps://apps.apple.com/app/id" + APP_ID + query;
 
   var ua = navigator.userAgent || "";
   var isIOS = /iPhone|iPad|iPod/.test(ua) ||
@@ -162,12 +195,14 @@
 
   var h = document.getElementById("h"), sub = document.getElementById("sub"),
       btn = document.getElementById("btn"), alt = document.getElementById("alt"),
-      hint = document.getElementById("hint");
+      steps = document.getElementById("steps"),
+      stepsTitle = document.getElementById("stepsTitle"),
+      stepsBody = document.getElementById("stepsBody");
 
   h.textContent = t.h;
   sub.textContent = t.s;
   btn.textContent = t.b;
-  btn.href = store;                 // birincil yol: DÜZ bağlantı, JS karışmaz
+  btn.href = store;          // düz anchor, üzerinde hiçbir dinleyici yok
 
   if (!isIOS) {
     // Android/masaüstü: dürüst mesaj, satın alınamayacak vitrine yollamak yok.
@@ -175,25 +210,17 @@
     return;
   }
 
-  if (!inApp) return;               // gerçek tarayıcıda butondan fazlası gerekmiyor
+  if (!inApp) return;        // gerçek tarayıcı: tek buton yeter
 
-  // In-app browser: Safari kaçışı AYRI ve açıkça etiketli İKİNCİ seçenek.
-  // Denemek kullanıcının kararı; boş sekme açılırsa bunu kendi seçtiği için
-  // görür ve birincil buton hâlâ arkasında durur. Boş sekmeyi kapatmayı da
-  // deneriz (best-effort: bazı in-app browser'lar buna izin vermez).
-  alt.textContent = t.a;
+  // In-app browser: garantili yol görsel olarak birincil, şema denemesi
+  // ikincil. İkisi de pasif; sayfa kullanıcı adına hiçbir şey denemiyor,
+  // çünkü denediği iki şey de canlıda ölü çıktı.
+  stepsTitle.textContent = t.st;
+  stepsBody.textContent = t.sb;
+  steps.hidden = false;
+  alt.textContent = t.d;
+  alt.href = storeScheme;
   alt.hidden = false;
-  hint.textContent = t.n;
-  hint.hidden = false;
-
-  alt.addEventListener("click", function () {
-    var popup = null;
-    try { popup = window.open("x-safari-" + store, "_blank"); } catch (err) { popup = null; }
-    if (!popup) return;
-    setTimeout(function () {
-      try { if (popup && !popup.closed) popup.close(); } catch (err) {}
-    }, 1500);
-  });
 })();
 </script>
 </body>
