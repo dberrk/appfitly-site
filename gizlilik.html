@@ -78,7 +78,7 @@
 
 <main>
   <h1>Gizlilik Politikası ve KVKK Aydınlatma Metni</h1>
-  <div class="sub">Son güncelleme: 18 Temmuz 2026 · Yürürlük: 18 Temmuz 2026</div>
+  <div class="sub">Son güncelleme: 10 Ağustos 2026 · Yürürlük: 10 Ağustos 2026</div>
 
   <h2><span class="n">1</span> Veri Sorumlusu</h2>
   <p>İşbu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") ve
@@ -103,6 +103,7 @@
     <tr><td>Kimlik / iletişim (genel)</td><td>e-posta adresi, görünen ad; Apple ile girişte Apple kimliği</td><td>Sözleşme (m.5)</td></tr>
     <tr><td><strong>Sağlık (özel nitelikli)</strong></td><td>boy, kilo, hedef kilo, yaş, cinsiyet, vücut ölçümleri; antrenman ve set kayıtları, kişisel rekorlar; öğün, su ve beslenme kayıtları; diyet kısıtları (helal vb. inanç da açığa çıkarabilir); Konsey sohbetinde sağlıkla ilgili anlattıklarınız; HealthKit verileri</td><td><strong>Açık rıza (m.6)</strong></td></tr>
     <tr><td>Kullanım verisi (psödonim)</td><td>kota sayaçları, anonim UUID'ye bağlı ürün istatistikleri (yalnız sayı/etiket), token kullanım sayıları</td><td>Meşru menfaat (m.5)</td></tr>
+    <tr><td>Reklam edinimi / atıf (psödonim)</td><td>Kimlik doğrulama sonrasındaki StoreKit ilk-edinim-sürümü adayı için Apple Ads standart AdServices alanları psödonim UUID ile Supabase'te saklanır. Bu sürüm kontrolü upgrade'i dışlar; aynı sürüm redownload'ını veya başka cihazdaki edinimi kesin ayırmaz. Download/Redownload/PreOrder sınıflamasında Apple'ın <code>conversionType</code> alanı esastır ve yeni-kullanıcı raporları yalnız Download'ı kullanır. Ham belirteç asla saklanmaz; SHA-256 özeti 24 saatte sona erer ve saatlik silme işlemiyle en geç 25 saatte kaldırılır.</td><td>Meşru menfaat (m.5)</td></tr>
     <tr><td>Abonelik / finansal (genel)</td><td>App Store işlem durumu, ürün kimliği, abonelik dönemi</td><td>Sözleşme (m.5)</td></tr>
     <tr><td>Anonim / kişisel olmayan</td><td>egzersiz kataloğu, yemek kataloğu, paylaşımlı tarif önbelleği</td><td>—</td></tr>
   </table>
@@ -113,6 +114,7 @@
     <li>Size özel antrenman planı, beslenme hedefleri ve AI Konsey tavsiyelerinin üretilmesi — <em>açık rıza (sağlık verisi)</em>.</li>
     <li>İlerlemenizin takibi (kilo grafiği, rekorlar, seriler) — <em>açık rıza</em>.</li>
     <li>Aboneliğin işletilmesi, Pro özelliklerinin açılması ve kötüye kullanım/limit denetimi — <em>sözleşme / meşru menfaat</em>.</li>
+    <li>Apple Ads edinim performansının ölçülmesi ve geliştirici reklam/pazarlamasının yönetilmesi — <em>meşru menfaat</em>.</li>
     <li>Uygulama kararlılığı (çökme raporları) ve ürün geliştirme (anonim kullanım metrikleri) — <em>meşru menfaat; ayarlar üzerinden devre dışı bırakılabilir</em>.</li>
   </ul>
 
@@ -136,7 +138,8 @@
   <table>
     <tr><th>Alıcı</th><th>Aktarılan</th><th>Yerleşim</th></tr>
     <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Konsey sohbet içeriği + AI bağlamı (profil özeti, ölçüm/aktivite özetleri, aktif plan özeti)</td><td>ABD</td></tr>
-    <tr><td>RevenueCat</td><td>Abonelik/işlem verisi + psödonim kullanıcı kimliği (yalnız UUID; <strong>e-posta/isim/sağlık verisi asla</strong>)</td><td>ABD</td></tr>
+    <tr><td>Apple / AdServices</td><td>Kimlik doğrulama ve StoreKit ilk-edinim-sürümü adayından sonra Supabase Edge Function'ımız ham AdServices belirtecini Apple'a yalnız geçici olarak yollar. UUID, e-posta, isim, sağlık verisi, serbest metin veya IDFA gönderilmez. Apple'ın standart yanıtı ve esas dönüşüm türü AB'deki Supabase'e döner.</td><td>ABD / global hizmet</td></tr>
+    <tr><td>RevenueCat</td><td>Abonelik/işlem verisi + psödonim kullanıcı kimliği (yalnız UUID). <strong>RevenueCat'e AdServices belirteci, Apple Ads yanıtı, e-posta, isim, sağlık verisi, serbest metin veya IDFA gönderilmez.</strong></td><td>ABD</td></tr>
   </table>
   <p>Fotoğrafla öğün kaydı ve serbest-metin makro tahmini gibi bazı akışlarda,
   <strong>yalnızca siz açıkça bir butona dokunduğunuzda</strong> (bu dokunuş aktarım
@@ -147,10 +150,12 @@
   <p>Verileriniz mümkün olduğunca <span class="region">Avrupa Birliği</span> içinde tutulur:</p>
   <table>
     <tr><th>Sağlayıcı</th><th>Ne için</th><th>Yerleşim</th></tr>
-    <tr><td>Supabase</td><td>Barındırma: kimlik doğrulama, veritabanı, sunucu fonksiyonları (tüm veriler)</td><td class="region">AB — İrlanda</td></tr>
+    <tr><td>Supabase</td><td>Barındırma: kimlik doğrulama, taşınabilir hesap verileri ve sınırlı operasyonel güvenlik kayıtları</td><td class="region">AB — İrlanda</td></tr>
     <tr><td>Apple / HealthKit</td><td>Antrenman/kilo okuma-yazma — <strong>cihazınızda</strong> kalır</td><td>Cihaz üzeri</td></tr>
     <tr><td>Sentry</td><td>Çökme raporları (sağlık içeriği taşımaz; IP maskeleme)</td><td class="region">AB — Frankfurt</td></tr>
-    <tr><td>PostHog</td><td>Ürün metrikleri: yalnız sayı/etiket + anonim UUID (serbest metin yok)</td><td class="region">AB — Frankfurt</td></tr>
+    <tr><td>Apple / AdServices</td><td>Kimliği doğrulanmış Supabase Edge Function üzerinden geçici standart atıf-belirteci alışverişi; ham belirteç saklanmaz (bkz. §5)</td><td>ABD / global hizmet</td></tr>
+    <tr><td>PostHog</td><td>Yalnız analitik tercihiniz izin verirse: sınırlı istemci funnel olayları + psödonim UUID; serbest metin, sağlık, fiyat, işlem veya Apple kampanya verisi yok</td><td class="region">AB — Frankfurt</td></tr>
+    <tr><td>RevenueCat</td><td>Yalnız abonelik yönetimi. Apple Search Ads atfı ve RevenueCat→PostHog entegrasyonları kapalıdır.</td><td>ABD</td></tr>
     <tr><td>Brevo</td><td>Giriş/doğrulama e-postaları (yalnız e-posta adresi + bağlantı; sağlık içeriği asla)</td><td class="region">AB — Paris</td></tr>
     <tr><td>GitHub Pages + Cloudflare</td><td>Giriş bağlantısı yönlendirme sayfası (<strong>kişisel veri akmaz</strong>)</td><td>Global (statik sayfa)</td></tr>
   </table>
@@ -166,6 +171,12 @@
     <li>Kişisel verileriniz <strong>hesabınız aktif olduğu sürece</strong> saklanır.</li>
     <li>Hesabınızı sildiğinizde (Ayarlar → Hesabı sil), size ait tüm satırlar
     veritabanından <strong>zincirleme (cascade) olarak silinir</strong>.</li>
+    <li>Hesap silme işlemi, RevenueCat müşteri kaydınızı ve abonelik verilerinizi mevcut hizmet içi
+    silme akışı üzerinden RevenueCat'ten de siler.</li>
+    <li>Apple atıf yanıtı ve UUID bağı Supabase'ten silinir. Yalnız aynı belirtecin tekrarlarını
+    tekilleştiren tek yönlü SHA-256 özeti 24 saatte sona erer ve saatlik silme işlemiyle en geç
+    25 saatte kaldırılır. Ayrı kötüye-kullanım/güvenlik kaydı UUID, sayaç ve zaman damgaları ile
+    işlem-kilidi özetini sabit 25 saatlik pencerede, aktif işlem kilidini 45 saniye tutar ve hesap silmede silinir.</li>
     <li>Kişisel olmayan paylaşımlı tarif önbelleği hiçbir kişiye bağlı olmadığından
     silme kapsamı dışındadır.</li>
     <li>Veri indirme talebinizde oluşturulan geçici dışa aktarım dosyası
@@ -178,9 +189,10 @@
   işlenme amacını öğrenme, düzeltilmesini/silinmesini isteme, aktarıldığı üçüncü kişileri
   öğrenme ve işlemeye itiraz etme haklarına sahipsiniz. Uygulama içinde:</p>
   <ul>
-    <li><strong>Verilerinizi indirin</strong> — Ayarlar → "Verilerini indir": tüm verileriniz
-    güvenli bir bağlantıyla e-postanıza gönderilir.</li>
-    <li><strong>Hesabınızı ve tüm verilerinizi silin</strong> — Ayarlar → "Hesabı sil".</li>
+    <li><strong>Taşınabilir hesap verilerinizi indirin</strong> — Ayarlar → "Verilerini indir":
+    Apple atıf yanıtı dahil taşınabilir hesap verileriniz güvenli bir bağlantıyla e-postanıza gönderilir.
+    Kısa ömürlü tekrar, güvenlik ve bütçe kayıtları güvenlik bütünlüğü için bu dosyaya eklenmez.</li>
+    <li><strong>Hesabınızı ve hesabınıza bağlı verileri silin</strong> — Ayarlar → "Hesabı sil".</li>
     <li><strong>Konsey'in sizinle ilgili çıkarımlarını görün/silin</strong> — Ayarlar → "Konsey seni böyle tanıyor".</li>
     <li><strong>Rızanızı geri çekin</strong> — Ayarlar → Rıza yönetimi.</li>
   </ul>
@@ -189,9 +201,17 @@
 
   <h2><span class="n">10</span> Çerezler ve İzleme</h2>
   <p>Fitly bir mobil uygulamadır; reklam amaçlı takip (cross-app tracking) yapmaz,
-  Apple ATT izni gerektirmez. Ürün metrikleri için kullanılan analitik, otomatik ekran
-  yakalama ve oturum kaydı <strong>kapalıdır</strong> ve yalnız sayısal olay verisi toplar;
-  Ayarlar'dan tamamen devre dışı bırakabilirsiniz.</p>
+  Apple ATT izni gerektirmez. StoreKit'teki sürüm eşitliği yalnız upgrade'i dışlayan bir
+  ilk-edinim-sürümü adayıdır; aynı sürüm redownload'ını veya başka cihazdaki edinimi kesin dışlamaz.
+  Kimliği doğrulanmış UUID oluştuktan sonra iOS AdServices belirtecini Edge Function'ımıza yollar;
+  Function belirteci Apple'a geçici olarak iletir, ham belirteci asla saklamaz ve Apple'ın standart
+  yanıtını AB'deki Supabase'te saklar. Apple'ın <code>conversionType</code> alanı Download/Redownload/
+  PreOrder sınıflamasında esastır. Yerel sahip kaydı yalnız aynı kurulum dururken olağan hesap
+  değişimini; istek sahibi ile JWT eşitliği ise A→B yarışını engeller. <strong>IDFA toplanmaz ve uygulamalar arası
+  takip yapılmaz.</strong> RevenueCat Apple Search
+  Ads ve RevenueCat→PostHog entegrasyonları kapalıdır. PostHog yalnız analitik tercihiniz izin verirse
+  sınırlı istemci funnel olaylarını alır; otomatik ekran yakalama ve oturum kaydı <strong>kapalıdır</strong>
+  ve analitiği Ayarlar'dan tamamen devre dışı bırakabilirsiniz.</p>
 
   <h2><span class="n">11</span> Çocukların Gizliliği</h2>
   <p>Fitly <strong>18 yaşından küçükler</strong> için tasarlanmamıştır ve bilerek 18 yaş altı

@@ -78,7 +78,7 @@
 
 <main>
   <h1>隐私政策与 KVKK 告知声明</h1>
-  <div class="sub">最后更新：2026年7月18日 · 生效日期：2026年7月18日</div>
+  <div class="sub">最后更新：2026年8月10日 · 生效日期：2026年8月10日</div>
 
   <h2><span class="n">1</span> 数据控制者</h2>
   <p>本告知声明依据第 6698 号《个人数据保护法》（以下简称"KVKK"）及相关法律法规，
@@ -101,6 +101,7 @@
     <tr><td>身份 / 联系（一般）</td><td>电子邮箱地址、显示名称；使用 Apple 登录时的 Apple ID</td><td>合同（第 5 条）</td></tr>
     <tr><td><strong>健康（特殊类别）</strong></td><td>身高、体重、目标体重、年龄、性别、身体围度；训练与组数记录、个人纪录；餐食、饮水与营养记录；饮食限制（如清真等，可能同时透露信仰）；您在顾问团对话中讲述的健康相关内容；HealthKit 数据</td><td><strong>明确同意（第 6 条）</strong></td></tr>
     <tr><td>使用数据（假名化）</td><td>配额计数器、与匿名 UUID 关联的产品统计（仅数字/标签）、token 使用次数</td><td>合法利益（第 5 条）</td></tr>
+    <tr><td>广告获客 / 归因（假名化）</td><td>对于已通过身份验证的 StoreKit 首次获取版本候选，Apple Ads AdServices 标准字段会与假名化 UUID 关联并存储在 Supabase。版本检查可排除升级，但不能确定排除同版本重新下载或在另一设备上的获取。Apple 的 <code>conversionType</code> 是 Download/Redownload/PreOrder 分类依据；新用户报告仅使用 Download。原始令牌绝不存储；SHA-256 重放哈希在 24 小时后失效，并由每小时清理任务在 25 小时内删除。</td><td>合法利益（第 5 条）</td></tr>
     <tr><td>订阅 / 财务（一般）</td><td>App Store 交易状态、产品 ID、订阅周期</td><td>合同（第 5 条）</td></tr>
     <tr><td>匿名 / 非个人</td><td>运动目录、食物目录、共享食谱缓存</td><td>无</td></tr>
   </table>
@@ -111,6 +112,7 @@
     <li>为您生成专属训练计划、营养目标和 AI 顾问团建议：<em>明确同意（健康数据）</em>。</li>
     <li>跟踪您的进展（体重图表、纪录、连续记录）：<em>明确同意</em>。</li>
     <li>运营订阅、开启 Pro 功能以及滥用/额度管控：<em>合同 / 合法利益</em>。</li>
+    <li>衡量 Apple Ads 获客成效并管理开发者广告/营销：<em>合法利益</em>。</li>
     <li>应用稳定性（崩溃报告）和产品改进（匿名使用指标）：<em>合法利益；可在设置中关闭</em>。</li>
   </ul>
 
@@ -132,7 +134,8 @@
   <table>
     <tr><th>接收方</th><th>传输内容</th><th>所在地</th></tr>
     <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>顾问团对话内容 + AI 上下文（个人资料摘要、测量/活动摘要、当前计划摘要）</td><td>美国</td></tr>
-    <tr><td>RevenueCat</td><td>订阅/交易数据 + 假名化用户标识（仅 UUID；<strong>绝不包含电子邮箱/姓名/健康数据</strong>）</td><td>美国</td></tr>
+    <tr><td>Apple / AdServices</td><td>在完成身份验证和 StoreKit 首次获取版本候选检查后，经过身份验证的 Supabase Edge Function 仅临时向 Apple 发送原始令牌。Apple 不会收到 UUID、电子邮箱、姓名、健康数据、自由文本或 IDFA；包括权威转换类型在内的标准响应返回 Supabase 的欧盟区域。</td><td>美国 / 全球</td></tr>
+    <tr><td>RevenueCat</td><td>仅接收订阅/交易数据和假名化 UUID，不接收 AdServices 令牌或 Apple 归因响应。<strong>电子邮箱、姓名、健康数据、自由文本和 IDFA 也绝不会发送。</strong></td><td>美国</td></tr>
   </table>
   <p>在某些流程中，例如通过照片记录餐食和自由文本宏量估算，
   <strong>只有当您明确点击某个按钮时</strong>（此次点击即为您的传输请求），您输入的食物名称
@@ -142,10 +145,12 @@
   <p>您的数据尽可能保存在<span class="region">欧盟</span>境内：</p>
   <table>
     <tr><th>提供商</th><th>用途</th><th>所在地</th></tr>
-    <tr><td>Supabase</td><td>托管：身份验证、数据库、服务器函数（全部数据）</td><td class="region">欧盟·爱尔兰</td></tr>
+    <tr><td>Supabase</td><td>托管：身份验证、可携带的账户数据及有限的运营安全记录</td><td class="region">欧盟·爱尔兰</td></tr>
     <tr><td>Apple / HealthKit</td><td>训练/体重读写：保留在<strong>您的设备上</strong></td><td>设备本地</td></tr>
     <tr><td>Sentry</td><td>崩溃报告（不含健康内容；IP 掩码）</td><td class="region">欧盟·法兰克福</td></tr>
-    <tr><td>PostHog</td><td>产品指标：仅数字/标签 + 匿名 UUID（无自由文本）</td><td class="region">欧盟·法兰克福</td></tr>
+    <tr><td>Apple / AdServices</td><td>通过经过身份验证的 Supabase Edge Function 临时处理归因令牌；不存储原始令牌</td><td>美国 / 全球</td></tr>
+    <tr><td>PostHog</td><td>仅在您的分析选择允许时：有限的客户端漏斗事件 + 假名化 UUID；不含自由文本、健康数据、价格、交易或 Apple 广告系列数据</td><td class="region">欧盟·法兰克福</td></tr>
+    <tr><td>RevenueCat</td><td>仅管理订阅。RevenueCat 的 Apple Search Ads 集成和 RevenueCat→PostHog 集成均为<strong>关闭</strong></td><td>美国</td></tr>
     <tr><td>Brevo</td><td>登录/验证电子邮件（仅电子邮箱地址 + 链接；绝不含健康内容）</td><td class="region">欧盟·巴黎</td></tr>
     <tr><td>GitHub Pages + Cloudflare</td><td>登录链接跳转页面（<strong>不流经任何个人数据</strong>）</td><td>全球（静态页面）</td></tr>
   </table>
@@ -160,6 +165,9 @@
     <li>只要您的账户处于<strong>活跃状态</strong>，您的个人数据即会被留存。</li>
     <li>当您删除账户时（设置 → 删除账户），属于您的所有记录行将从数据库中
     <strong>级联（cascade）删除</strong>。</li>
+    <li>删除账户时，还会通过现有的服务内删除流程删除您的 RevenueCat 客户记录及其关联的
+    订阅数据。</li>
+    <li>与 UUID 关联的 Apple 归因响应会从 Supabase 删除。不可逆重放哈希在 24 小时后失效，并由每小时清理任务在 25 小时内删除。另一条防滥用/安全记录在固定 25 小时窗口内保存 UUID、计数器、时间戳与租约哈希，活动租约保留 45 秒，并在删除账户时级联删除。</li>
     <li>非个人的共享食谱缓存不与任何个人关联，因此不在删除范围之内。</li>
     <li>在您提出数据下载请求时生成的临时导出文件将在
     <strong>48 小时后</strong>自动变为不可访问。</li>
@@ -170,9 +178,8 @@
   <p>根据 KVKK 第 11 条，您有权：了解您的个人数据是否被处理、要求获知相关信息、了解处理目的、
   要求更正/删除、了解数据被传输给哪些第三方，以及对处理提出异议。在本应用内：</p>
   <ul>
-    <li><strong>下载您的数据</strong>：设置 → "下载你的数据"：您的所有数据将通过安全链接
-    发送到您的电子邮箱。</li>
-    <li><strong>删除您的账户和所有数据</strong>：设置 → "删除账户"。</li>
+    <li><strong>下载可携带的账户数据</strong>：设置 → "下载你的数据"：包括 Apple 归因响应在内的可携带数据将通过安全链接发送。为维护安全完整性，短期重放、安全和预算账本不包含在导出文件中。</li>
+    <li><strong>删除您的账户及其关联数据</strong>：设置 → "删除账户"。</li>
     <li><strong>查看/删除顾问团对您的推断</strong>：设置 → "顾问团这样认识你"。</li>
     <li><strong>撤回您的同意</strong>：设置 → 同意管理。</li>
   </ul>
@@ -181,8 +188,14 @@
 
   <h2><span class="n">10</span> Cookie 与追踪</h2>
   <p>Fitly 是一款移动应用；不进行广告目的的追踪（跨应用追踪），无需 Apple ATT 授权。
-  用于产品指标的分析中，自动屏幕捕获和会话录制均为<strong>关闭</strong>状态，仅收集数字化的事件数据；
-  您可以在设置中将其完全关闭。</p>
+  StoreKit 版本相等仅表示可排除升级的首次获取版本候选，不能确定排除同版本重新下载或在另一
+  设备上的获取。完成身份验证后，iOS 将令牌发送给 Edge Function；该函数仅临时转发给 Apple，
+  不存储原始令牌，并在欧盟保存标准响应。Apple 的 <code>conversionType</code> 是 Download/
+  Redownload/PreOrder 分类依据。本地所有者记录仅在该安装仍存在时阻止普通账户切换，预期所有者
+  与 JWT 相等可防止 A→B 竞态。<strong>我们不会收集 IDFA，也不会跨应用追踪您。</strong>RevenueCat 的
+  Apple Search Ads 集成和 RevenueCat→PostHog 集成均为关闭，RevenueCat 仅处理订阅。
+  PostHog 仅在您的分析选择允许时接收有限的客户端漏斗事件。自动屏幕捕获和会话录制均为
+  <strong>关闭</strong>状态。</p>
 
   <h2><span class="n">11</span> 儿童隐私</h2>
   <p>Fitly 并非为<strong>未满 18 周岁</strong>者设计，也不会在知情的情况下收集未满 18 周岁个人的

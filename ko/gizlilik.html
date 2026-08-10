@@ -78,7 +78,7 @@
 
 <main>
   <h1>개인정보 처리방침 및 KVKK 고지문</h1>
-  <div class="sub">최종 업데이트: 2026년 7월 18일 · 시행일: 2026년 7월 18일</div>
+  <div class="sub">최종 업데이트: 2026년 8월 10일 · 시행일: 2026년 8월 10일</div>
 
   <h2><span class="n">1</span> 데이터 관리자</h2>
   <p>본 고지문은 제6698호 개인정보 보호법(이하 "KVKK") 및
@@ -103,6 +103,7 @@
     <tr><td>신원 / 연락처 (일반)</td><td>이메일 주소, 표시 이름; Apple 로그인 시 Apple ID</td><td>계약 (제5조)</td></tr>
     <tr><td><strong>건강 (민감/특별 범주)</strong></td><td>키, 체중, 목표 체중, 나이, 성별, 신체 치수; 운동 및 세트 기록, 개인 기록; 식사, 수분 및 영양 기록; 식이 제한(할랄 등 신념을 드러낼 수도 있음); 카운슬 대화에서 건강과 관련해 말씀하신 내용; HealthKit 데이터</td><td><strong>명시적 동의 (제6조)</strong></td></tr>
     <tr><td>이용 데이터 (가명)</td><td>할당량 카운터, 익명 UUID에 연결된 제품 통계(숫자/라벨만), 토큰 사용량 수치</td><td>정당한 이익 (제5조)</td></tr>
+    <tr><td>광고 획득 / 기여도 (가명)</td><td>인증된 StoreKit 최초 획득 버전 후보에 대해 Apple Ads AdServices의 표준 필드를 가명 UUID와 연결하여 Supabase에 저장합니다. 버전 검사는 업그레이드를 제외하지만 같은 버전의 재다운로드나 다른 기기에서의 획득을 확실히 제외하지는 못합니다. Download/Redownload/PreOrder 분류는 Apple의 <code>conversionType</code>이 기준이며 신규 사용자 보고에는 Download만 사용합니다. 원본 토큰은 저장하지 않고, SHA-256 재전송 해시는 24시간 후 만료되며 매시간 정리되어 25시간 이내 삭제됩니다.</td><td>정당한 이익 (제5조)</td></tr>
     <tr><td>구독 / 금융 (일반)</td><td>App Store 거래 상태, 제품 ID, 구독 기간</td><td>계약 (제5조)</td></tr>
     <tr><td>익명 / 비개인정보</td><td>운동 카탈로그, 음식 카탈로그, 공유 레시피 캐시</td><td>—</td></tr>
   </table>
@@ -113,6 +114,7 @@
     <li>맞춤 운동 플랜, 영양 목표 및 AI 카운슬 조언 생성 — <em>명시적 동의(건강 정보)</em>.</li>
     <li>진행 상황 추적(체중 그래프, 기록, 연속 기록) — <em>명시적 동의</em>.</li>
     <li>구독 운영, Pro 기능 활성화 및 오용/한도 관리 — <em>계약 / 정당한 이익</em>.</li>
+    <li>Apple Ads 획득 성과 측정 및 개발자 광고/마케팅 관리 — <em>정당한 이익</em>.</li>
     <li>앱 안정성(충돌 리포트) 및 제품 개선(익명 이용 지표) — <em>정당한 이익; 설정에서 비활성화할 수 있음</em>.</li>
   </ul>
 
@@ -136,7 +138,8 @@
   <table>
     <tr><th>수신자</th><th>이전 데이터</th><th>소재지</th></tr>
     <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>카운슬 대화 내용 + AI 컨텍스트(프로필 요약, 측정/활동 요약, 활성 플랜 요약)</td><td>미국</td></tr>
-    <tr><td>RevenueCat</td><td>구독/거래 데이터 + 가명 사용자 ID(UUID만; <strong>이메일/이름/건강 정보는 절대 아님</strong>)</td><td>미국</td></tr>
+    <tr><td>Apple / AdServices</td><td>인증과 StoreKit 최초 획득 버전 후보 확인 후 인증된 Supabase Edge Function이 원본 토큰을 Apple에 일시적으로만 전송합니다. Apple에는 UUID, 이메일, 이름, 건강 정보, 자유 텍스트 또는 IDFA를 보내지 않으며, 기준이 되는 전환 유형을 포함한 표준 응답은 Supabase의 EU 리전으로 돌아옵니다.</td><td>미국 / 글로벌</td></tr>
+    <tr><td>RevenueCat</td><td>구독/거래 데이터와 가명 UUID만 전송합니다. AdServices 토큰과 Apple 기여도 응답은 전송하지 않으며, <strong>이메일, 이름, 건강 정보, 자유 텍스트 또는 IDFA도 절대 전송하지 않습니다.</strong></td><td>미국</td></tr>
   </table>
   <p>사진 식사 기록이나 자유 텍스트 매크로 추정과 같은 일부 흐름에서는,
   <strong>귀하가 명시적으로 버튼을 누른 경우에만</strong>(이 누름이 곧 이전
@@ -147,10 +150,12 @@
   <p>귀하의 데이터는 가능한 한 <span class="region">유럽 연합</span> 내에 보관됩니다:</p>
   <table>
     <tr><th>제공업체</th><th>용도</th><th>소재지</th></tr>
-    <tr><td>Supabase</td><td>호스팅: 인증, 데이터베이스, 서버 함수(모든 데이터)</td><td class="region">EU — 아일랜드</td></tr>
+    <tr><td>Supabase</td><td>호스팅: 인증, 이동 가능한 계정 데이터 및 제한된 운영 보안 기록</td><td class="region">EU — 아일랜드</td></tr>
     <tr><td>Apple / HealthKit</td><td>운동/체중 읽기·쓰기 — <strong>귀하의 기기</strong>에 유지</td><td>기기 내</td></tr>
     <tr><td>Sentry</td><td>충돌 리포트(건강 콘텐츠 미포함; IP 마스킹)</td><td class="region">EU — 프랑크푸르트</td></tr>
-    <tr><td>PostHog</td><td>제품 지표: 숫자/라벨 + 익명 UUID만(자유 텍스트 없음)</td><td class="region">EU — 프랑크푸르트</td></tr>
+    <tr><td>Apple / AdServices</td><td>인증된 Supabase Edge Function을 통한 기여도 토큰의 일시 처리. 원본 토큰은 저장하지 않음</td><td>미국 / 글로벌</td></tr>
+    <tr><td>PostHog</td><td>분석 선택이 허용하는 경우에만: 제한된 클라이언트 퍼널 이벤트 + 가명 UUID. 자유 텍스트, 건강 정보, 가격, 거래 또는 Apple 캠페인 데이터 없음</td><td class="region">EU — 프랑크푸르트</td></tr>
+    <tr><td>RevenueCat</td><td>구독 관리만 수행합니다. RevenueCat의 Apple Search Ads 연동과 RevenueCat→PostHog 연동은 <strong>꺼져 있습니다</strong></td><td>미국</td></tr>
     <tr><td>Brevo</td><td>로그인/인증 이메일(이메일 주소 + 링크만; 건강 콘텐츠는 절대 아님)</td><td class="region">EU — 파리</td></tr>
     <tr><td>GitHub Pages + Cloudflare</td><td>로그인 링크 리디렉션 페이지(<strong>개인정보가 흐르지 않음</strong>)</td><td>글로벌(정적 페이지)</td></tr>
   </table>
@@ -166,6 +171,9 @@
     <li>귀하의 개인정보는 <strong>계정이 활성화되어 있는 동안</strong> 보관됩니다.</li>
     <li>계정을 삭제하면(설정 → 계정 삭제) 귀하에게 속한 모든 레코드가
     데이터베이스에서 <strong>연쇄적으로(cascade) 삭제</strong>됩니다.</li>
+    <li>계정 삭제 시 기존 서비스 내 삭제 절차를 통해 RevenueCat 고객 레코드와 이에 연결된
+    구독 데이터도 함께 삭제됩니다.</li>
+    <li>UUID와 연결된 Apple 기여도 응답은 Supabase에서 삭제됩니다. 비가역 재전송 해시는 24시간 후 만료되고 매시간 정리되어 25시간 이내 삭제됩니다. 별도의 악용 방지/보안 기록은 UUID, 카운터, 타임스탬프와 리스 해시를 고정 25시간 창에, 활성 리스를 45초 동안 보관하며 계정 삭제 시 연쇄 삭제됩니다.</li>
     <li>비개인정보인 공유 레시피 캐시는 어떤 개인에게도 연결되어 있지 않으므로
     삭제 대상에서 제외됩니다.</li>
     <li>데이터 다운로드 요청 시 생성되는 임시 내보내기 파일은
@@ -178,9 +186,8 @@
   처리 목적을 알 권리, 정정/삭제를 요청할 권리, 이전된 제3자를
   알 권리, 처리에 이의를 제기할 권리를 가집니다. 앱 내에서:</p>
   <ul>
-    <li><strong>데이터 다운로드</strong> — 설정 → "내 데이터 다운로드": 모든 데이터가
-    안전한 링크로 귀하의 이메일로 전송됩니다.</li>
-    <li><strong>계정 및 모든 데이터 삭제</strong> — 설정 → "계정 삭제".</li>
+    <li><strong>이동 가능한 계정 데이터 다운로드</strong> — 설정 → "내 데이터 다운로드": Apple 기여도 응답을 포함한 이동 가능한 데이터가 안전한 링크로 전송됩니다. 단기 재전송·보안·예산 원장은 보안 무결성을 위해 제외됩니다.</li>
+    <li><strong>계정 및 계정에 연결된 데이터 삭제</strong> — 설정 → "계정 삭제".</li>
     <li><strong>카운슬이 당신에 대해 추론한 내용 보기/삭제</strong> — 설정 → "카운슬이 당신을 이렇게 알고 있어요".</li>
     <li><strong>동의 철회</strong> — 설정 → 동의 관리.</li>
   </ul>
@@ -189,9 +196,16 @@
 
   <h2><span class="n">10</span> 쿠키 및 추적</h2>
   <p>Fitly는 모바일 애플리케이션으로, 광고 목적의 추적(크로스 앱 트래킹)을 하지 않으며,
-  Apple ATT 권한을 요구하지 않습니다. 제품 지표에 사용되는 분석에서 자동 화면
-  캡처와 세션 기록은 <strong>꺼져 있으며</strong> 숫자 형태의 이벤트 데이터만 수집합니다.
-  설정에서 완전히 비활성화할 수 있습니다.</p>
+  Apple ATT 권한을 요구하지 않습니다. StoreKit 버전 일치는 업그레이드를 제외하는 최초 획득 버전
+  후보일 뿐이며 같은 버전의 재다운로드나 다른 기기에서의 획득을 확실히 제외하지는 못합니다. 인증 후
+  iOS가 토큰을 Edge Function으로 보내면 Function은 이를 Apple에 일시 전송하고 원본을 저장하지 않으며
+  표준 응답을 EU에 저장합니다. Download/Redownload/PreOrder 분류는 Apple의
+  <code>conversionType</code>이 기준입니다. 로컬 소유자 기록은 해당 설치가 유지되는 동안에만 일반적인
+  계정 전환을 막고, 예상 소유자와 JWT의 일치는 A→B 경합을 막습니다. <strong>IDFA를
+  수집하거나 앱 간에 귀하를 추적하지 않습니다.</strong> RevenueCat의 Apple Search Ads 연동과
+  RevenueCat→PostHog 연동은 꺼져 있으며 RevenueCat은 구독만 처리합니다. PostHog는 분석 선택이
+  허용하는 경우에만 제한된 클라이언트 퍼널 이벤트를 수신합니다. 자동 화면 캡처와 세션 기록은
+  <strong>꺼져 있습니다</strong>.</p>
 
   <h2><span class="n">11</span> 아동의 개인정보</h2>
   <p>Fitly는 <strong>만 18세 미만</strong>을 위해 설계되지 않았으며, 만 18세 미만

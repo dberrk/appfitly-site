@@ -78,7 +78,7 @@
 
 <main>
   <h1>Política de Privacidade e Aviso de Esclarecimento KVKK</h1>
-  <div class="sub">Última atualização: 18 de julho de 2026 · Vigência: 18 de julho de 2026</div>
+  <div class="sub">Última atualização: 10 de agosto de 2026 · Vigência: 10 de agosto de 2026</div>
 
   <h2><span class="n">1</span> Controlador de Dados</h2>
   <p>Este aviso de esclarecimento foi elaborado pelo controlador de dados identificado
@@ -103,6 +103,7 @@
     <tr><td>Identidade / contato (geral)</td><td>endereço de e-mail, nome de exibição; identificador Apple no login com Apple</td><td>Contrato (art. 5)</td></tr>
     <tr><td><strong>Saúde (dado sensível)</strong></td><td>altura, peso, peso-alvo, idade, sexo, medidas corporais; registros de treino e séries, recordes pessoais; registros de refeições, água e nutrição; restrições alimentares (halal etc., que também podem revelar crença); o que você conta sobre saúde na conversa com o Conselho; dados do HealthKit</td><td><strong>Consentimento explícito (art. 6)</strong></td></tr>
     <tr><td>Dados de uso (pseudonimizados)</td><td>contadores de cota, estatísticas de produto vinculadas a um UUID anônimo (apenas números/rótulos), contagens de uso de tokens</td><td>Legítimo interesse (art. 5)</td></tr>
+    <tr><td>Aquisição publicitária / atribuição (pseudonimizados)</td><td>Para um candidato autenticado à versão da primeira aquisição do StoreKit, os campos padrão do AdServices do Apple Ads são armazenados na Supabase com um UUID pseudonimizado. A verificação de versão exclui atualizações, mas não exclui de forma conclusiva um novo download da mesma versão ou uma aquisição em outro dispositivo. O <code>conversionType</code> da Apple é a autoridade para Download/Redownload/PreOrder; relatórios de novos usuários usam apenas Download. O token bruto nunca é armazenado; seu hash SHA-256 de repetição expira em 24 horas e a limpeza horária o remove em até 25 horas.</td><td>Legítimo interesse (art. 5)</td></tr>
     <tr><td>Assinatura / financeiro (geral)</td><td>status da transação na App Store, identificador do produto, período de assinatura</td><td>Contrato (art. 5)</td></tr>
     <tr><td>Anônimo / não pessoal</td><td>catálogo de exercícios, catálogo de alimentos, cache compartilhado de receitas</td><td>—</td></tr>
   </table>
@@ -113,6 +114,7 @@
     <li>Geração do seu plano de treino personalizado, das metas nutricionais e das recomendações do Conselho de IA, <em>consentimento explícito (dado de saúde)</em>.</li>
     <li>Acompanhamento do seu progresso (gráfico de peso, recordes, sequências), <em>consentimento explícito</em>.</li>
     <li>Operação da assinatura, liberação dos recursos Pro e controle de abuso/limites, <em>contrato / legítimo interesse</em>.</li>
+    <li>Medição do desempenho de aquisição no Apple Ads e gestão da publicidade/do marketing do desenvolvedor, <em>legítimo interesse</em>.</li>
     <li>Estabilidade do aplicativo (relatórios de falhas) e melhoria do produto (métricas de uso anônimas), <em>legítimo interesse; pode ser desativado nas configurações</em>.</li>
   </ul>
 
@@ -139,7 +141,8 @@
   <table>
     <tr><th>Destinatário</th><th>O que é transferido</th><th>Localização</th></tr>
     <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Conteúdo das conversas do Conselho + contexto de IA (resumo do perfil, resumos de medidas/atividade, resumo do plano ativo)</td><td>EUA</td></tr>
-    <tr><td>RevenueCat</td><td>Dados de assinatura/transação + identificador de usuário pseudonimizado (apenas UUID; <strong>nunca e-mail/nome/dados de saúde</strong>)</td><td>EUA</td></tr>
+    <tr><td>Apple / AdServices</td><td>Após a autenticação e a verificação do candidato à versão da primeira aquisição, uma Supabase Edge Function autenticada envia o token bruto à Apple apenas de forma transitória. A Apple não recebe UUID, e-mail, nome, dados de saúde, texto livre nem IDFA; a resposta padrão, incluindo o tipo de conversão determinante, retorna à região da UE da Supabase.</td><td>EUA / global</td></tr>
+    <tr><td>RevenueCat</td><td>Apenas dados de assinatura/transação e o UUID pseudonimizado. O token do AdServices e a resposta de atribuição da Apple não são enviados; <strong>e-mail, nome, dados de saúde, texto livre e IDFA também nunca são enviados.</strong></td><td>EUA</td></tr>
   </table>
   <p>Em alguns fluxos, como o registro de refeição por foto e a estimativa de macros por
   texto livre, <strong>somente quando você toca explicitamente em um botão</strong> (esse
@@ -151,10 +154,12 @@
   <p>Seus dados são mantidos, sempre que possível, dentro da <span class="region">União Europeia</span>:</p>
   <table>
     <tr><th>Provedor</th><th>Para quê</th><th>Localização</th></tr>
-    <tr><td>Supabase</td><td>Hospedagem: autenticação, banco de dados, funções de servidor (todos os dados)</td><td class="region">UE, Irlanda</td></tr>
+    <tr><td>Supabase</td><td>Hospedagem: autenticação, dados portáveis da conta e registros limitados de segurança operacional</td><td class="region">UE, Irlanda</td></tr>
     <tr><td>Apple / HealthKit</td><td>Leitura/gravação de treino/peso, <strong>permanece no seu dispositivo</strong></td><td>No dispositivo</td></tr>
     <tr><td>Sentry</td><td>Relatórios de falhas (não carregam conteúdo de saúde; mascaramento de IP)</td><td class="region">UE, Frankfurt</td></tr>
-    <tr><td>PostHog</td><td>Métricas de produto: apenas números/rótulos + UUID anônimo (sem texto livre)</td><td class="region">UE, Frankfurt</td></tr>
+    <tr><td>Apple / AdServices</td><td>Tratamento transitório do token de atribuição por uma Supabase Edge Function autenticada; o token bruto não é armazenado</td><td>EUA / global</td></tr>
+    <tr><td>PostHog</td><td>Somente se sua escolha de análise permitir: eventos de funil limitados no cliente + UUID pseudonimizado; sem texto livre, dados de saúde, preços, transações ou dados de campanha da Apple</td><td class="region">UE, Frankfurt</td></tr>
+    <tr><td>RevenueCat</td><td>Somente gestão de assinaturas. As integrações Apple Search Ads da RevenueCat e RevenueCat→PostHog estão <strong>desativadas</strong></td><td>EUA</td></tr>
     <tr><td>Brevo</td><td>E-mails de login/verificação (apenas endereço de e-mail + link; nunca conteúdo de saúde)</td><td class="region">UE, Paris</td></tr>
     <tr><td>GitHub Pages + Cloudflare</td><td>Página de redirecionamento do link de login (<strong>não há fluxo de dados pessoais</strong>)</td><td>Global (página estática)</td></tr>
   </table>
@@ -170,6 +175,9 @@
     <li>Seus dados pessoais são mantidos <strong>enquanto sua conta estiver ativa</strong>.</li>
     <li>Ao excluir sua conta (Configurações → Excluir conta), todas as linhas referentes a
     você são <strong>excluídas em cascata (cascade)</strong> do banco de dados.</li>
+    <li>A exclusão da conta também remove seu registro de cliente da RevenueCat e os respectivos
+    dados de assinatura por meio do fluxo de exclusão existente no serviço.</li>
+    <li>A resposta de atribuição da Apple vinculada ao seu UUID é excluída da Supabase. O hash irreversível de repetição expira em 24 horas e a limpeza horária o remove em até 25 horas. Um registro separado de abuso/segurança mantém UUID, contador, horários e hash de bloqueio numa janela fixa de 25 horas, mantém um bloqueio ativo por 45 segundos e é excluído em cascata com a conta.</li>
     <li>O cache compartilhado de receitas, por não ser pessoal e não estar vinculado a
     nenhuma pessoa, está fora do escopo da exclusão.</li>
     <li>O arquivo de exportação temporário gerado em uma solicitação de download de dados
@@ -183,9 +191,9 @@
   correção/exclusão, saber a quais terceiros foram transferidos e se opor ao tratamento.
   Dentro do Aplicativo:</p>
   <ul>
-    <li><strong>Baixe seus dados</strong>, Configurações → "Baixar seus dados": todos os
-    seus dados são enviados ao seu e-mail por meio de um link seguro.</li>
-    <li><strong>Exclua sua conta e todos os seus dados</strong>, Configurações → "Excluir conta".</li>
+    <li><strong>Baixe os dados portáveis da sua conta</strong>, Configurações → "Baixar seus dados":
+    os dados portáveis, incluindo a resposta de atribuição da Apple, são enviados por link seguro. Registros breves de repetição, segurança e orçamento são excluídos para preservar a integridade da segurança.</li>
+    <li><strong>Exclua sua conta e os dados vinculados a ela</strong>, Configurações → "Excluir conta".</li>
     <li><strong>Veja/exclua as inferências do Conselho sobre você</strong>, Configurações → "É assim que o Conselho conhece você".</li>
     <li><strong>Retire seu consentimento</strong>, Configurações → Gestão de consentimento.</li>
   </ul>
@@ -194,9 +202,17 @@
 
   <h2><span class="n">10</span> Cookies e Rastreamento</h2>
   <p>O Fitly é um aplicativo móvel; não faz rastreamento para fins publicitários
-  (cross-app tracking) e não exige a permissão ATT da Apple. A análise usada para métricas
-  de produto, a captura automática de tela e a gravação de sessão estão <strong>desativadas</strong>
-  e coletam apenas dados numéricos de eventos; você pode desativá-las totalmente nas Configurações.</p>
+  (cross-app tracking) e não exige a permissão ATT da Apple. A igualdade de versões do StoreKit é apenas
+  um candidato à versão da primeira aquisição que exclui atualizações; não exclui de forma conclusiva
+  um novo download da mesma versão ou uma aquisição em outro dispositivo. Após a autenticação, o iOS
+  envia o token à nossa Edge Function, que o repassa temporariamente à Apple, nunca o armazena bruto e
+  mantém a resposta padrão na UE. O <code>conversionType</code> da Apple é a autoridade para Download/
+  Redownload/PreOrder. Um proprietário local bloqueia trocas comuns de conta apenas enquanto essa
+  instalação permanece; a igualdade entre proprietário esperado e JWT evita uma corrida A→B.
+  <strong>Não coletamos o IDFA nem rastreamos você entre aplicativos.</strong> As integrações
+  Apple Search Ads da RevenueCat e RevenueCat→PostHog estão desativadas; a RevenueCat trata apenas
+  assinaturas. O PostHog recebe eventos de funil limitados no cliente somente se sua escolha de análise
+  permitir. A captura automática de tela e a gravação de sessão estão <strong>desativadas</strong>.</p>
 
   <h2><span class="n">11</span> Privacidade das Crianças</h2>
   <p>O Fitly <strong>não foi projetado para menores de 18 anos</strong> e não coleta

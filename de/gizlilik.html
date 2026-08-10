@@ -78,7 +78,7 @@
 
 <main>
   <h1>Datenschutzerklärung und KVKK-Informationstext</h1>
-  <div class="sub">Zuletzt aktualisiert: 18. Juli 2026 · Gültig ab: 18. Juli 2026</div>
+  <div class="sub">Zuletzt aktualisiert: 10. August 2026 · Gültig ab: 10. August 2026</div>
 
   <h2><span class="n">1</span> Verantwortlicher</h2>
   <p>Dieser Informationstext wurde gemäß dem Gesetz zum Schutz personenbezogener Daten
@@ -103,6 +103,7 @@
     <tr><td>Identität / Kontakt (allgemein)</td><td>E-Mail-Adresse, Anzeigename; bei Anmeldung mit Apple die Apple-ID</td><td>Vertrag (Art. 5)</td></tr>
     <tr><td><strong>Gesundheit (besondere Kategorie)</strong></td><td>Größe, Gewicht, Zielgewicht, Alter, Geschlecht, Körpermaße; Trainings- und Satzaufzeichnungen, persönliche Rekorde; Mahlzeiten-, Wasser- und Ernährungsaufzeichnungen; Ernährungseinschränkungen (halal usw. können auch Glaubensüberzeugungen offenlegen); was Sie im Rat-Chat über Ihre Gesundheit mitteilen; HealthKit-Daten</td><td><strong>Ausdrückliche Einwilligung (Art. 6)</strong></td></tr>
     <tr><td>Nutzungsdaten (pseudonym)</td><td>Kontingentzähler, an eine anonyme UUID gebundene Produktstatistiken (nur Zahlen/Labels), Token-Nutzungszahlen</td><td>Berechtigtes Interesse (Art. 5)</td></tr>
+    <tr><td>Werbeakquise / Attribution (pseudonym)</td><td>Für einen authentifizierten StoreKit-Kandidaten der Ersterwerbsversion werden die Standardfelder von Apple Ads AdServices in Supabase einer pseudonymen UUID zugeordnet. Die Versionsprüfung schließt Upgrades aus, aber nicht sicher einen erneuten Download derselben Version oder einen Erwerb auf einem anderen Gerät. Apples <code>conversionType</code> ist für Download/Redownload/PreOrder maßgeblich; Berichte über neue Nutzer verwenden nur Download. Das rohe Token wird nie gespeichert; sein SHA-256-Wiederholungshash läuft nach 24 Stunden ab und wird durch die stündliche Löschung innerhalb von 25 Stunden entfernt.</td><td>Berechtigtes Interesse (Art. 5)</td></tr>
     <tr><td>Abonnement / finanziell (allgemein)</td><td>App-Store-Transaktionsstatus, Produkt-ID, Abonnementzeitraum</td><td>Vertrag (Art. 5)</td></tr>
     <tr><td>Anonym / nicht personenbezogen</td><td>Übungskatalog, Speisenkatalog, gemeinsamer Rezept-Cache</td><td>—</td></tr>
   </table>
@@ -113,6 +114,7 @@
     <li>Erstellung Ihres individuellen Trainingsplans, Ihrer Ernährungsziele und der Empfehlungen des KI-Rates: <em>ausdrückliche Einwilligung (Gesundheitsdaten)</em>.</li>
     <li>Verfolgung Ihres Fortschritts (Gewichtsdiagramm, Rekorde, Serien): <em>ausdrückliche Einwilligung</em>.</li>
     <li>Abwicklung des Abonnements, Freischaltung der Pro-Funktionen und Missbrauchs-/Limitkontrolle: <em>Vertrag / berechtigtes Interesse</em>.</li>
+    <li>Messung der Apple-Ads-Akquiseleistung und Verwaltung der Entwicklerwerbung/des Entwicklermarketings: <em>berechtigtes Interesse</em>.</li>
     <li>App-Stabilität (Absturzberichte) und Produktverbesserung (anonyme Nutzungsmetriken): <em>berechtigtes Interesse; kann über die Einstellungen deaktiviert werden</em>.</li>
   </ul>
 
@@ -139,7 +141,8 @@
   <table>
     <tr><th>Empfänger</th><th>Übermittelte Daten</th><th>Standort</th></tr>
     <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Rat-Chat-Inhalte + KI-Kontext (Profilzusammenfassung, Mess-/Aktivitätszusammenfassungen, Zusammenfassung des aktiven Plans)</td><td>USA</td></tr>
-    <tr><td>RevenueCat</td><td>Abonnement-/Transaktionsdaten + pseudonyme Nutzer-ID (nur UUID; <strong>niemals E-Mail/Name/Gesundheitsdaten</strong>)</td><td>USA</td></tr>
+    <tr><td>Apple / AdServices</td><td>Nach Authentifizierung und Prüfung des StoreKit-Kandidaten der Ersterwerbsversion übermittelt eine authentifizierte Supabase Edge Function das rohe Attributionstoken nur vorübergehend an Apple. Apple erhält keine UUID, E-Mail-Adresse, Namen, Gesundheitsdaten, Freitexte oder IDFA; die Standardantwort einschließlich des maßgeblichen Konversionstyps wird in die EU-Region von Supabase zurückgeführt.</td><td>USA / global</td></tr>
+    <tr><td>RevenueCat</td><td>Nur Abonnement-/Transaktionsdaten und die pseudonyme UUID. Das AdServices-Token und die Apple-Attributionsantwort werden nicht übermittelt; <strong>E-Mail, Name, Gesundheitsdaten, Freitext und IDFA werden ebenfalls niemals übermittelt.</strong></td><td>USA</td></tr>
   </table>
   <p>Bei einigen Abläufen wie der Mahlzeitenerfassung per Foto und der Makroschätzung aus
   Freitext wird der von Ihnen eingegebene Speisenname oder das von Ihnen aufgenommene Foto
@@ -151,10 +154,12 @@
   <p>Ihre Daten werden so weit wie möglich innerhalb der <span class="region">Europäischen Union</span> gehalten:</p>
   <table>
     <tr><th>Anbieter</th><th>Wofür</th><th>Standort</th></tr>
-    <tr><td>Supabase</td><td>Hosting: Authentifizierung, Datenbank, Serverfunktionen (alle Daten)</td><td class="region">EU · Irland</td></tr>
+    <tr><td>Supabase</td><td>Hosting: Authentifizierung, übertragbare Kontodaten und begrenzte betriebliche Sicherheitsdatensätze</td><td class="region">EU · Irland</td></tr>
     <tr><td>Apple / HealthKit</td><td>Training/Gewicht lesen und schreiben, bleibt <strong>auf Ihrem Gerät</strong></td><td>Auf dem Gerät</td></tr>
     <tr><td>Sentry</td><td>Absturzberichte (enthalten keine Gesundheitsinhalte; IP-Maskierung)</td><td class="region">EU · Frankfurt</td></tr>
-    <tr><td>PostHog</td><td>Produktmetriken: nur Zahlen/Labels + anonyme UUID (kein Freitext)</td><td class="region">EU · Frankfurt</td></tr>
+    <tr><td>Apple / AdServices</td><td>Vorübergehende Verarbeitung des Attributionstokens über eine authentifizierte Supabase Edge Function; das rohe Token wird nicht gespeichert</td><td>USA / global</td></tr>
+    <tr><td>PostHog</td><td>Nur wenn Ihre Analyseauswahl dies zulässt: begrenzte clientseitige Funnel-Ereignisse + pseudonyme UUID; keine Freitexte, Gesundheitsdaten, Preise, Transaktionen oder Apple-Kampagnendaten</td><td class="region">EU · Frankfurt</td></tr>
+    <tr><td>RevenueCat</td><td>Nur Abonnementverwaltung. Die Integrationen Apple Search Ads von RevenueCat und RevenueCat→PostHog sind <strong>deaktiviert</strong></td><td>USA</td></tr>
     <tr><td>Brevo</td><td>Anmelde-/Bestätigungs-E-Mails (nur E-Mail-Adresse + Link; niemals Gesundheitsinhalte)</td><td class="region">EU · Paris</td></tr>
     <tr><td>GitHub Pages + Cloudflare</td><td>Weiterleitungsseite für den Anmeldelink (<strong>es fließen keine personenbezogenen Daten</strong>)</td><td>Global (statische Seite)</td></tr>
   </table>
@@ -170,6 +175,9 @@
     <li>Ihre personenbezogenen Daten werden gespeichert, <strong>solange Ihr Konto aktiv ist</strong>.</li>
     <li>Wenn Sie Ihr Konto löschen (Einstellungen → Konto löschen), werden alle zu Ihnen
     gehörenden Datensätze <strong>kaskadierend (cascade) aus der Datenbank gelöscht</strong>.</li>
+    <li>Bei der Kontolöschung werden über den bestehenden dienstinternen Löschablauf auch Ihr
+    RevenueCat-Kundendatensatz und die zugehörigen Abonnementdaten gelöscht.</li>
+    <li>Die mit Ihrer UUID verknüpfte Apple-Attributionsantwort wird aus Supabase gelöscht. Der nicht umkehrbare Wiederholungshash läuft nach 24 Stunden ab und wird durch die stündliche Löschung innerhalb von 25 Stunden entfernt. Ein separater Missbrauchs-/Sicherheitsdatensatz hält UUID, Zähler, Zeitstempel und Sperr-Hash in einem festen 25-Stunden-Fenster, eine aktive Sperre 45 Sekunden lang, und wird bei Kontolöschung kaskadiert gelöscht.</li>
     <li>Der nicht personenbezogene, gemeinsame Rezept-Cache ist an keine Person gebunden und
     daher von der Löschung ausgenommen.</li>
     <li>Die bei Ihrer Datenabrufanfrage erstellte temporäre Exportdatei wird
@@ -183,9 +191,9 @@
   Berichtigung/Löschung zu verlangen, die Dritten zu erfahren, an die sie übermittelt wurden,
   und der Verarbeitung zu widersprechen. In der App:</p>
   <ul>
-    <li><strong>Laden Sie Ihre Daten herunter</strong>, Einstellungen → "Daten herunterladen":
-    alle Ihre Daten werden über einen sicheren Link an Ihre E-Mail-Adresse gesendet.</li>
-    <li><strong>Löschen Sie Ihr Konto und alle Ihre Daten</strong>, Einstellungen → "Konto löschen".</li>
+    <li><strong>Laden Sie Ihre übertragbaren Kontodaten herunter</strong>, Einstellungen → "Daten herunterladen":
+    Ihre übertragbaren Kontodaten einschließlich der Apple-Attributionsantwort werden über einen sicheren Link gesendet. Kurzlebige Wiederholungs-, Sicherheits- und Budgetregister sind zum Schutz der Sicherheitsintegrität ausgeschlossen.</li>
+    <li><strong>Löschen Sie Ihr Konto und die kontoverknüpften Daten</strong>, Einstellungen → "Konto löschen".</li>
     <li><strong>Sehen/löschen Sie die Schlussfolgerungen des Rates über Sie</strong>, Einstellungen → "So kennt dich der Rat".</li>
     <li><strong>Widerrufen Sie Ihre Einwilligung</strong>, Einstellungen → Einwilligungsverwaltung.</li>
   </ul>
@@ -194,9 +202,19 @@
 
   <h2><span class="n">10</span> Cookies und Tracking</h2>
   <p>Fitly ist eine mobile App; sie betreibt kein werbliches Tracking (Cross-App-Tracking) und
-  erfordert keine Apple-ATT-Zustimmung. Die für Produktmetriken verwendete Analyse, automatische
-  Bildschirmaufzeichnung und Sitzungsaufzeichnung sind <strong>deaktiviert</strong> und erfassen
-  nur numerische Ereignisdaten; Sie können sie in den Einstellungen vollständig deaktivieren.</p>
+  erfordert keine Apple-ATT-Zustimmung. Die StoreKit-Versionsgleichheit ist nur ein Kandidat der
+  Ersterwerbsversion, der Upgrades ausschließt; sie schließt einen erneuten Download derselben Version
+  oder einen Erwerb auf einem anderen Gerät nicht sicher aus. Nach der Authentifizierung sendet iOS
+  das AdServices-Token an unsere Edge Function, die es vorübergehend an Apple sendet, nie roh speichert
+  und Apples Standardantwort in der EU speichert. Apples <code>conversionType</code> ist für
+  Download/Redownload/PreOrder maßgeblich. Ein lokaler Eigentümereintrag blockiert normale
+  Kontowechsel nur solange diese Installation besteht; die Gleichheit von erwartetem Eigentümer und
+  JWT verhindert ein A→B-Rennen. <strong>Wir erfassen keine IDFA und verfolgen Sie
+  nicht appübergreifend.</strong>
+  Die Integrationen Apple Search Ads von RevenueCat und RevenueCat→PostHog sind deaktiviert;
+  RevenueCat verarbeitet nur Abonnements. PostHog erhält begrenzte clientseitige Funnel-Ereignisse
+  nur, wenn Ihre Analyseauswahl dies zulässt. Automatische Bildschirmaufzeichnung und
+  Sitzungsaufzeichnung sind <strong>deaktiviert</strong>.</p>
 
   <h2><span class="n">11</span> Datenschutz von Kindern</h2>
   <p>Fitly ist nicht für <strong>Personen unter 18 Jahren</strong> konzipiert und erhebt
