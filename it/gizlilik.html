@@ -176,7 +176,7 @@
     riguardano vengono <strong>eliminate a cascata</strong> dal database.</li>
     <li>L'eliminazione dell'account rimuove anche il tuo record cliente RevenueCat e i relativi
     dati di abbonamento tramite il flusso di eliminazione esistente nel servizio.</li>
-    <li>La risposta di attribuzione Apple collegata al tuo UUID viene eliminata da Supabase. L'hash irreversibile di ripetizione scade dopo 24 ore e la pulizia oraria lo elimina entro 25 ore. Un registro separato di abuso/sicurezza conserva UUID, contatore, orari e hash del blocco in una finestra fissa di 25 ore, mantiene un blocco attivo per 45 secondi e viene eliminato a cascata con l'account.</li>
+    <li>La risposta di attribuzione Apple collegata al tuo UUID viene eliminata da Supabase. L'hash irreversibile di ripetizione scade dopo 24 ore e la pulizia oraria lo elimina entro 25 ore. Un registro separato di abuso/sicurezza conserva UUID, contatore e orari in una finestra fissa di 25 ore, mantiene un blocco attivo casuale per 45 secondi e viene eliminato a cascata con l'account. Non contiene alcun hash del token AdServices.</li>
     <li>La cache condivisa delle ricette, non personale, non è collegata ad alcuna persona ed è
     quindi esclusa dall'eliminazione.</li>
     <li>Il file di esportazione temporaneo creato in seguito alla tua richiesta di download dei

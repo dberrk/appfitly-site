@@ -179,7 +179,7 @@
     vous concernant sont <strong>supprimées en cascade</strong> de la base de données.</li>
     <li>La suppression du compte efface également votre fiche client RevenueCat et les données
     d'abonnement associées via le flux de suppression existant dans le service.</li>
-    <li>La réponse d'attribution Apple liée à votre UUID est supprimée de Supabase. Le hachage de rejeu irréversible expire après 24 heures et la purge horaire le supprime dans les 25 heures. Un registre distinct d'abus/sécurité conserve l'UUID, le compteur, les horodatages et le hachage de bail dans une fenêtre fixe de 25 heures, garde un bail actif pendant 45 secondes et est supprimé en cascade avec le compte.</li>
+    <li>La réponse d'attribution Apple liée à votre UUID est supprimée de Supabase. Le hachage de rejeu irréversible expire après 24 heures et la purge horaire le supprime dans les 25 heures. Un registre distinct d'abus/sécurité conserve l'UUID, le compteur et les horodatages dans une fenêtre fixe de 25 heures, garde un bail actif aléatoire pendant 45 secondes et est supprimé en cascade avec le compte. Il ne contient aucun hachage du jeton AdServices.</li>
     <li>Le cache de recettes partagé, non personnel, n'étant lié à aucune personne, est exclu du
     champ de la suppression.</li>
     <li>Le fichier d'export temporaire créé lors de votre demande de téléchargement des données

@@ -175,7 +175,7 @@
     <strong>eliminan en cascada</strong> de la base de datos.</li>
     <li>La eliminación de la cuenta también borra tu registro de cliente de RevenueCat y sus datos
     de suscripción asociados mediante el flujo de eliminación existente en el servicio.</li>
-    <li>La respuesta de atribución de Apple vinculada a tu UUID se elimina de Supabase. El hash de repetición irreversible caduca a las 24 horas y la purga horaria lo elimina antes de 25 horas. Un registro separado de abuso/seguridad conserva UUID, contador, marcas de tiempo y hash de arrendamiento en una ventana fija de 25 horas, mantiene un arrendamiento activo durante 45 segundos y se elimina en cascada al borrar la cuenta.</li>
+    <li>La respuesta de atribución de Apple vinculada a tu UUID se elimina de Supabase. El hash de repetición irreversible caduca a las 24 horas y la purga horaria lo elimina antes de 25 horas. Un registro separado de abuso/seguridad conserva UUID, contador y marcas de tiempo en una ventana fija de 25 horas, mantiene un arrendamiento activo aleatorio durante 45 segundos y se elimina en cascada al borrar la cuenta. No contiene ningún hash del token de AdServices.</li>
     <li>La caché compartida de recetas, al ser no personal y no estar vinculada a ninguna persona,
     queda fuera del alcance de la eliminación.</li>
     <li>El archivo de exportación temporal generado al solicitar la descarga de tus datos deja de ser

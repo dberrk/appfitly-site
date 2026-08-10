@@ -175,8 +175,9 @@
     through the existing in-service deletion flow.</li>
     <li>The Apple attribution response and UUID link are deleted from Supabase. The one-way
     SHA-256 replay hash expires after 24 hours and is removed by the hourly purge within 25 hours.
-    A separate abuse/security record holds the UUID, counter and timestamps plus a lease hash in a
-    fixed 25-hour window, holds an active lease for 45 seconds, and cascades on account deletion.</li>
+    A separate abuse/security record holds the UUID, counter and timestamps in a fixed 25-hour
+    window and a random active lease for 45 seconds, then cascades on account deletion. It contains
+    no AdServices token hash.</li>
     <li>The non-personal shared recipe cache is not tied to any individual and is therefore
     outside the scope of deletion.</li>
     <li>The temporary export file created for your data download request automatically becomes

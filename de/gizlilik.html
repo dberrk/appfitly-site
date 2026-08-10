@@ -177,7 +177,7 @@
     gehörenden Datensätze <strong>kaskadierend (cascade) aus der Datenbank gelöscht</strong>.</li>
     <li>Bei der Kontolöschung werden über den bestehenden dienstinternen Löschablauf auch Ihr
     RevenueCat-Kundendatensatz und die zugehörigen Abonnementdaten gelöscht.</li>
-    <li>Die mit Ihrer UUID verknüpfte Apple-Attributionsantwort wird aus Supabase gelöscht. Der nicht umkehrbare Wiederholungshash läuft nach 24 Stunden ab und wird durch die stündliche Löschung innerhalb von 25 Stunden entfernt. Ein separater Missbrauchs-/Sicherheitsdatensatz hält UUID, Zähler, Zeitstempel und Sperr-Hash in einem festen 25-Stunden-Fenster, eine aktive Sperre 45 Sekunden lang, und wird bei Kontolöschung kaskadiert gelöscht.</li>
+    <li>Die mit Ihrer UUID verknüpfte Apple-Attributionsantwort wird aus Supabase gelöscht. Der nicht umkehrbare Wiederholungshash läuft nach 24 Stunden ab und wird durch die stündliche Löschung innerhalb von 25 Stunden entfernt. Ein separater Missbrauchs-/Sicherheitsdatensatz hält UUID, Zähler und Zeitstempel in einem festen 25-Stunden-Fenster sowie eine zufällige aktive Sperre 45 Sekunden lang und wird bei Kontolöschung kaskadiert gelöscht. Er enthält keinen AdServices-Token-Hash.</li>
     <li>Der nicht personenbezogene, gemeinsame Rezept-Cache ist an keine Person gebunden und
     daher von der Löschung ausgenommen.</li>
     <li>Die bei Ihrer Datenabrufanfrage erstellte temporäre Exportdatei wird

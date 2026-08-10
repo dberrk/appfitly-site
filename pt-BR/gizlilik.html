@@ -177,7 +177,7 @@
     você são <strong>excluídas em cascata (cascade)</strong> do banco de dados.</li>
     <li>A exclusão da conta também remove seu registro de cliente da RevenueCat e os respectivos
     dados de assinatura por meio do fluxo de exclusão existente no serviço.</li>
-    <li>A resposta de atribuição da Apple vinculada ao seu UUID é excluída da Supabase. O hash irreversível de repetição expira em 24 horas e a limpeza horária o remove em até 25 horas. Um registro separado de abuso/segurança mantém UUID, contador, horários e hash de bloqueio numa janela fixa de 25 horas, mantém um bloqueio ativo por 45 segundos e é excluído em cascata com a conta.</li>
+    <li>A resposta de atribuição da Apple vinculada ao seu UUID é excluída da Supabase. O hash irreversível de repetição expira em 24 horas e a limpeza horária o remove em até 25 horas. Um registro separado de abuso/segurança mantém UUID, contador e horários numa janela fixa de 25 horas, mantém um bloqueio ativo aleatório por 45 segundos e é excluído em cascata com a conta. Ele não contém hash do token do AdServices.</li>
     <li>O cache compartilhado de receitas, por não ser pessoal e não estar vinculado a
     nenhuma pessoa, está fora do escopo da exclusão.</li>
     <li>O arquivo de exportação temporário gerado em uma solicitação de download de dados
