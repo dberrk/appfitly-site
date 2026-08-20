@@ -101,7 +101,7 @@
   <table>
     <tr><th>Categoría</th><th>Ejemplos</th><th>Base jurídica</th></tr>
     <tr><td>Identidad / contacto (general)</td><td>dirección de correo electrónico, nombre visible; identificador de Apple al iniciar sesión con Apple</td><td>Contrato (art. 5)</td></tr>
-    <tr><td><strong>Salud (categoría especial)</strong></td><td>estatura, peso, peso objetivo, edad, sexo, medidas corporales; registros de entrenamiento y series, récords personales; registros de comidas, agua y nutrición; restricciones dietéticas (que pueden revelar creencias, p. ej. halal); lo que cuentas sobre tu salud en el chat del Consejo; datos de HealthKit</td><td><strong>Consentimiento explícito (art. 6)</strong></td></tr>
+    <tr><td><strong>Salud (categoría especial)</strong></td><td>estatura, peso, peso objetivo, edad, sexo, medidas corporales; registros de entrenamiento y series, récords personales; registros de comidas, agua y nutrición; restricciones dietéticas (que pueden revelar creencias, p. ej. halal); lo que cuentas sobre tu salud en el chat de Fitly Coach; datos de HealthKit</td><td><strong>Consentimiento explícito (art. 6)</strong></td></tr>
     <tr><td>Datos de uso (seudónimos)</td><td>contadores de cuota, estadísticas de producto vinculadas a un UUID anónimo (solo cifras/etiquetas), recuentos de uso de tokens</td><td>Interés legítimo (art. 5)</td></tr>
     <tr><td>Adquisición publicitaria / atribución (datos seudonimizados)</td><td>Para un candidato autenticado de versión de primera adquisición de StoreKit, los campos estándar de AdServices de Apple Ads se guardan en Supabase asociados a un UUID seudónimo. La comprobación de versión excluye actualizaciones, pero no descarta de forma concluyente una redescarga de la misma versión o una adquisición en otro dispositivo. El <code>conversionType</code> de Apple es la autoridad para Download/Redownload/PreOrder; los informes de usuarios nuevos usan solo Download. El token sin procesar nunca se almacena; su hash de repetición SHA-256 caduca a las 24 horas y la purga horaria lo elimina antes de 25 horas.</td><td>Interés legítimo (art. 5)</td></tr>
     <tr><td>Suscripción / financieros (general)</td><td>estado de la transacción del App Store, identificador del producto, periodo de suscripción</td><td>Contrato (art. 5)</td></tr>
@@ -111,7 +111,7 @@
   <h2><span class="n">3</span> Fines del tratamiento y bases jurídicas</h2>
   <ul>
     <li>La creación y gestión de tu cuenta, el inicio de sesión y la recuperación de la cuenta — <em>contrato</em>.</li>
-    <li>La generación de tu plan de entrenamiento personalizado, objetivos de nutrición y recomendaciones del Consejo de IA — <em>consentimiento explícito (datos de salud)</em>.</li>
+    <li>La generación de tu plan de entrenamiento personalizado, objetivos de nutrición y recomendaciones de Fitly Coach — <em>consentimiento explícito (datos de salud)</em>.</li>
     <li>El seguimiento de tu progreso (gráfico de peso, récords, rachas) — <em>consentimiento explícito</em>.</li>
     <li>La gestión de la suscripción, la activación de las funciones Pro y el control de abuso/límites — <em>contrato / interés legítimo</em>.</li>
     <li>La medición del rendimiento de adquisición en Apple Ads y la gestión de la publicidad/el marketing del desarrollador — <em>interés legítimo</em>.</li>
@@ -138,7 +138,7 @@
   resúmenes derivados, no tablas en bruto).</p>
   <table>
     <tr><th>Destinatario</th><th>Datos transferidos</th><th>Ubicación</th></tr>
-    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Contenido del chat del Consejo + contexto de IA (resumen del perfil, resúmenes de medidas/actividad, resumen del plan activo)</td><td>EE. UU.</td></tr>
+    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Contenido del chat de Fitly Coach + contexto de IA (resumen del perfil, resúmenes de medidas/actividad, resumen del plan activo)</td><td>EE. UU.</td></tr>
     <tr><td>Apple / AdServices</td><td>Tras la autenticación y la comprobación del candidato de versión de primera adquisición, una Supabase Edge Function autenticada envía el token de atribución sin procesar a Apple solo de forma transitoria. Apple no recibe UUID, correo electrónico, nombre, datos de salud, texto libre ni IDFA; la respuesta estándar, incluido el tipo de conversión determinante, vuelve a la región de la UE de Supabase.</td><td>EE. UU. / global</td></tr>
     <tr><td>RevenueCat</td><td>Solo datos de suscripción/transacción y el UUID seudónimo. No recibe el token de AdServices ni la respuesta de atribución de Apple; <strong>tampoco se envían el correo electrónico, el nombre, datos de salud, texto libre ni el IDFA.</strong></td><td>EE. UU.</td></tr>
   </table>
@@ -192,7 +192,7 @@
     <li><strong>Descarga los datos portables de tu cuenta</strong> — Ajustes → "Descargar tus datos":
     tus datos portables, incluida la respuesta de atribución de Apple, se envían mediante un enlace seguro. Los registros breves de repetición, seguridad y presupuesto se excluyen para preservar la integridad de seguridad.</li>
     <li><strong>Elimina tu cuenta y los datos vinculados a ella</strong> — Ajustes → "Eliminar cuenta".</li>
-    <li><strong>Consulta/elimina las inferencias que el Consejo ha hecho sobre ti</strong> — Ajustes → "Así te conoce el Consejo".</li>
+    <li><strong>Consulta/elimina las inferencias que Fitly Coach ha hecho sobre ti</strong> — Ajustes → "Así te conoce Fitly Coach".</li>
     <li><strong>Retira tu consentimiento</strong> — Ajustes → Gestión de consentimiento.</li>
   </ul>
   <p>Puedes enviar tus solicitudes a la dirección destek@appfitly.com;

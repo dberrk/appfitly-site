@@ -101,7 +101,7 @@
   <table>
     <tr><th>Kategori</th><th>Örnekler</th><th>Hukuki sebep</th></tr>
     <tr><td>Kimlik / iletişim (genel)</td><td>e-posta adresi, görünen ad; Apple ile girişte Apple kimliği</td><td>Sözleşme (m.5)</td></tr>
-    <tr><td><strong>Sağlık (özel nitelikli)</strong></td><td>boy, kilo, hedef kilo, yaş, cinsiyet, vücut ölçümleri; antrenman ve set kayıtları, kişisel rekorlar; öğün, su ve beslenme kayıtları; diyet kısıtları (helal vb. inanç da açığa çıkarabilir); Konsey sohbetinde sağlıkla ilgili anlattıklarınız; HealthKit verileri</td><td><strong>Açık rıza (m.6)</strong></td></tr>
+    <tr><td><strong>Sağlık (özel nitelikli)</strong></td><td>boy, kilo, hedef kilo, yaş, cinsiyet, vücut ölçümleri; antrenman ve set kayıtları, kişisel rekorlar; öğün, su ve beslenme kayıtları; diyet kısıtları (helal vb. inanç da açığa çıkarabilir); Fitly Koç sohbetinde sağlıkla ilgili anlattıklarınız; HealthKit verileri</td><td><strong>Açık rıza (m.6)</strong></td></tr>
     <tr><td>Kullanım verisi (psödonim)</td><td>kota sayaçları, anonim UUID'ye bağlı ürün istatistikleri (yalnız sayı/etiket), token kullanım sayıları</td><td>Meşru menfaat (m.5)</td></tr>
     <tr><td>Reklam edinimi / atıf (psödonim)</td><td>Kimlik doğrulama sonrasındaki StoreKit ilk-edinim-sürümü adayı için Apple Ads standart AdServices alanları psödonim UUID ile Supabase'te saklanır. Bu sürüm kontrolü upgrade'i dışlar; aynı sürüm redownload'ını veya başka cihazdaki edinimi kesin ayırmaz. Download/Redownload/PreOrder sınıflamasında Apple'ın <code>conversionType</code> alanı esastır ve yeni-kullanıcı raporları yalnız Download'ı kullanır. Ham belirteç asla saklanmaz; SHA-256 özeti 24 saatte sona erer ve saatlik silme işlemiyle en geç 25 saatte kaldırılır.</td><td>Meşru menfaat (m.5)</td></tr>
     <tr><td>Abonelik / finansal (genel)</td><td>App Store işlem durumu, ürün kimliği, abonelik dönemi</td><td>Sözleşme (m.5)</td></tr>
@@ -111,7 +111,7 @@
   <h2><span class="n">3</span> İşleme Amaçları ve Hukuki Sebepler</h2>
   <ul>
     <li>Hesabınızın oluşturulması ve yönetimi, giriş ve hesap kurtarma — <em>sözleşme</em>.</li>
-    <li>Size özel antrenman planı, beslenme hedefleri ve AI Konsey tavsiyelerinin üretilmesi — <em>açık rıza (sağlık verisi)</em>.</li>
+    <li>Size özel antrenman planı, beslenme hedefleri ve Fitly Koç tavsiyelerinin üretilmesi — <em>açık rıza (sağlık verisi)</em>.</li>
     <li>İlerlemenizin takibi (kilo grafiği, rekorlar, seriler) — <em>açık rıza</em>.</li>
     <li>Aboneliğin işletilmesi, Pro özelliklerinin açılması ve kötüye kullanım/limit denetimi — <em>sözleşme / meşru menfaat</em>.</li>
     <li>Apple Ads edinim performansının ölçülmesi ve geliştirici reklam/pazarlamasının yönetilmesi — <em>meşru menfaat</em>.</li>
@@ -137,7 +137,7 @@
   dayanır ve payload minimize edilir (ham tablolar değil, türetilmiş özetler gönderilir).</p>
   <table>
     <tr><th>Alıcı</th><th>Aktarılan</th><th>Yerleşim</th></tr>
-    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Konsey sohbet içeriği + AI bağlamı (profil özeti, ölçüm/aktivite özetleri, aktif plan özeti)</td><td>ABD</td></tr>
+    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Fitly Koç sohbet içeriği + AI bağlamı (profil özeti, ölçüm/aktivite özetleri, aktif plan özeti)</td><td>ABD</td></tr>
     <tr><td>Apple / AdServices</td><td>Kimlik doğrulama ve StoreKit ilk-edinim-sürümü adayından sonra Supabase Edge Function'ımız ham AdServices belirtecini Apple'a yalnız geçici olarak yollar. UUID, e-posta, isim, sağlık verisi, serbest metin veya IDFA gönderilmez. Apple'ın standart yanıtı ve esas dönüşüm türü AB'deki Supabase'e döner.</td><td>ABD / global hizmet</td></tr>
     <tr><td>RevenueCat</td><td>Abonelik/işlem verisi + psödonim kullanıcı kimliği (yalnız UUID). <strong>RevenueCat'e AdServices belirteci, Apple Ads yanıtı, e-posta, isim, sağlık verisi, serbest metin veya IDFA gönderilmez.</strong></td><td>ABD</td></tr>
   </table>
@@ -193,7 +193,7 @@
     Apple atıf yanıtı dahil taşınabilir hesap verileriniz güvenli bir bağlantıyla e-postanıza gönderilir.
     Kısa ömürlü tekrar, güvenlik ve bütçe kayıtları güvenlik bütünlüğü için bu dosyaya eklenmez.</li>
     <li><strong>Hesabınızı ve hesabınıza bağlı verileri silin</strong> — Ayarlar → "Hesabı sil".</li>
-    <li><strong>Konsey'in sizinle ilgili çıkarımlarını görün/silin</strong> — Ayarlar → "Konsey seni böyle tanıyor".</li>
+    <li><strong>Fitly Koç'un sizinle ilgili çıkarımlarını görün/silin</strong> — Ayarlar → "Fitly Koç seni böyle tanıyor".</li>
     <li><strong>Rızanızı geri çekin</strong> — Ayarlar → Rıza yönetimi.</li>
   </ul>
   <p>Başvurularınızı destek@appfitly.com adresine iletebilirsiniz;

@@ -101,7 +101,7 @@
   <table>
     <tr><th>Category</th><th>Examples</th><th>Legal basis</th></tr>
     <tr><td>Identity / contact (general)</td><td>email address, display name; Apple ID when signing in with Apple</td><td>Contract (Art. 5)</td></tr>
-    <tr><td><strong>Health (special category)</strong></td><td>height, weight, target weight, age, sex, body measurements; workout and set records, personal records; meal, water, and nutrition logs; dietary restrictions (e.g. halal, which may also reveal belief); anything health-related you share in Council chat; HealthKit data</td><td><strong>Explicit consent (Art. 6)</strong></td></tr>
+    <tr><td><strong>Health (special category)</strong></td><td>height, weight, target weight, age, sex, body measurements; workout and set records, personal records; meal, water, and nutrition logs; dietary restrictions (e.g. halal, which may also reveal belief); anything health-related you share in Fitly Coach chat; HealthKit data</td><td><strong>Explicit consent (Art. 6)</strong></td></tr>
     <tr><td>Usage data (pseudonymous)</td><td>quota counters, product statistics tied to an anonymous UUID (numbers/labels only), token usage counts</td><td>Legitimate interest (Art. 5)</td></tr>
     <tr><td>Advertising acquisition / attribution (pseudonymous)</td><td>For an authenticated StoreKit first-acquisition-version candidate, Apple Ads standard AdServices fields are stored in Supabase against a pseudonymous UUID. The version check excludes upgrades; it cannot conclusively exclude a same-version redownload or an acquisition on another device. Apple's <code>conversionType</code> is authoritative for Download/Redownload/PreOrder, and new-user reports use Download only. The raw token is never stored; its SHA-256 replay hash expires after 24 hours and is removed by the hourly purge within 25 hours.</td><td>Legitimate interest (Art. 5)</td></tr>
     <tr><td>Subscription / financial (general)</td><td>App Store transaction status, product ID, subscription period</td><td>Contract (Art. 5)</td></tr>
@@ -111,7 +111,7 @@
   <h2><span class="n">3</span> Processing Purposes and Legal Bases</h2>
   <ul>
     <li>Creating and managing your account, sign-in, and account recovery — <em>contract</em>.</li>
-    <li>Generating your personalized workout plan, nutrition targets, and AI Council recommendations — <em>explicit consent (health data)</em>.</li>
+    <li>Generating your personalized workout plan, nutrition targets, and Fitly Coach recommendations — <em>explicit consent (health data)</em>.</li>
     <li>Tracking your progress (weight chart, records, streaks) — <em>explicit consent</em>.</li>
     <li>Operating the subscription, unlocking Pro features, and abuse/limit control — <em>contract / legitimate interest</em>.</li>
     <li>Measuring Apple Ads acquisition performance and managing developer advertising/marketing — <em>legitimate interest</em>.</li>
@@ -137,7 +137,7 @@
   payload is minimized (derived summaries are sent, not raw tables).</p>
   <table>
     <tr><th>Recipient</th><th>Transferred</th><th>Location</th></tr>
-    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Council chat content + AI context (profile summary, measurement/activity summaries, active plan summary)</td><td>USA</td></tr>
+    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Fitly Coach chat content + AI context (profile summary, measurement/activity summaries, active plan summary)</td><td>USA</td></tr>
     <tr><td>Apple / AdServices</td><td>After authentication and a StoreKit first-acquisition-version candidate, our Supabase Edge Function sends the raw AdServices token to Apple only transiently. No UUID, email, name, health data, free text or IDFA is sent. Apple's standard response, including the authoritative conversion type, returns to Supabase in the EU.</td><td>USA / global service</td></tr>
     <tr><td>RevenueCat</td><td>Subscription/transaction data + pseudonymous user ID (UUID only). <strong>RevenueCat receives no AdServices token, Apple Ads response, email, name, health data, free text or IDFA.</strong></td><td>USA</td></tr>
   </table>
@@ -195,7 +195,7 @@
     your portable account data, including the Apple attribution response, is sent via a secure link.
     Short-lived replay, security, and budget ledgers are excluded to preserve security integrity.</li>
     <li><strong>Delete your account and account-linked data</strong> — Settings → "Delete account".</li>
-    <li><strong>View/delete the Council's inferences about you</strong> — Settings → "How the Council knows you".</li>
+    <li><strong>View/delete Fitly Coach's inferences about you</strong> — Settings → "How Fitly Coach knows you".</li>
     <li><strong>Withdraw your consent</strong> — Settings → Consent management.</li>
   </ul>
   <p>You may submit your requests to destek@appfitly.com;

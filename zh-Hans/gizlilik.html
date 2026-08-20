@@ -99,7 +99,7 @@
   <table>
     <tr><th>类别</th><th>示例</th><th>法律依据</th></tr>
     <tr><td>身份 / 联系（一般）</td><td>电子邮箱地址、显示名称；使用 Apple 登录时的 Apple ID</td><td>合同（第 5 条）</td></tr>
-    <tr><td><strong>健康（特殊类别）</strong></td><td>身高、体重、目标体重、年龄、性别、身体围度；训练与组数记录、个人纪录；餐食、饮水与营养记录；饮食限制（如清真等，可能同时透露信仰）；您在顾问团对话中讲述的健康相关内容；HealthKit 数据</td><td><strong>明确同意（第 6 条）</strong></td></tr>
+    <tr><td><strong>健康（特殊类别）</strong></td><td>身高、体重、目标体重、年龄、性别、身体围度；训练与组数记录、个人纪录；餐食、饮水与营养记录；饮食限制（如清真等，可能同时透露信仰）；您在 Fitly 教练对话中讲述的健康相关内容；HealthKit 数据</td><td><strong>明确同意（第 6 条）</strong></td></tr>
     <tr><td>使用数据（假名化）</td><td>配额计数器、与匿名 UUID 关联的产品统计（仅数字/标签）、token 使用次数</td><td>合法利益（第 5 条）</td></tr>
     <tr><td>广告获客 / 归因（假名化）</td><td>对于已通过身份验证的 StoreKit 首次获取版本候选，Apple Ads AdServices 标准字段会与假名化 UUID 关联并存储在 Supabase。版本检查可排除升级，但不能确定排除同版本重新下载或在另一设备上的获取。Apple 的 <code>conversionType</code> 是 Download/Redownload/PreOrder 分类依据；新用户报告仅使用 Download。原始令牌绝不存储；SHA-256 重放哈希在 24 小时后失效，并由每小时清理任务在 25 小时内删除。</td><td>合法利益（第 5 条）</td></tr>
     <tr><td>订阅 / 财务（一般）</td><td>App Store 交易状态、产品 ID、订阅周期</td><td>合同（第 5 条）</td></tr>
@@ -109,7 +109,7 @@
   <h2><span class="n">3</span> 处理目的与法律依据</h2>
   <ul>
     <li>创建和管理您的账户、登录与账户恢复：<em>合同</em>。</li>
-    <li>为您生成专属训练计划、营养目标和 AI 顾问团建议：<em>明确同意（健康数据）</em>。</li>
+    <li>为您生成专属训练计划、营养目标和 Fitly 教练建议：<em>明确同意（健康数据）</em>。</li>
     <li>跟踪您的进展（体重图表、纪录、连续记录）：<em>明确同意</em>。</li>
     <li>运营订阅、开启 Pro 功能以及滥用/额度管控：<em>合同 / 合法利益</em>。</li>
     <li>衡量 Apple Ads 获客成效并管理开发者广告/营销：<em>合法利益</em>。</li>
@@ -133,7 +133,7 @@
   <strong>单独的明确同意</strong>，并会将传输内容最小化（发送的是派生摘要，而非原始数据表）。</p>
   <table>
     <tr><th>接收方</th><th>传输内容</th><th>所在地</th></tr>
-    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>顾问团对话内容 + AI 上下文（个人资料摘要、测量/活动摘要、当前计划摘要）</td><td>美国</td></tr>
+    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Fitly 教练对话内容 + AI 上下文（个人资料摘要、测量/活动摘要、当前计划摘要）</td><td>美国</td></tr>
     <tr><td>Apple / AdServices</td><td>在完成身份验证和 StoreKit 首次获取版本候选检查后，经过身份验证的 Supabase Edge Function 仅临时向 Apple 发送原始令牌。Apple 不会收到 UUID、电子邮箱、姓名、健康数据、自由文本或 IDFA；包括权威转换类型在内的标准响应返回 Supabase 的欧盟区域。</td><td>美国 / 全球</td></tr>
     <tr><td>RevenueCat</td><td>仅接收订阅/交易数据和假名化 UUID，不接收 AdServices 令牌或 Apple 归因响应。<strong>电子邮箱、姓名、健康数据、自由文本和 IDFA 也绝不会发送。</strong></td><td>美国</td></tr>
   </table>
@@ -180,7 +180,7 @@
   <ul>
     <li><strong>下载可携带的账户数据</strong>：设置 → "下载你的数据"：包括 Apple 归因响应在内的可携带数据将通过安全链接发送。为维护安全完整性，短期重放、安全和预算账本不包含在导出文件中。</li>
     <li><strong>删除您的账户及其关联数据</strong>：设置 → "删除账户"。</li>
-    <li><strong>查看/删除顾问团对您的推断</strong>：设置 → "顾问团这样认识你"。</li>
+    <li><strong>查看/删除 Fitly 教练对您的推断</strong>：设置 → "Fitly 教练这样认识你"。</li>
     <li><strong>撤回您的同意</strong>：设置 → 同意管理。</li>
   </ul>
   <p>您可以将申请发送至 destek@appfitly.com；

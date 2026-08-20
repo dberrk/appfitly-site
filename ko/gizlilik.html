@@ -101,7 +101,7 @@
   <table>
     <tr><th>범주</th><th>예시</th><th>법적 근거</th></tr>
     <tr><td>신원 / 연락처 (일반)</td><td>이메일 주소, 표시 이름; Apple 로그인 시 Apple ID</td><td>계약 (제5조)</td></tr>
-    <tr><td><strong>건강 (민감/특별 범주)</strong></td><td>키, 체중, 목표 체중, 나이, 성별, 신체 치수; 운동 및 세트 기록, 개인 기록; 식사, 수분 및 영양 기록; 식이 제한(할랄 등 신념을 드러낼 수도 있음); 카운슬 대화에서 건강과 관련해 말씀하신 내용; HealthKit 데이터</td><td><strong>명시적 동의 (제6조)</strong></td></tr>
+    <tr><td><strong>건강 (민감/특별 범주)</strong></td><td>키, 체중, 목표 체중, 나이, 성별, 신체 치수; 운동 및 세트 기록, 개인 기록; 식사, 수분 및 영양 기록; 식이 제한(할랄 등 신념을 드러낼 수도 있음); Fitly 코치 대화에서 건강과 관련해 말씀하신 내용; HealthKit 데이터</td><td><strong>명시적 동의 (제6조)</strong></td></tr>
     <tr><td>이용 데이터 (가명)</td><td>할당량 카운터, 익명 UUID에 연결된 제품 통계(숫자/라벨만), 토큰 사용량 수치</td><td>정당한 이익 (제5조)</td></tr>
     <tr><td>광고 획득 / 기여도 (가명)</td><td>인증된 StoreKit 최초 획득 버전 후보에 대해 Apple Ads AdServices의 표준 필드를 가명 UUID와 연결하여 Supabase에 저장합니다. 버전 검사는 업그레이드를 제외하지만 같은 버전의 재다운로드나 다른 기기에서의 획득을 확실히 제외하지는 못합니다. Download/Redownload/PreOrder 분류는 Apple의 <code>conversionType</code>이 기준이며 신규 사용자 보고에는 Download만 사용합니다. 원본 토큰은 저장하지 않고, SHA-256 재전송 해시는 24시간 후 만료되며 매시간 정리되어 25시간 이내 삭제됩니다.</td><td>정당한 이익 (제5조)</td></tr>
     <tr><td>구독 / 금융 (일반)</td><td>App Store 거래 상태, 제품 ID, 구독 기간</td><td>계약 (제5조)</td></tr>
@@ -111,7 +111,7 @@
   <h2><span class="n">3</span> 처리 목적 및 법적 근거</h2>
   <ul>
     <li>계정 생성 및 관리, 로그인 및 계정 복구 — <em>계약</em>.</li>
-    <li>맞춤 운동 플랜, 영양 목표 및 AI 카운슬 조언 생성 — <em>명시적 동의(건강 정보)</em>.</li>
+    <li>맞춤 운동 플랜, 영양 목표 및 Fitly 코치 조언 생성 — <em>명시적 동의(건강 정보)</em>.</li>
     <li>진행 상황 추적(체중 그래프, 기록, 연속 기록) — <em>명시적 동의</em>.</li>
     <li>구독 운영, Pro 기능 활성화 및 오용/한도 관리 — <em>계약 / 정당한 이익</em>.</li>
     <li>Apple Ads 획득 성과 측정 및 개발자 광고/마케팅 관리 — <em>정당한 이익</em>.</li>
@@ -137,7 +137,7 @@
   근거하며, 전송 데이터는 최소화됩니다(원본 테이블이 아니라 파생된 요약을 전송합니다).</p>
   <table>
     <tr><th>수신자</th><th>이전 데이터</th><th>소재지</th></tr>
-    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>카운슬 대화 내용 + AI 컨텍스트(프로필 요약, 측정/활동 요약, 활성 플랜 요약)</td><td>미국</td></tr>
+    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Fitly 코치 대화 내용 + AI 컨텍스트(프로필 요약, 측정/활동 요약, 활성 플랜 요약)</td><td>미국</td></tr>
     <tr><td>Apple / AdServices</td><td>인증과 StoreKit 최초 획득 버전 후보 확인 후 인증된 Supabase Edge Function이 원본 토큰을 Apple에 일시적으로만 전송합니다. Apple에는 UUID, 이메일, 이름, 건강 정보, 자유 텍스트 또는 IDFA를 보내지 않으며, 기준이 되는 전환 유형을 포함한 표준 응답은 Supabase의 EU 리전으로 돌아옵니다.</td><td>미국 / 글로벌</td></tr>
     <tr><td>RevenueCat</td><td>구독/거래 데이터와 가명 UUID만 전송합니다. AdServices 토큰과 Apple 기여도 응답은 전송하지 않으며, <strong>이메일, 이름, 건강 정보, 자유 텍스트 또는 IDFA도 절대 전송하지 않습니다.</strong></td><td>미국</td></tr>
   </table>
@@ -188,7 +188,7 @@
   <ul>
     <li><strong>이동 가능한 계정 데이터 다운로드</strong> — 설정 → "내 데이터 다운로드": Apple 기여도 응답을 포함한 이동 가능한 데이터가 안전한 링크로 전송됩니다. 단기 재전송·보안·예산 원장은 보안 무결성을 위해 제외됩니다.</li>
     <li><strong>계정 및 계정에 연결된 데이터 삭제</strong> — 설정 → "계정 삭제".</li>
-    <li><strong>카운슬이 당신에 대해 추론한 내용 보기/삭제</strong> — 설정 → "카운슬이 당신을 이렇게 알고 있어요".</li>
+    <li><strong>Fitly 코치가 당신에 대해 추론한 내용 보기/삭제</strong> — 설정 → "Fitly 코치가 당신을 이렇게 알고 있어요".</li>
     <li><strong>동의 철회</strong> — 설정 → 동의 관리.</li>
   </ul>
   <p>신청은 destek@appfitly.com 으로 보내실 수 있으며,

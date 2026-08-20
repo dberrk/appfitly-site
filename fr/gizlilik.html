@@ -102,7 +102,7 @@
   <table>
     <tr><th>Catégorie</th><th>Exemples</th><th>Base juridique</th></tr>
     <tr><td>Identité / contact (général)</td><td>adresse e-mail, nom affiché ; identifiant Apple lors de la connexion avec Apple</td><td>Contrat (art. 5)</td></tr>
-    <tr><td><strong>Santé (catégorie particulière)</strong></td><td>taille, poids, poids cible, âge, sexe, mensurations ; enregistrements d'entraînements et de séries, records personnels ; enregistrements de repas, d'hydratation et de nutrition ; restrictions alimentaires (halal, etc., pouvant aussi révéler des convictions) ; ce que vous communiquez au sujet de votre santé dans le chat du Conseil ; données HealthKit</td><td><strong>Consentement explicite (art. 6)</strong></td></tr>
+    <tr><td><strong>Santé (catégorie particulière)</strong></td><td>taille, poids, poids cible, âge, sexe, mensurations ; enregistrements d'entraînements et de séries, records personnels ; enregistrements de repas, d'hydratation et de nutrition ; restrictions alimentaires (halal, etc., pouvant aussi révéler des convictions) ; ce que vous communiquez au sujet de votre santé dans le chat du Coach Fitly ; données HealthKit</td><td><strong>Consentement explicite (art. 6)</strong></td></tr>
     <tr><td>Données d'utilisation (pseudonymisées)</td><td>compteurs de quota, statistiques produit liées à un UUID anonyme (chiffres/étiquettes uniquement), nombres de jetons utilisés</td><td>Intérêt légitime (art. 5)</td></tr>
     <tr><td>Acquisition publicitaire / attribution (pseudonymisées)</td><td>Pour un candidat authentifié à la version de première acquisition StoreKit, les champs standard AdServices d'Apple Ads sont stockés dans Supabase avec un UUID pseudonymisé. Le contrôle de version exclut les mises à niveau, mais pas avec certitude un retéléchargement de la même version ou une acquisition sur un autre appareil. Le <code>conversionType</code> d'Apple fait autorité pour Download/Redownload/PreOrder ; les rapports de nouveaux utilisateurs utilisent uniquement Download. Le jeton brut n'est jamais stocké ; son hachage de rejeu SHA-256 expire après 24 heures et la purge horaire le supprime dans les 25 heures.</td><td>Intérêt légitime (art. 5)</td></tr>
     <tr><td>Abonnement / financier (général)</td><td>statut de la transaction App Store, identifiant du produit, période d'abonnement</td><td>Contrat (art. 5)</td></tr>
@@ -112,7 +112,7 @@
   <h2><span class="n">3</span> Finalités du traitement et bases juridiques</h2>
   <ul>
     <li>Création et gestion de votre compte, connexion et récupération de compte — <em>contrat</em>.</li>
-    <li>Génération de votre plan d'entraînement personnalisé, de vos objectifs nutritionnels et des recommandations du Conseil IA — <em>consentement explicite (donnée de santé)</em>.</li>
+    <li>Génération de votre plan d'entraînement personnalisé, de vos objectifs nutritionnels et des recommandations du Coach Fitly — <em>consentement explicite (donnée de santé)</em>.</li>
     <li>Suivi de votre progression (courbe de poids, records, séries) — <em>consentement explicite</em>.</li>
     <li>Gestion de l'abonnement, activation des fonctionnalités Pro et contrôle des abus/limites — <em>contrat / intérêt légitime</em>.</li>
     <li>Mesure des performances d'acquisition Apple Ads et gestion de la publicité/du marketing du développeur — <em>intérêt légitime</em>.</li>
@@ -141,7 +141,7 @@
   minimisée (ce ne sont pas les tables brutes qui sont envoyées, mais des résumés dérivés).</p>
   <table>
     <tr><th>Destinataire</th><th>Données transférées</th><th>Localisation</th></tr>
-    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Contenu du chat du Conseil + contexte IA (résumé de profil, résumés des mesures/activités, résumé du plan actif)</td><td>États-Unis</td></tr>
+    <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Contenu du chat du Coach Fitly + contexte IA (résumé de profil, résumés des mesures/activités, résumé du plan actif)</td><td>États-Unis</td></tr>
     <tr><td>Apple / AdServices</td><td>Après authentification et contrôle du candidat à la version de première acquisition, une Supabase Edge Function authentifiée transmet le jeton d'attribution brut à Apple uniquement de manière transitoire. Apple ne reçoit ni UUID, ni e-mail, ni nom, ni données de santé, ni texte libre, ni IDFA ; la réponse standard, y compris le type de conversion faisant autorité, revient dans la région UE de Supabase.</td><td>États-Unis / mondial</td></tr>
     <tr><td>RevenueCat</td><td>Uniquement les données d'abonnement/de transaction et l'UUID pseudonymisé. Le jeton AdServices et la réponse d'attribution Apple ne lui sont pas transmis ; <strong>l'e-mail, le nom, les données de santé, le texte libre et l'IDFA ne le sont jamais non plus.</strong></td><td>États-Unis</td></tr>
   </table>
@@ -197,7 +197,7 @@
     <li><strong>Téléchargez les données portables de votre compte</strong> — Réglages → « Télécharger vos données » :
     vos données portables, y compris la réponse d'attribution Apple, sont envoyées via un lien sécurisé. Les registres éphémères de rejeu, de sécurité et de budget sont exclus pour préserver l'intégrité de la sécurité.</li>
     <li><strong>Supprimez votre compte et les données qui lui sont liées</strong> — Réglages → « Supprimer le compte ».</li>
-    <li><strong>Consultez/supprimez les déductions du Conseil à votre sujet</strong> — Réglages → « Voici comment le Conseil vous connaît ».</li>
+    <li><strong>Consultez/supprimez les déductions du Coach Fitly à votre sujet</strong> — Réglages → « Voici comment le Coach Fitly vous connaît ».</li>
     <li><strong>Retirez votre consentement</strong> — Réglages → Gestion du consentement.</li>
   </ul>
   <p>Vous pouvez adresser vos demandes à destek@appfitly.com ;
