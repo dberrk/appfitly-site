@@ -22,6 +22,8 @@ fi
 
 find . -name .DS_Store -not -path "./.git/*" -delete
 
+python3 scripts/check-seo.py
+
 npx wrangler pages deploy . \
   --project-name=appfitly \
   --branch=master \
