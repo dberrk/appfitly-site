@@ -23,6 +23,7 @@ fi
 find . -name .DS_Store -not -path "./.git/*" -delete
 
 python3 scripts/check-seo.py
+node scripts/test-indir.js
 
 npx wrangler pages deploy . \
   --project-name=appfitly \
