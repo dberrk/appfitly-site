@@ -106,9 +106,8 @@
 <script>
 (function () {
   var APP_ID = "6790693710";
-  // ASC → App Analytics kampanya linklerinin sağlayıcı token'ı. Boşken link
-  // yine çalışır, sadece Apple tarafı creator kırılımı vermez.
-  var PROVIDER_TOKEN = "";
+  // ASC → App Analytics kampanya linklerinin sağlayıcı token'ı.
+  var PROVIDER_TOKEN = "127590870";
 
   var COPY = {
     tr:{h:"Fitly'yi indir",s:"App Store'da aç, kurulum bir dokunuş.",b:"App Store'da aç",
@@ -257,12 +256,37 @@
   document.documentElement.lang = lang;
   if (lang === "ar") document.documentElement.dir = "rtl";
 
-  var query = "?l=" + encodeURIComponent(lang);
-  var creator = (params.get("c") || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
-  if (creator) {
-    query += "&ct=" + encodeURIComponent(creator);
-    if (PROVIDER_TOKEN) query += "&pt=" + encodeURIComponent(PROVIDER_TOKEN);
+  function cleanCt(value) {
+    return String(value || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
   }
+
+  function pickCt() {
+    if (params.has("c")) return cleanCt(params.get("c"));
+
+    var source = String(params.get("utm_source") || "").toLowerCase();
+    if (source.indexOf("chatgpt.com") !== -1 || source.indexOf("chatgpt") !== -1) {
+      return "ai_chatgpt";
+    }
+
+    var host = "";
+    try {
+      host = document.referrer ? new URL(document.referrer).hostname.toLowerCase() : "";
+    } catch (err) { /* geçersiz referrer yok sayılır */ }
+
+    if (host === "chatgpt.com" || host === "chat.openai.com") return "ai_chatgpt";
+    if (host === "perplexity.ai" || host === "www.perplexity.ai") return "ai_perplexity";
+    if (host === "claude.ai") return "ai_claude";
+    if (host === "gemini.google.com") return "ai_gemini";
+    if (host === "copilot.microsoft.com" || host === "you.com" ||
+        host === "poe.com" || host === "grok.com" || host === "meta.ai" ||
+        host === "lechat.mistral.ai" || host === "phind.com") return "ai_other";
+    return "website";
+  }
+
+  var campaign = cleanCt(pickCt()) || "website";
+  var query = "?pt=" + encodeURIComponent(PROVIDER_TOKEN) +
+              "&ct=" + encodeURIComponent(campaign) + "&mt=8" +
+              "&l=" + encodeURIComponent(lang);
   var store = "https://apps.apple.com/app/id" + APP_ID + query;
   // ARAŞTIRMA SONUCU (2026-08-05, owner cihazında ölçüldü):
   //   · https://apps.apple.com  → Apple iOS'ta itms-appss:// şemasına
