@@ -72,7 +72,7 @@
     </div>
 
     <div class="card">
-      <h2 id="codesTitle">Kodların</h2>
+      <h2 id="codesTitle">Atıf özeti</h2>
       <p class="sub" id="privacyNote"></p>
       <div id="codesBody"><p class="empty" id="loadingText">Yükleniyor...</p></div>
     </div>
@@ -118,7 +118,7 @@
 
 <script src="/partner/vendor/supabase.js"></script>
 <script src="/partner/config.js?v=20260729d"></script>
-<script src="/partner/i18n.js?v=20260729d"></script>
+<script src="/partner/i18n.js?v=20260826a"></script>
 <script src="/partner/panel.js?v=20260729d"></script>
 <script>
 (function () {
@@ -316,11 +316,10 @@
     }
     $("codesBody").innerHTML =
       '<div class="table-scroll"><table><thead><tr>' +
-        "<th>" + esc(t("code")) + "</th><th>" + esc(t("status")) + "</th>" +
+        "<th>" + esc(t("partnerReference")) + "</th><th>" + esc(t("status")) + "</th>" +
         '<th class="num">' + esc(t("claims")) + "</th>" +
         '<th class="num">' + esc(t("conversions")) + "</th>" +
         '<th class="num">' + esc(t("activeConversions")) + "</th>" +
-        "<th></th>" +
       "</tr></thead><tbody>" +
       codes.map(function (c) {
         var on = c.status === "active";
@@ -331,40 +330,10 @@
           '<td class="num">' + esc(c.claims) + "</td>" +
           '<td class="num">' + esc(c.conversions) + "</td>" +
           '<td class="num">' + esc(c.activeConversions) + "</td>" +
-          '<td class="nowrap">' +
-            '<button type="button" class="btn btn-ghost btn-sm" data-copy="' +
-              esc(c.code) + '">' + esc(t("copyCode")) + "</button> " +
-            '<button type="button" class="btn btn-ghost btn-sm" data-share="' +
-              esc(c.code) + '">' + esc(t("copyShare")) + "</button>" +
-          "</td>" +
         "</tr>";
       }).join("") +
       "</tbody></table></div>";
   }
-
-  /// Clipboard writes can be refused (permissions, insecure context, older
-  /// Safari), so the button reports what actually happened rather than
-  /// optimistically claiming success.
-  async function copyText(button, text) {
-    var original = button.textContent;
-    try {
-      await navigator.clipboard.writeText(text);
-      button.textContent = t("copied");
-    } catch (e) {
-      button.textContent = t("genericError");
-    }
-    setTimeout(function () { button.textContent = original; }, 1600);
-  }
-
-  $("codesBody").addEventListener("click", function (ev) {
-    var copyBtn = ev.target.closest("button[data-copy]");
-    if (copyBtn) return copyText(copyBtn, copyBtn.getAttribute("data-copy"));
-    var shareBtn = ev.target.closest("button[data-share]");
-    if (shareBtn) {
-      copyText(shareBtn,
-        t("shareTemplate").replace("{code}", shareBtn.getAttribute("data-share")));
-    }
-  });
 
   async function loadStats() {
     var res = await P.callFunction("affiliate-stats", {});
