@@ -10,6 +10,7 @@ Bu depo Fitly'nin statik pazarlama sitesini ve App Store indirme köprüsünü i
   - `https://appfitly.com/indir/?c=tiktok_paid_spark_a_us&lang=en`
   - `https://appfitly.com/indir/?c=tiktok_organic_us&lang=en`
   - `https://appfitly.com/indir/?c=instagram_organic_us&lang=en`
+  - `https://appfitly.com/indir/?c=elif_balci` (creator: Elif Balcı, 2026-09-07; `ı` sanitize edilir, ASCII `elif_balci` yaz)
 
 TikTok App Promotion reklamlarında öncelikli destination doğrudan Apple linkidir: `https://apps.apple.com/app/apple-store/id6790693710?pt=127590870&ct=tiktok_paid_spark_a_us&mt=8`. Web URL'si yalnızca Traffic kampanyalarında veya App Store'un doğrudan açılamadığı organik ve in-app-browser akışlarında kullanılmalıdır.
 
