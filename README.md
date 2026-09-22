@@ -80,12 +80,21 @@ Privacy, Terms and EULA each retain their own full 12-language set plus
 `x-default`: `tr` points to `/<document>.html`, other languages to
 `/<language>/<document>.html`, and `x-default` to `/en/<document>.html`.
 The partner agreement has only two translations, so its complete set is `tr`,
-`en`, and `x-default` (English). Every indexable HTML page has `og:locale`.
+`en`, and `x-default` (English). Every home, compatibility page and legal document
+has `og:locale` and an `og:url` matching its canonical, including both noindex
+partner agreements. Their metadata and hreflang are checked independently of
+indexability.
 The noindex download/auth/partner tools are not translated document clusters;
 they do not advertise unrelated home pages as hreflang alternatives.
 
-The sitemap lists only the 50 canonical, indexable pages. `/en/` is replaced by
-`/tr/`; the already-noindex `/indir/` and `/partner/` are removed. Robots keeps
+The sitemap lists only the 48 canonical, indexable pages: 12 homes and 36
+Privacy, Terms and EULA documents. `/en/` is replaced by `/tr/`; the already-noindex
+`/indir/`, `/partner/` and both partner agreements are excluded. The agreements
+remain `noindex,nofollow`: they govern participation in the partner programme
+and are linked from partner flows, so preserving their existing policy follows
+the sitemap's policy of listing indexable pages. Their URLs and legal text stay in
+place. The SEO checker rejects any noindex sitemap target and missing or
+noncanonical `og:url` values on content and compatibility pages. Robots keeps
 both home languages and the `/en/` redirect crawlable, retains the existing bot
 policy, and points to the same sitemap.
 
@@ -105,9 +114,30 @@ executes every translated page's language switcher and covers directory and
 `index.html` aliases. The existing bridge suite covers attribution and browser
 navigation. This is local verification, not a claim that the feature is live.
 
-No Cloudflare routing configuration is stored in this repository. Before the
-release-day merge, the owner should confirm that no edge rule redirects `/tr/`
-to `/` or `/` to `/en/`, and that `/tr/` reaches GitHub Pages. No new edge rule is
-required by this implementation. Any optional edge redirect must match only
-`/en/` and `/en/index.html`, never `/en/*` (the English legal pages stay there).
-No Cloudflare settings are changed by this PR.
+No Cloudflare routing configuration is stored in this repository, and account
+rules have not been inspected. P1-P4 are plausible deployment risks for the owner
+to check before the release-day merge, then verify against live responses after
+publishing:
+
+- [ ] **P1, root redirect loop:** inspect Single/Bulk Redirects, legacy Page Rules,
+  Workers/Snippets and URL rewrites. Use Cloudflare Trace for `/` and `/index.html`;
+  remove any legacy redirect to `/en/` that would conflict with its refresh back
+  to `/`. Confirm the root serves English, including language/geolocation rules.
+- [ ] **P2, Turkish route:** trace `/tr/` and `/tr/index.html` and confirm they reach
+  the Turkish file on GitHub Pages. Remove any legacy `/tr/` to `/` redirect,
+  locale-prefix rewrite or Worker fallback that would serve English there.
+- [ ] **P3, English legal routes:** exclude `/en/*` wildcard redirects. Any optional
+  edge redirect must match only `/en/` and `/en/index.html`, directly to `/`.
+  Check `/en/gizlilik.html`, `/en/kosullar.html`, `/en/eula.html` and
+  `/en/partner-sozlesmesi.html` separately; each must serve its own document.
+- [ ] **P4, cache and Workers:** inspect Cache Rules, cached redirects/404s,
+  Workers, origin routing and response-header rules. Invalidate affected HTML,
+  sitemap and robots cache entries during release. Verify final response bodies,
+  status codes and any `X-Robots-Tag` headers for the intended language and
+  indexability policy.
+- [ ] Verify HTTPS/www normalization preserves paths and queries, especially
+  `/indir/` campaign `c`, `lang` and other attribution parameters.
+
+No new Cloudflare rule is required by the static implementation; compatibility
+with existing rules depends on these checks. No Cloudflare settings are changed
+by this PR.
