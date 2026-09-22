@@ -1,6 +1,8 @@
 User-agent: *
 Content-Signal: search=yes, ai-train=no
 Allow: /
+# English home: /. Turkish home: /tr/.
+# Keep /en/ crawlable so crawlers can follow its canonical and HTML redirect.
 
 User-agent: GPTBot
 Disallow: /

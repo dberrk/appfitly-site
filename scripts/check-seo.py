@@ -14,9 +14,12 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 ORIGIN = "https://appfitly.com"
 LANGS = ("tr", "en", "de", "es", "fr", "it", "pt-BR", "ru", "ja", "ko", "zh-Hans", "ar")
-HOME_FILES = {"tr": Path("index.html"), **{lang: Path(lang) / "index.html" for lang in LANGS[1:]}}
-HOME_URLS = {"tr": f"{ORIGIN}/", **{lang: f"{ORIGIN}/{lang}/" for lang in LANGS[1:]}}
-EXPECTED_HREFLANG = {**HOME_URLS, "x-default": f"{ORIGIN}/en/"}
+HOME_FILES = {lang: Path("index.html") if lang == "en" else Path(lang) / "index.html" for lang in LANGS}
+HOME_URLS = {lang: f"{ORIGIN}/" if lang == "en" else f"{ORIGIN}/{lang}/" for lang in LANGS}
+EXPECTED_HREFLANG = {**HOME_URLS, "x-default": HOME_URLS["en"]}
+OG_LOCALES = dict(zip(LANGS, ("tr_TR", "en_US", "de_DE", "es_ES", "fr_FR", "it_IT", "pt_BR", "ru_RU", "ja_JP", "ko_KR", "zh_CN", "ar_AR")))
+INDEXABLE_LEGAL_FILES = ("gizlilik.html", "kosullar.html", "eula.html")
+LEGAL_FILES = (*INDEXABLE_LEGAL_FILES, "partner-sozlesmesi.html")
 EM_DASH = chr(0x2014)
 
 
@@ -110,6 +113,15 @@ def meta_values(page: PageParser, *, name: str | None = None, prop: str | None =
     return result
 
 
+def is_noindex(page: PageParser) -> bool:
+    directives = {
+        directive
+        for value in meta_values(page, name="robots")
+        for directive in value.lower().replace(",", " ").split()
+    }
+    return bool(directives & {"noindex", "none"})
+
+
 def main() -> int:
     errors: list[str] = []
     pages: dict[Path, PageParser] = {}
@@ -130,14 +142,29 @@ def main() -> int:
             errors.append(f"sitemap.xml: geçersiz mutlak URL: {location}")
         elif not (ROOT / local).is_file():
             errors.append(f"sitemap.xml: {location} için dosya yok: {local}")
+        else:
+            page = parse_page(local, errors)
+            pages[local] = page
+            if is_noindex(page):
+                errors.append(f"sitemap.xml: noindex URL must not be listed: {location}")
+            if page.canonicals != [location]:
+                errors.append(f"sitemap.xml: URL must match the page canonical: {location}")
+
+    expected_sitemap = set(HOME_URLS.values())
+    for filename in INDEXABLE_LEGAL_FILES:
+        for lang in LANGS:
+            expected_sitemap.add(f"{ORIGIN}/{'' if lang == 'tr' else lang + '/'}{filename}")
+    if set(locations) != expected_sitemap:
+        errors.append(f"sitemap.xml: must contain exactly the {len(expected_sitemap)} canonical, indexable pages")
 
     baseline: list[tuple[str, str]] | None = None
     for lang, path in HOME_FILES.items():
-        page = parse_page(path, errors)
+        page = pages.get(path) or parse_page(path, errors)
         pages[path] = page
         if page.canonicals != [HOME_URLS[lang]]:
             errors.append(f"{path}: canonical kendi dil URL'si değil veya sayısı 1 değil")
-
+        if page.html_lang != lang:
+            errors.append(f"{path}: html lang must be {lang}")
         counts: dict[str, int] = {}
         hrefs: dict[str, str] = {}
         for code, href in page.alternates:
@@ -192,6 +219,22 @@ def main() -> int:
             if len(descriptions) == 1 and json_descriptions != descriptions:
                 errors.append(f"{path}: JSON-LD description meta description ile eşleşmiyor")
 
+        # Legal documents retain metadata checks even when noindex. Auth,
+        # partner tools and the unchanged download bridge are utility pages.
+        if path.name in LEGAL_FILES or not is_noindex(page):
+            if meta_values(page, prop="og:locale") != [OG_LOCALES.get(page.html_lang)]:
+                errors.append(f"{path}: og:locale must match the page language")
+            if len(page.canonicals) != 1 or meta_values(page, prop="og:url") != page.canonicals:
+                errors.append(f"{path}: og:url must match the single canonical")
+            if path.name in LEGAL_FILES:
+                codes = ("tr", "en") if path.name == "partner-sozlesmesi.html" else LANGS
+                expected = {code: f"{ORIGIN}/{'' if code == 'tr' else code + '/'}{path.name}" for code in codes}
+                expected["x-default"] = expected["en"]
+                if dict(page.alternates) != expected or len(page.alternates) != len(expected):
+                    errors.append(f"{path}: incomplete or incorrect legal hreflang cluster")
+                if page.canonicals != [expected.get(page.html_lang)]:
+                    errors.append(f"{path}: legal canonical must match its language")
+
         if path != Path("a/index.html"):
             seo_text = page.titles + page.json_ld
             seo_text.extend(meta_values(page, name="description"))
@@ -206,6 +249,18 @@ def main() -> int:
                 errors.append(f"{path}: eklenen metinde em dash var")
         except OSError as exc:
             errors.append(f"{path}: dosya okunamadı: {exc}")
+
+    redirect = pages[Path("en/index.html")]
+    if redirect.canonicals != [HOME_URLS["en"]]:
+        errors.append("en/index.html: redirect canonical must be the English root")
+    if dict(redirect.alternates) != EXPECTED_HREFLANG or len(redirect.alternates) != 13:
+        errors.append("en/index.html: redirect must carry the complete home hreflang cluster")
+    refreshes = [item.get("content") for item in redirect.meta if item.get("http-equiv", "").lower() == "refresh"]
+    if refreshes != ["0; url=/"] or "<script" in (ROOT / "en/index.html").read_text().lower():
+        errors.append("en/index.html: expected an immediate, JavaScript-free redirect to /")
+    robots = (ROOT / "robots.txt").read_text()
+    if f"Sitemap: {ORIGIN}/sitemap.xml" not in robots:
+        errors.append("robots.txt: missing canonical sitemap URL")
 
     if errors:
         print("SEO doğrulaması başarısız:", file=sys.stderr)
