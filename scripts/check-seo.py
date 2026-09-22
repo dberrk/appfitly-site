@@ -14,9 +14,10 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 ORIGIN = "https://appfitly.com"
 LANGS = ("tr", "en", "de", "es", "fr", "it", "pt-BR", "ru", "ja", "ko", "zh-Hans", "ar")
-HOME_FILES = {"tr": Path("index.html"), **{lang: Path(lang) / "index.html" for lang in LANGS[1:]}}
-HOME_URLS = {"tr": f"{ORIGIN}/", **{lang: f"{ORIGIN}/{lang}/" for lang in LANGS[1:]}}
-EXPECTED_HREFLANG = {**HOME_URLS, "x-default": f"{ORIGIN}/en/"}
+HOME_FILES = {lang: Path("index.html") if lang == "en" else Path(lang) / "index.html" for lang in LANGS}
+HOME_URLS = {lang: f"{ORIGIN}/" if lang == "en" else f"{ORIGIN}/{lang}/" for lang in LANGS}
+EXPECTED_HREFLANG = {**HOME_URLS, "x-default": HOME_URLS["en"]}
+OG_LOCALES = dict(zip(LANGS, ("tr_TR", "en_US", "de_DE", "es_ES", "fr_FR", "it_IT", "pt_BR", "ru_RU", "ja_JP", "ko_KR", "zh_CN", "ar_AR")))
 EM_DASH = chr(0x2014)
 
 
@@ -131,12 +132,23 @@ def main() -> int:
         elif not (ROOT / local).is_file():
             errors.append(f"sitemap.xml: {location} için dosya yok: {local}")
 
+    expected_sitemap = set(HOME_URLS.values())
+    for filename in ("gizlilik.html", "kosullar.html", "eula.html", "partner-sozlesmesi.html"):
+        for lang in (("tr", "en") if filename == "partner-sozlesmesi.html" else LANGS):
+            expected_sitemap.add(f"{ORIGIN}/{'' if lang == 'tr' else lang + '/'}{filename}")
+    if set(locations) != expected_sitemap:
+        errors.append("sitemap.xml: must contain exactly the 50 canonical, indexable pages")
+
     baseline: list[tuple[str, str]] | None = None
     for lang, path in HOME_FILES.items():
         page = parse_page(path, errors)
         pages[path] = page
         if page.canonicals != [HOME_URLS[lang]]:
             errors.append(f"{path}: canonical kendi dil URL'si değil veya sayısı 1 değil")
+        if page.html_lang != lang:
+            errors.append(f"{path}: html lang must be {lang}")
+        if meta_values(page, prop="og:url") != [HOME_URLS[lang]]:
+            errors.append(f"{path}: og:url must match the canonical")
 
         counts: dict[str, int] = {}
         hrefs: dict[str, str] = {}
@@ -192,6 +204,20 @@ def main() -> int:
             if len(descriptions) == 1 and json_descriptions != descriptions:
                 errors.append(f"{path}: JSON-LD description meta description ile eşleşmiyor")
 
+        # Only translated content belongs in an hreflang cluster. Auth, partner
+        # tools and the unchanged download bridge are noindex utility pages.
+        if not any("noindex" in value.lower() for value in meta_values(page, name="robots")):
+            if meta_values(page, prop="og:locale") != [OG_LOCALES.get(page.html_lang)]:
+                errors.append(f"{path}: og:locale must match the page language")
+            if path.name in ("gizlilik.html", "kosullar.html", "eula.html", "partner-sozlesmesi.html"):
+                codes = ("tr", "en") if path.name == "partner-sozlesmesi.html" else LANGS
+                expected = {code: f"{ORIGIN}/{'' if code == 'tr' else code + '/'}{path.name}" for code in codes}
+                expected["x-default"] = expected["en"]
+                if dict(page.alternates) != expected or len(page.alternates) != len(expected):
+                    errors.append(f"{path}: incomplete or incorrect legal hreflang cluster")
+                if page.canonicals != [expected.get(page.html_lang)]:
+                    errors.append(f"{path}: legal canonical must match its language")
+
         if path != Path("a/index.html"):
             seo_text = page.titles + page.json_ld
             seo_text.extend(meta_values(page, name="description"))
@@ -206,6 +232,18 @@ def main() -> int:
                 errors.append(f"{path}: eklenen metinde em dash var")
         except OSError as exc:
             errors.append(f"{path}: dosya okunamadı: {exc}")
+
+    redirect = pages[Path("en/index.html")]
+    if redirect.canonicals != [HOME_URLS["en"]]:
+        errors.append("en/index.html: redirect canonical must be the English root")
+    if dict(redirect.alternates) != EXPECTED_HREFLANG or len(redirect.alternates) != 13:
+        errors.append("en/index.html: redirect must carry the complete home hreflang cluster")
+    refreshes = [item.get("content") for item in redirect.meta if item.get("http-equiv", "").lower() == "refresh"]
+    if refreshes != ["0; url=/"] or "<script" in (ROOT / "en/index.html").read_text().lower():
+        errors.append("en/index.html: expected an immediate, JavaScript-free redirect to /")
+    robots = (ROOT / "robots.txt").read_text()
+    if f"Sitemap: {ORIGIN}/sitemap.xml" not in robots:
+        errors.append("robots.txt: missing canonical sitemap URL")
 
     if errors:
         print("SEO doğrulaması başarısız:", file=sys.stderr)

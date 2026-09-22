@@ -11,8 +11,9 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
 <link rel="canonical" href="https://appfitly.com/ko/">
-<link rel="alternate" hreflang="tr" href="https://appfitly.com/">
-<link rel="alternate" hreflang="en" href="https://appfitly.com/en/">
+<meta property="og:url" content="https://appfitly.com/ko/">
+<link rel="alternate" hreflang="tr" href="https://appfitly.com/tr/">
+<link rel="alternate" hreflang="en" href="https://appfitly.com/">
 <link rel="alternate" hreflang="de" href="https://appfitly.com/de/">
 <link rel="alternate" hreflang="es" href="https://appfitly.com/es/">
 <link rel="alternate" hreflang="fr" href="https://appfitly.com/fr/">
@@ -23,7 +24,7 @@
 <link rel="alternate" hreflang="ko" href="https://appfitly.com/ko/">
 <link rel="alternate" hreflang="zh-Hans" href="https://appfitly.com/zh-Hans/">
 <link rel="alternate" hreflang="ar" href="https://appfitly.com/ar/">
-<link rel="alternate" hreflang="x-default" href="https://appfitly.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://appfitly.com/">
 <link rel="icon" href="/assets/logo.png">
 <script type="application/ld+json">
 {
@@ -716,12 +717,8 @@ select.lang option{background:#15171C;color:var(--text);}
 
 <script>
 (function(){
-  var L=["tr","en","de","es","fr","it","pt-BR","ru","ar","ja","ko","zh-Hans"];
-  var seg=location.pathname.replace(/^\/+/,'').split('/');
-  var cur="tr",page;
-  if(L.indexOf(seg[0])>-1){cur=seg[0];page=seg.slice(1).join('/')||'index.html';}
-  else{page=seg.join('/')||'index.html';}
-  window.fitlySwitchLang=function(l){location.href=(l==='tr'?'/':'/'+l+'/')+page;};
+  var cur=document.documentElement.lang;
+  window.fitlySwitchLang=function(l){location.href=l==='en'?'/':'/'+l+'/';};
   document.addEventListener('DOMContentLoaded',function(){var s=document.querySelectorAll('select.lang');for(var i=0;i<s.length;i++)s[i].value=cur;});
 })();
 </script>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://appfitly.com/</loc></url>
-  <url><loc>https://appfitly.com/en/</loc></url>
+  <url><loc>https://appfitly.com/tr/</loc></url>
   <url><loc>https://appfitly.com/de/</loc></url>
   <url><loc>https://appfitly.com/es/</loc></url>
   <url><loc>https://appfitly.com/fr/</loc></url>
@@ -12,7 +12,6 @@
   <url><loc>https://appfitly.com/ko/</loc></url>
   <url><loc>https://appfitly.com/zh-Hans/</loc></url>
   <url><loc>https://appfitly.com/ar/</loc></url>
-  <url><loc>https://appfitly.com/indir/</loc></url>
   <url><loc>https://appfitly.com/eula.html</loc></url>
   <url><loc>https://appfitly.com/en/eula.html</loc></url>
   <url><loc>https://appfitly.com/de/eula.html</loc></url>
@@ -51,5 +50,4 @@
   <url><loc>https://appfitly.com/ar/kosullar.html</loc></url>
   <url><loc>https://appfitly.com/partner-sozlesmesi.html</loc></url>
   <url><loc>https://appfitly.com/en/partner-sozlesmesi.html</loc></url>
-  <url><loc>https://appfitly.com/partner/</loc></url>
 </urlset>
