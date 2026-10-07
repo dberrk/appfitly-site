@@ -13,7 +13,7 @@ Bu depo Fitly'nin statik pazarlama sitesini ve App Store indirme köprüsünü i
   - `https://appfitly.com/indir/?c=elif_balci` (creator: Elif Balcı, 2026-09-07; `ı` sanitize edilir, ASCII `elif_balci` yaz)
   - `https://appfitly.com/indir/?c=ig_popeye&lang=en` ve `https://appfitly.com/indir/?c=tt_popeye&lang=en` (AI UGC persona Popeye Sailorman, 2026-10-08; bio'da bit.ly kısaltmasıyla, platform başına ayrı `ct`)
 
-TikTok (2026-10-08, owner iPhone'unda ölçüldü): TikTok WebView'ı dokunuşla `location.href = https://apps.apple.com/...` geçişini App Store'a devrediyor (Safari şeması ve `itms-apps` tutmadı). `/indir/` TikTok UA'sında (`TikTok|musical_ly|trill_|Bytedance`) butonu doğrudan mağazaya bağlar; Instagram zinciri değişmedi. `?test=1` her yöntemi ayrı butonla dener, yeniden ölçüm içindir.
+TikTok ve Instagram (2026-10-08, owner iPhone'unda iki uygulamanın DM'sinden `?test=1` ile ölçüldü): dokunuşla `location.href = https://apps.apple.com/...` App Store'u açıyor (Instagram 2026-08-05'teki ölçümden bu yana değişmiş). `/indir/` bu iki uygulamada butonu doğrudan mağazaya bağlar; ölçülmeyen in-app tarayıcılarda (Facebook, Snapchat, ...) tarayıcı şeması zinciri kalır. `?test=1` her yöntemi ayrı butonla dener, yeniden ölçüm içindir.
 
 TikTok App Promotion reklamlarında öncelikli destination doğrudan Apple linkidir: `https://apps.apple.com/app/apple-store/id6790693710?pt=127590870&ct=tiktok_paid_spark_a_us&mt=8`. Web URL'si yalnızca Traffic kampanyalarında veya App Store'un doğrudan açılamadığı organik ve in-app-browser akışlarında kullanılmalıdır.
 

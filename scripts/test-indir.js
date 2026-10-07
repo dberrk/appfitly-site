@@ -270,12 +270,13 @@ const tests = [
       }
     }
   }],
-  ["TikTok doğrudan mağazaya gider, Instagram Chrome ile başlar", () => {
+  ["TikTok ve Instagram doğrudan mağazaya, Facebook tarayıcı zinciriyle", () => {
     const MUSICAL_LY_IOS = "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148 musical_ly_36.1.0 BytedanceWebview/d8a21c6";
     const cases = [
       { name: "TikTok", ua: TIKTOK_IOS, first: "https://apps.apple.com/app/id" },
       { name: "TikTok (musical_ly UA)", ua: MUSICAL_LY_IOS, first: "https://apps.apple.com/app/id" },
-      { name: "Instagram", ua: INSTAGRAM_IOS, first: "googlechromes://apps.apple.com/app/id" },
+      { name: "Instagram", ua: INSTAGRAM_IOS, first: "https://apps.apple.com/app/id" },
+      { name: "Facebook", ua: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148 [FBAN/FBIOS;FBAV/480.0]", first: "googlechromes://apps.apple.com/app/id" },
     ];
     for (const c of cases) {
       const page = createPage({ search: "?c=tt_popeye", ua: c.ua });

@@ -406,7 +406,14 @@
   window.addEventListener("pagehide", markLeft);
   window.addEventListener("blur", markLeft);
 
-  btn.onclick = isTikTok ? function () { location.href = store; } : function () {
+  // Instagram YENİDEN ÖLÇÜLDÜ (owner iPhone, Instagram DM içinden ?test=1,
+  // 2026-10-08): dokunuşla location.href = https://apps.apple.com... artık
+  // App Store'u AÇIYOR. 2026-08-05'teki "Instagram App Store'a giden her yolu
+  // düşürüyor" ölçümü bu davranış için geçersiz; Instagram değişmiş. Ölçülen
+  // iki uygulamada buton doğrudan mağazaya gider, ölçülmeyenlerde (Facebook,
+  // Snapchat, ...) tarayıcı zinciri kalır.
+  var isInstagram = /Instagram/i.test(ua);
+  btn.onclick = (isTikTok || isInstagram) ? function () { location.href = store; } : function () {
     var i = 0;
     (function step() {
       if (left || document.hidden || i >= BROWSERS.length) return;
