@@ -270,6 +270,24 @@ const tests = [
       }
     }
   }],
+  ["TikTok önce Safari'ye kaçar, Instagram Chrome ile başlar", () => {
+    const MUSICAL_LY_IOS = "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148 musical_ly_36.1.0 BytedanceWebview/d8a21c6";
+    const cases = [
+      { name: "TikTok", ua: TIKTOK_IOS, first: "x-safari-https://apps.apple.com/app/id" },
+      { name: "TikTok (musical_ly UA)", ua: MUSICAL_LY_IOS, first: "x-safari-https://apps.apple.com/app/id" },
+      { name: "Instagram", ua: INSTAGRAM_IOS, first: "googlechromes://apps.apple.com/app/id" },
+    ];
+    for (const c of cases) {
+      const page = createPage({ search: "?c=tt_popeye", ua: c.ua });
+      const btn = page.element("btn");
+      assert.equal(typeof btn.onclick, "function", c.name + " zinciri kurmalı");
+      btn.onclick();
+      const first = page.locationAssignments[0];
+      assert.ok(first && first.startsWith(c.first), c.name + " ilk adım " + c.first + " olmalı, gelen: " + first);
+      assertAttribution(first.replace(/^x-safari-https:\/\//, "https://").replace(/^googlechromes:\/\//, "https://"), "tt_popeye", "en");
+      assert.equal(page.element("fallbacks").hidden, false, c.name + " fallback alanını açmalı");
+    }
+  }],
 ];
 
 let failures = 0;
