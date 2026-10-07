@@ -318,13 +318,11 @@
   var inApp = isTikTok ||
               /Instagram|FBAN|FBAV|FB_IAB|Line\/|Twitter|Snapchat|Pinterest/i.test(ua);
 
-  // TikTok (2026-10-08): App Store'a giden her yol TikTok'un WebView'ında
-  // düşüyor (sektör raporları + 2023'ten beri bio'da App Store linki engelli).
-  // Önerilen kaçış önce Safari'ye geçmek: x-safari-https:// (iOS 17+).
-  // Instagram'da bu şema ölçülerek ölü çıktı (2026-08-05), o yüzden yalnız
-  // TikTok zincirinin BAŞINA konuyor; tutmazsa sessizce sıradaki tarayıcıya
-  // geçilir. TikTok davranışı owner cihazında ?test=1 ile ölçülecek.
-  if (isTikTok) BROWSERS.unshift({ key: "fs", url: "x-safari-" + store });
+  // TikTok ÖLÇÜLDÜ (owner iPhone, TikTok DM içinden ?test=1, 2026-10-08):
+  // dokunuşla location.href = https://apps.apple.com... App Store'u AÇIYOR.
+  // Instagram'ın tersine TikTok WebView'ı bu geçişi sisteme devrediyor. Bu
+  // yüzden TikTok'ta buton tarayıcı aramaz, doğrudan mağazaya gider; şema
+  // butonları yalnız yedek olarak altta kalır.
 
   var h = document.getElementById("h"), sub = document.getElementById("sub"),
       btn = document.getElementById("btn"), alt = document.getElementById("alt"),
@@ -408,7 +406,7 @@
   window.addEventListener("pagehide", markLeft);
   window.addEventListener("blur", markLeft);
 
-  btn.onclick = function () {
+  btn.onclick = isTikTok ? function () { location.href = store; } : function () {
     var i = 0;
     (function step() {
       if (left || document.hidden || i >= BROWSERS.length) return;

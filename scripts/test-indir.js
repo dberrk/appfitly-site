@@ -270,11 +270,11 @@ const tests = [
       }
     }
   }],
-  ["TikTok önce Safari'ye kaçar, Instagram Chrome ile başlar", () => {
+  ["TikTok doğrudan mağazaya gider, Instagram Chrome ile başlar", () => {
     const MUSICAL_LY_IOS = "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148 musical_ly_36.1.0 BytedanceWebview/d8a21c6";
     const cases = [
-      { name: "TikTok", ua: TIKTOK_IOS, first: "x-safari-https://apps.apple.com/app/id" },
-      { name: "TikTok (musical_ly UA)", ua: MUSICAL_LY_IOS, first: "x-safari-https://apps.apple.com/app/id" },
+      { name: "TikTok", ua: TIKTOK_IOS, first: "https://apps.apple.com/app/id" },
+      { name: "TikTok (musical_ly UA)", ua: MUSICAL_LY_IOS, first: "https://apps.apple.com/app/id" },
       { name: "Instagram", ua: INSTAGRAM_IOS, first: "googlechromes://apps.apple.com/app/id" },
     ];
     for (const c of cases) {
