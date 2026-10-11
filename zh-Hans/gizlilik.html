@@ -92,7 +92,7 @@
 
 <main>
   <h1>隐私政策与 KVKK 告知声明</h1>
-  <div class="sub">最后更新：2026年8月10日 · 生效日期：2026年8月10日</div>
+  <div class="sub">最后更新：2026年10月10日 · 生效日期：2026年8月10日</div>
 
   <h2><span class="n">1</span> 数据控制者</h2>
   <p>本告知声明依据第 6698 号《个人数据保护法》（以下简称"KVKK"）及相关法律法规，
@@ -116,6 +116,7 @@
     <tr><td><strong>健康（特殊类别）</strong></td><td>身高、体重、目标体重、年龄、性别、身体围度；训练与组数记录、个人纪录；餐食、饮水与营养记录；饮食限制（如清真等，可能同时透露信仰）；您在 Fitly 教练对话中讲述的健康相关内容；HealthKit 数据</td><td><strong>明确同意（第 6 条）</strong></td></tr>
     <tr><td>使用数据（假名化）</td><td>配额计数器、与匿名 UUID 关联的产品统计（仅数字/标签）、token 使用次数</td><td>合法利益（第 5 条）</td></tr>
     <tr><td>广告获客 / 归因（假名化）</td><td>对于已通过身份验证的 StoreKit 首次获取版本候选，Apple Ads AdServices 标准字段会与假名化 UUID 关联并存储在 Supabase。版本检查可排除升级，但不能确定排除同版本重新下载或在另一设备上的获取。Apple 的 <code>conversionType</code> 是 Download/Redownload/PreOrder 分类依据；新用户报告仅使用 Download。原始令牌绝不存储；SHA-256 重放哈希在 24 小时后失效，并由每小时清理任务在 25 小时内删除。</td><td>合法利益（第 5 条）</td></tr>
+    <tr><td>广告衡量事件和设备标识符（假名化）</td><td><strong>Meta：</strong>只要设置 → "诊断与使用数据"处于开启状态，每次安装都会发送：安装、打开应用及会话时长、完成新手引导、开始试用和订阅事件，设备信息（如型号、操作系统、语言、时区），应用专属设备标识符（IDFV）和 IP 地址；广告标识符（IDFA）仅在您于 Apple 的 ATT 弹窗中允许跟踪后发送。<strong>TikTok：</strong>仅在您允许跟踪后且同一开关开启时：安装、每次打开应用、次日回访、完成新手引导、开始试用和订阅事件，设备信息、IDFV、IDFA 和 IP 地址。绝不会发送给任何一方的内容：健康数据、消息、姓名、电子邮箱、支付金额。</td><td>允许跟踪前为合法利益（第 5 条第 2 款 (f)）；允许后为明确同意（第 5 条第 1 款）</td></tr>
     <tr><td>订阅 / 财务（一般）</td><td>App Store 交易状态、产品 ID、订阅周期</td><td>合同（第 5 条）</td></tr>
     <tr><td>匿名 / 非个人</td><td>运动目录、食物目录、共享食谱缓存</td><td>无</td></tr>
   </table>
@@ -127,6 +128,7 @@
     <li>跟踪您的进展（体重图表、纪录、连续记录）：<em>明确同意</em>。</li>
     <li>运营订阅、开启 Pro 功能以及滥用/额度管控：<em>合同 / 合法利益</em>。</li>
     <li>衡量 Apple Ads 获客成效并管理开发者广告/营销：<em>合法利益</em>。</li>
+    <li>通过 Meta 和 TikTok 衡量哪些广告为 Fitly 带来用户（广告衡量与归因）：<em>允许跟踪前为合法利益（第 5 条第 2 款 (f)），允许后为明确同意（第 5 条第 1 款）；可在设置中关闭</em>。</li>
     <li>应用稳定性（崩溃报告）和产品改进（匿名使用指标）：<em>合法利益；可在设置中关闭</em>。</li>
   </ul>
 
@@ -150,7 +152,10 @@
     <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Fitly 教练对话内容 + AI 上下文（个人资料摘要、测量/活动摘要、当前计划摘要）</td><td>美国</td></tr>
     <tr><td>Apple / AdServices</td><td>在完成身份验证和 StoreKit 首次获取版本候选检查后，经过身份验证的 Supabase Edge Function 仅临时向 Apple 发送原始令牌。Apple 不会收到 UUID、电子邮箱、姓名、健康数据、自由文本或 IDFA；包括权威转换类型在内的标准响应返回 Supabase 的欧盟区域。</td><td>美国 / 全球</td></tr>
     <tr><td>RevenueCat</td><td>仅接收订阅/交易数据和假名化 UUID，不接收 AdServices 令牌或 Apple 归因响应。<strong>电子邮箱、姓名、健康数据、自由文本和 IDFA 也绝不会发送。</strong></td><td>美国</td></tr>
+    <tr><td>Meta Platforms, Inc.</td><td>广告衡量事件、设备信息、IDFV 和 IP 地址；仅在您允许跟踪后发送 IDFA。不发送健康数据、消息、联系方式或支付金额（参见第 10 节）。</td><td>美国</td></tr>
+    <tr><td>TikTok（TikTok Pte. Ltd. 及其关联公司）</td><td>仅在您允许跟踪后：广告衡量事件、设备信息、IDFV、IDFA 和 IP 地址。不发送健康数据、消息、联系方式或支付金额（参见第 10 节）。</td><td>美国 / 新加坡</td></tr>
   </table>
+  <p>为广告衡量向 Meta 和 TikTok 的传输依据 Meta 和 TikTok 商业工具条款中的数据传输条款进行（Meta Business Tools Terms、TikTok Business Products (Data) Terms），不以上文所述的人工智能跨境传输同意为依据。</p>
   <p>在某些流程中，例如通过照片记录餐食和自由文本宏量估算，
   <strong>只有当您明确点击某个按钮时</strong>（此次点击即为您的传输请求），您输入的食物名称
   或拍摄的照片才会被发送给人工智能服务；照片不会保存在服务器上，仅保存您确认的宏量数值。</p>
@@ -165,6 +170,8 @@
     <tr><td>Apple / AdServices</td><td>通过经过身份验证的 Supabase Edge Function 临时处理归因令牌；不存储原始令牌</td><td>美国 / 全球</td></tr>
     <tr><td>PostHog</td><td>仅在您的分析选择允许时：有限的客户端漏斗事件 + 假名化 UUID；不含自由文本、健康数据、价格、交易或 Apple 广告系列数据</td><td class="region">欧盟·法兰克福</td></tr>
     <tr><td>RevenueCat</td><td>仅管理订阅。RevenueCat 的 Apple Search Ads 集成和 RevenueCat→PostHog 集成均为<strong>关闭</strong></td><td>美国</td></tr>
+    <tr><td>Meta（Meta Platforms, Inc.）</td><td>通过 Meta SDK 进行广告衡量与归因。Meta 为 Fitly 的衡量处理这些事件，并依据其商业工具条款，也作为独立的数据控制者为其自身目的进行处理。<a href="https://www.facebook.com/privacy/policy/">Meta 隐私政策</a></td><td>美国</td></tr>
+    <tr><td>TikTok（TikTok Pte. Ltd.）</td><td>通过 TikTok SDK 进行广告衡量与归因，仅在您允许跟踪后。TikTok 为 Fitly 的衡量处理这些事件，并依据其商业产品条款，也作为独立的数据控制者为其自身目的进行处理。<a href="https://www.tiktok.com/legal/privacy-policy">TikTok 隐私政策</a></td><td>美国 / 新加坡</td></tr>
     <tr><td>Brevo</td><td>登录/验证电子邮件（仅电子邮箱地址 + 链接；绝不含健康内容）</td><td class="region">欧盟·巴黎</td></tr>
     <tr><td>GitHub Pages + Cloudflare</td><td>登录链接跳转页面（<strong>不流经任何个人数据</strong>）</td><td>全球（静态页面）</td></tr>
   </table>
@@ -201,12 +208,18 @@
   您的请求将在 KVKK 规定的期限内（最长 30 天）得到处理。</p>
 
   <h2><span class="n">10</span> Cookie 与追踪</h2>
-  <p>Fitly 是一款移动应用；不进行广告目的的追踪（跨应用追踪），无需 Apple ATT 授权。
-  StoreKit 版本相等仅表示可排除升级的首次获取版本候选，不能确定排除同版本重新下载或在另一
+  <p>Fitly 是一款移动应用。为了衡量哪些广告为 Fitly 带来用户，它使用 Meta 和 TikTok 的 SDK（参见第 2、3、5、6 节）。在引导流程期间，iOS 会显示 Apple 的 ATT（App Tracking Transparency）弹窗：</p>
+  <ul>
+    <li><strong>如果您允许跟踪：</strong>Meta 还会收到您的广告标识符（IDFA），并且 TikTok SDK 开始运行：安装、每次打开应用、次日回访、完成新手引导、开始试用和订阅事件会连同设备信息、IDFV、IDFA 和 IP 地址发送给 TikTok。TikTok SDK 还会更新 Apple 的 SKAdNetwork 衡量。法律依据：您的明确同意。</li>
+    <li><strong>如果您不允许（或在询问您之前）：</strong>不会收集 IDFA，也不会向 TikTok 发送任何内容。Meta 仍会基于合法利益接收第 2 节所列的应用事件以及设备信息、IDFV 和 IP 地址。</li>
+    <li><strong>设置 → "诊断与使用数据"：</strong>关闭此开关后，Fitly 发送给 Meta 和 TikTok 的所有事件会立即停止。在下次重新启动应用之前，Meta SDK 仍可能发送一次不含广告标识符的每日状态通知。</li>
+    <li><strong>iOS 设置 → 隐私与安全性 → 跟踪：</strong>您可以随时撤回 Fitly 的跟踪权限；此后将停止发送广告标识符，也会停止向 TikTok 发送。</li>
+  </ul>
+  <p>您的健康数据绝不会发送给 Meta 或 TikTok。Meta 和 TikTok 自身的处理受其各自隐私政策约束（参见第 6 节）。Apple Ads 归因（AdServices）不使用 IDFA。StoreKit 版本相等仅表示可排除升级的首次获取版本候选，不能确定排除同版本重新下载或在另一
   设备上的获取。完成身份验证后，iOS 将令牌发送给 Edge Function；该函数仅临时转发给 Apple，
   不存储原始令牌，并在欧盟保存标准响应。Apple 的 <code>conversionType</code> 是 Download/
   Redownload/PreOrder 分类依据。本地所有者记录仅在该安装仍存在时阻止普通账户切换，预期所有者
-  与 JWT 相等可防止 A→B 竞态。<strong>我们不会收集 IDFA，也不会跨应用追踪您。</strong>RevenueCat 的
+  与 JWT 相等可防止 A→B 竞态。RevenueCat 的
   Apple Search Ads 集成和 RevenueCat→PostHog 集成均为关闭，RevenueCat 仅处理订阅。
   PostHog 仅在您的分析选择允许时接收有限的客户端漏斗事件。自动屏幕捕获和会话录制均为
   <strong>关闭</strong>状态。</p>

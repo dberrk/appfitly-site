@@ -92,7 +92,7 @@
 
 <main>
   <h1>Privacy Policy and KVKK Disclosure Notice</h1>
-  <div class="sub">Last updated: August 10, 2026 · Effective: August 10, 2026</div>
+  <div class="sub">Last updated: October 10, 2026 · Effective: August 10, 2026</div>
 
   <h2><span class="n">1</span> Data Controller</h2>
   <p>This disclosure notice has been prepared by the data controller whose details appear
@@ -118,6 +118,7 @@
     <tr><td><strong>Health (special category)</strong></td><td>height, weight, target weight, age, sex, body measurements; workout and set records, personal records; meal, water, and nutrition logs; dietary restrictions (e.g. halal, which may also reveal belief); anything health-related you share in Fitly Coach chat; HealthKit data</td><td><strong>Explicit consent (Art. 6)</strong></td></tr>
     <tr><td>Usage data (pseudonymous)</td><td>quota counters, product statistics tied to an anonymous UUID (numbers/labels only), token usage counts</td><td>Legitimate interest (Art. 5)</td></tr>
     <tr><td>Advertising acquisition / attribution (pseudonymous)</td><td>For an authenticated StoreKit first-acquisition-version candidate, Apple Ads standard AdServices fields are stored in Supabase against a pseudonymous UUID. The version check excludes upgrades; it cannot conclusively exclude a same-version redownload or an acquisition on another device. Apple's <code>conversionType</code> is authoritative for Download/Redownload/PreOrder, and new-user reports use Download only. The raw token is never stored; its SHA-256 replay hash expires after 24 hours and is removed by the hourly purge within 25 hours.</td><td>Legitimate interest (Art. 5)</td></tr>
+    <tr><td>Ad measurement events and device identifiers (pseudonymous)</td><td><strong>Meta:</strong> from every install while Settings → "Diagnostics &amp; usage data" is on: install, app open and session length, tutorial completed, trial start and subscription events, device information (such as model, operating system, language, time zone), the app-specific device identifier (IDFV) and IP address; your advertising identifier (IDFA) only after you allow tracking in Apple's ATT prompt. <strong>TikTok:</strong> only after you allow tracking, with the same switch on: install, every app open, next-day return, tutorial completed, trial start and subscription events, device information, IDFV, IDFA and IP address. Never sent to either: health data, messages, name, email, amount paid.</td><td>Legitimate interest (Art. 5(2)(f)) before you allow tracking; explicit consent (Art. 5(1)) after</td></tr>
     <tr><td>Subscription / financial (general)</td><td>App Store transaction status, product ID, subscription period</td><td>Contract (Art. 5)</td></tr>
     <tr><td>Anonymous / non-personal</td><td>exercise catalog, food catalog, shared recipe cache</td><td>—</td></tr>
   </table>
@@ -129,6 +130,7 @@
     <li>Tracking your progress (weight chart, records, streaks) — <em>explicit consent</em>.</li>
     <li>Operating the subscription, unlocking Pro features, and abuse/limit control — <em>contract / legitimate interest</em>.</li>
     <li>Measuring Apple Ads acquisition performance and managing developer advertising/marketing — <em>legitimate interest</em>.</li>
+    <li>Measuring which ads bring people to Fitly, with Meta and TikTok (ad measurement and attribution): <em>legitimate interest (Art. 5(2)(f)) before you allow tracking, explicit consent (Art. 5(1)) after you allow it; can be turned off in Settings</em>.</li>
     <li>App stability (crash reports) and product improvement (anonymous usage metrics) — <em>legitimate interest; can be disabled in settings</em>.</li>
   </ul>
 
@@ -154,7 +156,10 @@
     <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Fitly Coach chat content + AI context (profile summary, measurement/activity summaries, active plan summary)</td><td>USA</td></tr>
     <tr><td>Apple / AdServices</td><td>After authentication and a StoreKit first-acquisition-version candidate, our Supabase Edge Function sends the raw AdServices token to Apple only transiently. No UUID, email, name, health data, free text or IDFA is sent. Apple's standard response, including the authoritative conversion type, returns to Supabase in the EU.</td><td>USA / global service</td></tr>
     <tr><td>RevenueCat</td><td>Subscription/transaction data + pseudonymous user ID (UUID only). <strong>RevenueCat receives no AdServices token, Apple Ads response, email, name, health data, free text or IDFA.</strong></td><td>USA</td></tr>
+    <tr><td>Meta Platforms, Inc.</td><td>Ad measurement events, device information, IDFV and IP address; IDFA only after you allow tracking. No health data, messages, contact details or amounts paid (see Section 10).</td><td>USA</td></tr>
+    <tr><td>TikTok (TikTok Pte. Ltd. and affiliates)</td><td>Only after you allow tracking: ad measurement events, device information, IDFV, IDFA and IP address. No health data, messages, contact details or amounts paid (see Section 10).</td><td>USA / Singapore</td></tr>
   </table>
+  <p>The transfer to Meta and TikTok for ad measurement takes place under the data transfer terms of Meta's and TikTok's business tools (Meta Business Tools Terms, TikTok Business Products (Data) Terms); it does not rely on the AI transfer consent described above.</p>
   <p>In some flows, such as photo meal logging and free-text macro estimation,
   <strong>only when you explicitly tap a button</strong> (that tap is your transfer
   request) is the food name you typed or the photo you took sent to the AI service;
@@ -170,6 +175,8 @@
     <tr><td>Apple / AdServices</td><td>Transient standard attribution-token exchange through the authenticated Supabase Edge Function; no raw-token storage (see §5)</td><td>USA / global service</td></tr>
     <tr><td>PostHog</td><td>Only when your analytics choice permits: bounded client-side funnel events + pseudonymous UUID; no free text, health, price, transaction or Apple campaign data</td><td class="region">EU — Frankfurt</td></tr>
     <tr><td>RevenueCat</td><td>Subscription management only. Apple Search Ads attribution and RevenueCat→PostHog integrations are disabled.</td><td>USA</td></tr>
+    <tr><td>Meta (Meta Platforms, Inc.)</td><td>Ad measurement and attribution through the Meta SDK. Meta processes the events for Fitly's measurement and, under its Business Tools Terms, also as an independent controller for its own purposes. <a href="https://www.facebook.com/privacy/policy/">Meta Privacy Policy</a></td><td>USA</td></tr>
+    <tr><td>TikTok (TikTok Pte. Ltd.)</td><td>Ad measurement and attribution through the TikTok SDK, only after you allow tracking. TikTok processes the events for Fitly's measurement and, under its Business Products (Data) Terms, also as an independent controller for its own purposes. <a href="https://www.tiktok.com/legal/privacy-policy">TikTok Privacy Policy</a></td><td>USA / Singapore</td></tr>
     <tr><td>Brevo</td><td>Sign-in/verification emails (email address + link only; never health content)</td><td class="region">EU — Paris</td></tr>
     <tr><td>GitHub Pages + Cloudflare</td><td>Sign-in link redirect page (<strong>no personal data flows</strong>)</td><td>Global (static page)</td></tr>
   </table>
@@ -216,16 +223,21 @@
   your requests are resolved within the period prescribed by KVKK (at most 30 days).</p>
 
   <h2><span class="n">10</span> Cookies and Tracking</h2>
-  <p>Fitly is a mobile app; it does not perform advertising tracking (cross-app tracking) and
-  does not require Apple ATT permission. StoreKit version equality is only a
+  <p>Fitly is a mobile app. To measure which ads bring people to Fitly, it uses the Meta and TikTok SDKs (see Sections 2, 3, 5 and 6). During onboarding, iOS shows Apple's ATT (App Tracking Transparency) prompt:</p>
+  <ul>
+    <li><strong>If you allow tracking:</strong> Meta also receives your advertising identifier (IDFA), and the TikTok SDK starts: install, every app open, next-day return, tutorial completed, trial start and subscription events are sent to TikTok with device information, IDFV, IDFA and IP address. TikTok's SDK also updates Apple's SKAdNetwork measurement. Legal basis: your explicit consent.</li>
+    <li><strong>If you do not allow tracking (or before you are asked):</strong> no IDFA is collected and nothing is sent to TikTok. Meta still receives the app events listed in Section 2 with device information, IDFV and IP address, on the basis of legitimate interest.</li>
+    <li><strong>Settings → "Diagnostics &amp; usage data":</strong> turning this switch off stops every event Fitly sends to Meta and TikTok at once. Until the app is next restarted, Meta's SDK may still send one daily status ping without the advertising identifier.</li>
+    <li><strong>iOS Settings → Privacy &amp; Security → Tracking:</strong> you can withdraw tracking permission for Fitly at any time; the advertising identifier then stops being sent, and so does everything sent to TikTok.</li>
+  </ul>
+  <p>Your health data is never sent to Meta or TikTok. Meta's and TikTok's own processing follows their privacy policies (see Section 6). Apple Ads attribution (AdServices) does not use the IDFA. StoreKit version equality is only a
   first-acquisition-version candidate that excludes upgrades; it cannot conclusively exclude a
   same-version redownload or an acquisition on another device. After authentication, iOS sends the
   AdServices token to our Edge Function, which posts it transiently to Apple, never stores the raw
   token, and stores Apple's standard response in Supabase in the EU. Apple's
   <code>conversionType</code> is authoritative for Download/Redownload/PreOrder. A local owner record
   blocks ordinary account changes only while that installation remains, and expected-owner/JWT
-  equality prevents an in-flight A→B race. <strong>We do not collect IDFA or track you
-  across apps.</strong>
+  equality prevents an in-flight A→B race.
   RevenueCat Apple Search Ads and RevenueCat→PostHog integrations are disabled. PostHog receives
   only bounded client funnel events when your analytics choice permits; automatic screen capture
   and session recording are <strong>off</strong>, and analytics can be disabled in Settings.</p>

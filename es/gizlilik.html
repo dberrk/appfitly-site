@@ -92,7 +92,7 @@
 
 <main>
   <h1>Política de Privacidad y Aviso Informativo KVKK</h1>
-  <div class="sub">Última actualización: 10 de agosto de 2026 · Vigencia: 10 de agosto de 2026</div>
+  <div class="sub">Última actualización: 10 de octubre de 2026 · Vigencia: 10 de agosto de 2026</div>
 
   <h2><span class="n">1</span> Responsable del tratamiento</h2>
   <p>El presente aviso informativo ha sido elaborado, de conformidad con la Ley n.º 6698 de
@@ -118,6 +118,7 @@
     <tr><td><strong>Salud (categoría especial)</strong></td><td>estatura, peso, peso objetivo, edad, sexo, medidas corporales; registros de entrenamiento y series, récords personales; registros de comidas, agua y nutrición; restricciones dietéticas (que pueden revelar creencias, p. ej. halal); lo que cuentas sobre tu salud en el chat de Fitly Coach; datos de HealthKit</td><td><strong>Consentimiento explícito (art. 6)</strong></td></tr>
     <tr><td>Datos de uso (seudónimos)</td><td>contadores de cuota, estadísticas de producto vinculadas a un UUID anónimo (solo cifras/etiquetas), recuentos de uso de tokens</td><td>Interés legítimo (art. 5)</td></tr>
     <tr><td>Adquisición publicitaria / atribución (datos seudonimizados)</td><td>Para un candidato autenticado de versión de primera adquisición de StoreKit, los campos estándar de AdServices de Apple Ads se guardan en Supabase asociados a un UUID seudónimo. La comprobación de versión excluye actualizaciones, pero no descarta de forma concluyente una redescarga de la misma versión o una adquisición en otro dispositivo. El <code>conversionType</code> de Apple es la autoridad para Download/Redownload/PreOrder; los informes de usuarios nuevos usan solo Download. El token sin procesar nunca se almacena; su hash de repetición SHA-256 caduca a las 24 horas y la purga horaria lo elimina antes de 25 horas.</td><td>Interés legítimo (art. 5)</td></tr>
+    <tr><td>Eventos de medición publicitaria e identificadores del dispositivo (seudónimos)</td><td><strong>Meta:</strong> desde cada instalación mientras Ajustes → "Datos de diagnóstico y uso" esté activado: eventos de instalación, apertura de la app y duración de la sesión, tutorial completado, inicio de prueba y suscripción, información del dispositivo (como modelo, sistema operativo, idioma, zona horaria), el identificador del dispositivo propio de la app (IDFV) y la dirección IP; tu identificador de publicidad (IDFA) solo después de que permitas el rastreo en el aviso ATT de Apple. <strong>TikTok:</strong> solo después de que permitas el rastreo y con el mismo interruptor activado: eventos de instalación, cada apertura de la app, regreso al día siguiente, tutorial completado, inicio de prueba y suscripción, información del dispositivo, IDFV, IDFA y dirección IP. Nunca se envía a ninguno de los dos: datos de salud, mensajes, nombre, correo electrónico, importe pagado.</td><td>Interés legítimo (art. 5(2)(f)) antes de que permitas el rastreo; consentimiento explícito (art. 5(1)) después</td></tr>
     <tr><td>Suscripción / financieros (general)</td><td>estado de la transacción del App Store, identificador del producto, periodo de suscripción</td><td>Contrato (art. 5)</td></tr>
     <tr><td>Anónimos / no personales</td><td>catálogo de ejercicios, catálogo de comidas, caché compartida de recetas</td><td>No aplicable</td></tr>
   </table>
@@ -129,6 +130,7 @@
     <li>El seguimiento de tu progreso (gráfico de peso, récords, rachas) — <em>consentimiento explícito</em>.</li>
     <li>La gestión de la suscripción, la activación de las funciones Pro y el control de abuso/límites — <em>contrato / interés legítimo</em>.</li>
     <li>La medición del rendimiento de adquisición en Apple Ads y la gestión de la publicidad/el marketing del desarrollador — <em>interés legítimo</em>.</li>
+    <li>La medición con Meta y TikTok de qué anuncios traen personas a Fitly (medición publicitaria y atribución): <em>interés legítimo (art. 5(2)(f)) antes de que permitas el rastreo, consentimiento explícito (art. 5(1)) después; se puede desactivar desde los ajustes</em>.</li>
     <li>La estabilidad de la aplicación (informes de fallos) y la mejora del producto (métricas de uso anónimas) — <em>interés legítimo; se puede desactivar desde los ajustes</em>.</li>
   </ul>
 
@@ -155,7 +157,10 @@
     <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Contenido del chat de Fitly Coach + contexto de IA (resumen del perfil, resúmenes de medidas/actividad, resumen del plan activo)</td><td>EE. UU.</td></tr>
     <tr><td>Apple / AdServices</td><td>Tras la autenticación y la comprobación del candidato de versión de primera adquisición, una Supabase Edge Function autenticada envía el token de atribución sin procesar a Apple solo de forma transitoria. Apple no recibe UUID, correo electrónico, nombre, datos de salud, texto libre ni IDFA; la respuesta estándar, incluido el tipo de conversión determinante, vuelve a la región de la UE de Supabase.</td><td>EE. UU. / global</td></tr>
     <tr><td>RevenueCat</td><td>Solo datos de suscripción/transacción y el UUID seudónimo. No recibe el token de AdServices ni la respuesta de atribución de Apple; <strong>tampoco se envían el correo electrónico, el nombre, datos de salud, texto libre ni el IDFA.</strong></td><td>EE. UU.</td></tr>
+    <tr><td>Meta Platforms, Inc.</td><td>Eventos de medición publicitaria, información del dispositivo, IDFV y dirección IP; IDFA solo después de que permitas el rastreo. No se envían datos de salud, mensajes, datos de contacto ni importes pagados (véase la Sección 10).</td><td>EE. UU.</td></tr>
+    <tr><td>TikTok (TikTok Pte. Ltd. y sus filiales)</td><td>Solo después de que permitas el rastreo: eventos de medición publicitaria, información del dispositivo, IDFV, IDFA y dirección IP. No se envían datos de salud, mensajes, datos de contacto ni importes pagados (véase la Sección 10).</td><td>EE. UU. / Singapur</td></tr>
   </table>
+  <p>La transferencia a Meta y TikTok para la medición publicitaria se realiza conforme a las cláusulas de transferencia de datos de las condiciones de las herramientas para empresas de Meta y TikTok (Meta Business Tools Terms, TikTok Business Products (Data) Terms); no se basa en el consentimiento de transferencia para la IA descrito arriba.</p>
   <p>En algunos flujos, como el registro de comidas con foto y la estimación de macros a partir de
   texto libre, <strong>solo cuando tú tocas expresamente un botón</strong> (ese toque constituye tu
   solicitud de transferencia) se envía al servicio de inteligencia artificial el nombre del alimento
@@ -172,6 +177,8 @@
     <tr><td>Apple / AdServices</td><td>Tratamiento transitorio del token de atribución mediante una Supabase Edge Function autenticada; el token sin procesar no se almacena</td><td>EE. UU. / global</td></tr>
     <tr><td>PostHog</td><td>Solo si tu elección de analítica lo permite: eventos de embudo limitados del cliente + UUID seudónimo; sin texto libre, datos de salud, precios, transacciones ni datos de campañas de Apple</td><td class="region">UE — Fráncfort</td></tr>
     <tr><td>RevenueCat</td><td>Solo gestión de suscripciones. Las integraciones Apple Search Ads de RevenueCat y RevenueCat→PostHog están <strong>desactivadas</strong></td><td>EE. UU.</td></tr>
+    <tr><td>Meta (Meta Platforms, Inc.)</td><td>Medición publicitaria y atribución mediante el SDK de Meta. Meta trata los eventos para la medición de Fitly y, según sus condiciones de herramientas para empresas, también como responsable independiente para sus propios fines. <a href="https://www.facebook.com/privacy/policy/">Política de privacidad de Meta</a></td><td>EE. UU.</td></tr>
+    <tr><td>TikTok (TikTok Pte. Ltd.)</td><td>Medición publicitaria y atribución mediante el SDK de TikTok, solo después de que permitas el rastreo. TikTok trata los eventos para la medición de Fitly y, según sus condiciones de productos para empresas, también como responsable independiente para sus propios fines. <a href="https://www.tiktok.com/legal/privacy-policy">Política de privacidad de TikTok</a></td><td>EE. UU. / Singapur</td></tr>
     <tr><td>Brevo</td><td>Correos de inicio de sesión/verificación (solo dirección de correo + enlace; nunca contenido de salud)</td><td class="region">UE — París</td></tr>
     <tr><td>GitHub Pages + Cloudflare</td><td>Página de redirección del enlace de inicio de sesión (<strong>no circulan datos personales</strong>)</td><td>Global (página estática)</td></tr>
   </table>
@@ -213,15 +220,20 @@
   tus solicitudes se resuelven dentro del plazo previsto por la KVKK (30 días como máximo).</p>
 
   <h2><span class="n">10</span> Cookies y seguimiento</h2>
-  <p>Fitly es una aplicación móvil; no realiza seguimiento con fines publicitarios (cross-app tracking)
-  ni requiere el permiso ATT de Apple. La igualdad de versiones de StoreKit solo es un candidato de
+  <p>Fitly es una aplicación móvil. Para medir qué anuncios traen personas a Fitly, usa los SDK de Meta y TikTok (véanse las Secciones 2, 3, 5 y 6). Durante el onboarding, iOS muestra el aviso ATT (App Tracking Transparency) de Apple:</p>
+  <ul>
+    <li><strong>Si permites el rastreo:</strong> Meta recibe también tu identificador de publicidad (IDFA) y se activa el SDK de TikTok, que envía a TikTok eventos de instalación, cada apertura, regreso al día siguiente, tutorial completado, inicio de prueba y suscripción, junto con información del dispositivo, IDFV, IDFA y dirección IP. El SDK de TikTok también actualiza la medición SKAdNetwork de Apple. Base jurídica: tu consentimiento explícito.</li>
+    <li><strong>Si no lo permites (o antes de que se te pregunte):</strong> no se recopila el IDFA y no se envía nada a TikTok. Meta sigue recibiendo los eventos de la app indicados en la Sección 2, con información del dispositivo, IDFV y dirección IP, sobre la base del interés legítimo.</li>
+    <li><strong>Ajustes → "Datos de diagnóstico y uso":</strong> al desactivar este interruptor se detienen al instante todos los eventos que Fitly envía a Meta y TikTok. Hasta el siguiente reinicio de la app, el SDK de Meta aún puede enviar un aviso de estado diario sin el identificador de publicidad.</li>
+    <li><strong>Ajustes de iOS → Privacidad y seguridad → Rastreo:</strong> puedes retirar el permiso de rastreo de Fitly en cualquier momento; entonces deja de enviarse el identificador de publicidad y también se detiene el envío a TikTok.</li>
+  </ul>
+  <p>Tus datos de salud nunca se envían a Meta ni a TikTok. El tratamiento propio de Meta y TikTok se rige por sus políticas de privacidad (véase la Sección 6). La atribución de Apple Ads (AdServices) no utiliza el IDFA. La igualdad de versiones de StoreKit solo es un candidato de
   versión de primera adquisición que excluye actualizaciones; no descarta de forma concluyente una
   redescarga de la misma versión o una adquisición en otro dispositivo. Tras la autenticación, iOS
   envía el token a nuestra Edge Function, que lo remite transitoriamente a Apple, nunca lo almacena en
   bruto y guarda la respuesta estándar en la UE. El <code>conversionType</code> de Apple es la autoridad
   para Download/Redownload/PreOrder. Un propietario local bloquea cambios ordinarios de cuenta solo
-  mientras exista esa instalación, y la igualdad entre propietario esperado y JWT evita una carrera A→B.
-  <strong>No recopilamos el IDFA ni te rastreamos entre aplicaciones.</strong> Las integraciones Apple Search
+  mientras exista esa instalación, y la igualdad entre propietario esperado y JWT evita una carrera A→B. Las integraciones Apple Search
   Ads de RevenueCat y RevenueCat→PostHog están desactivadas; RevenueCat solo gestiona suscripciones.
   PostHog recibe eventos de embudo limitados del cliente únicamente si tu elección de analítica lo permite.
   La captura automática de pantallas y la grabación de sesiones están <strong>desactivadas</strong>.</p>

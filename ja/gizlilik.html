@@ -92,7 +92,7 @@
 
 <main>
   <h1>プライバシーポリシーおよびKVKK情報開示文書</h1>
-  <div class="sub">最終更新：2026年8月10日 · 発効：2026年8月10日</div>
+  <div class="sub">最終更新：2026年10月10日 · 発効：2026年8月10日</div>
 
   <h2><span class="n">1</span> データ管理者</h2>
   <p>本情報開示文書は、法律第6698号「個人情報保護法」（以下「KVKK」）および
@@ -117,6 +117,7 @@
     <tr><td><strong>健康（特別な種類）</strong></td><td>身長、体重、目標体重、年齢、性別、身体測定値、トレーニングとセットの記録、自己ベスト、食事・水分・栄養の記録、食事制限（ハラルなど信仰を明らかにする場合もあります）、Fitlyコーチとのチャットで健康について話した内容、HealthKitデータ</td><td><strong>明示的同意（第6条）</strong></td></tr>
     <tr><td>利用データ（仮名）</td><td>クォータカウンター、匿名UUIDに紐づく製品統計（数値／ラベルのみ）、トークン使用回数</td><td>正当な利益（第5条）</td></tr>
     <tr><td>広告獲得／アトリビューション（仮名）</td><td>認証済みのStoreKit初回取得バージョン候補について、Apple Ads AdServicesの標準項目を仮名UUIDに紐づけてSupabaseに保存します。バージョン確認はアップグレードを除外しますが、同じバージョンの再ダウンロードや別端末での取得を確実には除外できません。Download/Redownload/PreOrderの分類はAppleの<code>conversionType</code>が基準で、新規ユーザーレポートにはDownloadのみを使用します。生のトークンは保存せず、SHA-256再送ハッシュは24時間で失効し、毎時の削除処理により25時間以内に削除されます。</td><td>正当な利益（第5条）</td></tr>
+    <tr><td>広告効果測定イベントとデバイス識別子（仮名）</td><td><strong>Meta：</strong>設定 →「診断・使用状況データ」がオンの間、すべてのインストールから：インストール、アプリの起動とセッション時間、チュートリアル完了、トライアル開始、サブスクリプションの各イベント、デバイス情報（機種、OS、言語、タイムゾーンなど）、アプリ固有のデバイス識別子（IDFV）、IPアドレス。広告識別子（IDFA）は、AppleのATTダイアログでトラッキングを許可した後に限ります。<strong>TikTok：</strong>トラッキングを許可した後に限り、同じスイッチがオンの場合：インストール、毎回の起動、翌日の再訪、チュートリアル完了、トライアル開始、サブスクリプションの各イベント、デバイス情報、IDFV、IDFA、IPアドレス。どちらにも送信しないもの：健康データ、メッセージ、氏名、メールアドレス、支払金額。</td><td>トラッキング許可前は正当な利益（第5条第2項(f)）、許可後は明示的同意（第5条第1項）</td></tr>
     <tr><td>サブスクリプション／財務（一般）</td><td>App Storeの取引状況、製品ID、サブスクリプション期間</td><td>契約（第5条）</td></tr>
     <tr><td>匿名／非個人</td><td>エクササイズカタログ、料理カタログ、共有レシピキャッシュ</td><td>該当なし</td></tr>
   </table>
@@ -128,6 +129,7 @@
     <li>進捗の記録（体重グラフ、自己ベスト、連続記録）：<em>明示的同意</em>。</li>
     <li>サブスクリプションの運用、Pro機能の有効化、不正利用／利用制限の管理：<em>契約／正当な利益</em>。</li>
     <li>Apple Adsの獲得効果の測定およびデベロッパーによる広告／マーケティングの管理：<em>正当な利益</em>。</li>
+    <li>どの広告がFitlyに利用者を呼び込んでいるかをMetaおよびTikTokで測定すること（広告効果測定とアトリビューション）：<em>トラッキング許可前は正当な利益（第5条第2項(f)）、許可後は明示的同意（第5条第1項）。設定からオフにできます</em>。</li>
     <li>アプリの安定性（クラッシュレポート）と製品改善（匿名の利用メトリクス）：<em>正当な利益。設定から無効化できます</em>。</li>
   </ul>
 
@@ -153,7 +155,10 @@
     <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Fitlyコーチのチャット内容＋AIコンテキスト（プロフィール概要、測定値／アクティビティの概要、有効なプランの概要）</td><td>米国</td></tr>
     <tr><td>Apple / AdServices</td><td>認証とStoreKit初回取得バージョン候補の確認後、認証済みSupabase Edge Functionが生のトークンをAppleへ一時的に送信します。AppleにUUID、メール、氏名、健康データ、自由記述テキスト、IDFAは送信せず、基準となるコンバージョン種別を含む標準レスポンスはSupabaseのEUリージョンへ戻ります。</td><td>米国／グローバル</td></tr>
     <tr><td>RevenueCat</td><td>サブスクリプション／取引データと仮名UUIDのみ。AdServicesトークンおよびAppleのアトリビューションレスポンスは送信しません。<strong>メール、氏名、健康データ、自由記述テキスト、IDFAも一切送信されません。</strong></td><td>米国</td></tr>
+    <tr><td>Meta Platforms, Inc.</td><td>広告効果測定イベント、デバイス情報、IDFV、IPアドレス。IDFAはトラッキングを許可した後に限ります。健康データ、メッセージ、連絡先、支払金額は送信しません（第10章参照）。</td><td>米国</td></tr>
+    <tr><td>TikTok（TikTok Pte. Ltd.およびその関連会社）</td><td>トラッキングを許可した後に限り：広告効果測定イベント、デバイス情報、IDFV、IDFA、IPアドレス。健康データ、メッセージ、連絡先、支払金額は送信しません（第10章参照）。</td><td>米国／シンガポール</td></tr>
   </table>
+  <p>広告効果測定のためのMetaおよびTikTokへの移転は、MetaおよびTikTokのビジネスツール規約に含まれるデータ移転条項（Meta Business Tools Terms、TikTok Business Products (Data) Terms）に基づいて行われ、上記のAI向け移転の同意には基づきません。</p>
   <p>写真による食事記録や自由記述のマクロ推定といった一部のフローでは、
   <strong>あなたが明示的にボタンをタップした場合にのみ</strong>（このタップが移転の
   ご依頼にあたります）、入力した料理名または撮影した写真がAIサービスへ送信されます。
@@ -169,6 +174,8 @@
     <tr><td>Apple / AdServices</td><td>認証済みSupabase Edge Functionによるアトリビューショントークンの一時処理。生のトークンは保存しません</td><td>米国／グローバル</td></tr>
     <tr><td>PostHog</td><td>分析設定で許可した場合のみ：限定的なクライアント側ファネルイベント＋仮名UUID。自由記述、健康データ、価格、取引、Appleキャンペーンデータは含みません</td><td class="region">EU（フランクフルト）</td></tr>
     <tr><td>RevenueCat</td><td>サブスクリプション管理のみ。RevenueCatのApple Search Ads連携およびRevenueCat→PostHog連携は<strong>オフ</strong>です</td><td>米国</td></tr>
+    <tr><td>Meta（Meta Platforms, Inc.）</td><td>Meta SDKによる広告効果測定とアトリビューション。MetaはFitlyの測定のためにイベントを処理し、ビジネスツール規約に基づき、自らの目的のために独立した管理者としても処理します。<a href="https://www.facebook.com/privacy/policy/">Metaのプライバシーポリシー</a></td><td>米国</td></tr>
+    <tr><td>TikTok（TikTok Pte. Ltd.）</td><td>TikTok SDKによる広告効果測定とアトリビューション（トラッキングを許可した後に限る）。TikTokはFitlyの測定のためにイベントを処理し、ビジネス製品規約に基づき、自らの目的のために独立した管理者としても処理します。<a href="https://www.tiktok.com/legal/privacy-policy">TikTokのプライバシーポリシー</a></td><td>米国／シンガポール</td></tr>
     <tr><td>Brevo</td><td>ログイン／認証メール（メールアドレス＋リンクのみ、健康に関する内容は一切含みません）</td><td class="region">EU（パリ）</td></tr>
     <tr><td>GitHub Pages + Cloudflare</td><td>ログインリンクのリダイレクトページ（<strong>個人データは流れません</strong>）</td><td>グローバル（静的ページ）</td></tr>
   </table>
@@ -208,14 +215,19 @@
   ご依頼は、KVKKが定める期間内（遅くとも30日以内）に対応いたします。</p>
 
   <h2><span class="n">10</span> Cookieおよびトラッキング</h2>
-  <p>Fitlyはモバイルアプリであり、広告目的のトラッキング（クロスアプリトラッキング）を行わず、
-  Apple ATTの許可を必要としません。StoreKitのバージョン一致はアップグレードを除外する
+  <p>Fitlyはモバイルアプリです。どの広告がFitlyに利用者を呼び込んでいるかを測定するため、MetaおよびTikTokのSDKを使用します（第2章、第3章、第5章、第6章参照）。初期設定の途中で、iOSがAppleのATT（App Tracking Transparency）ダイアログを表示します：</p>
+  <ul>
+    <li><strong>トラッキングを許可した場合：</strong>Metaは広告識別子（IDFA）も受け取り、TikTok SDKが動作を開始します。インストール、毎回の起動、翌日の再訪、チュートリアル完了、トライアル開始、サブスクリプションの各イベントが、デバイス情報、IDFV、IDFA、IPアドレスとともにTikTokへ送信されます。TikTok SDKはAppleのSKAdNetwork測定も更新します。法的根拠：あなたの明示的同意。</li>
+    <li><strong>許可しない場合（または確認される前）：</strong>IDFAは収集されず、TikTokには何も送信されません。Metaは引き続き、第2章に記載したアプリイベントを、デバイス情報、IDFV、IPアドレスとともに正当な利益に基づいて受け取ります。</li>
+    <li><strong>設定 →「診断・使用状況データ」：</strong>このスイッチをオフにすると、FitlyがMetaとTikTokに送るすべてのイベントが直ちに停止します。アプリを次に再起動するまでの間、Meta SDKが広告識別子を含まない1日1回のステータス通知を送信することがあります。</li>
+    <li><strong>iOSの設定 → プライバシーとセキュリティ → トラッキング：</strong>Fitlyへのトラッキング許可はいつでも取り消せます。取り消すと広告識別子の送信が止まり、TikTokへの送信も止まります。</li>
+  </ul>
+  <p>あなたの健康データがMetaやTikTokに送信されることは決してありません。MetaおよびTikTok自身による処理には、それぞれのプライバシーポリシーが適用されます（第6章参照）。Apple Adsのアトリビューション（AdServices）はIDFAを使用しません。StoreKitのバージョン一致はアップグレードを除外する
   初回取得バージョン候補にすぎず、同じバージョンの再ダウンロードや別端末での取得を確実には
   除外できません。認証後、iOSはトークンをEdge Functionへ送り、FunctionはAppleへ一時送信し、
   生のトークンを保存せず、標準レスポンスをEUに保存します。Download/Redownload/PreOrderの分類は
   Appleの<code>conversionType</code>が基準です。ローカル所有者記録はそのインストールが残る間だけ
-  通常のアカウント切替を防ぎ、想定所有者とJWTの一致はA→Bの競合を防ぎます。<strong>IDFAは収集せず、アプリを横断したトラッキングも
-  行いません。</strong>RevenueCatのApple Search Ads連携およびRevenueCat→PostHog連携はオフで、
+  通常のアカウント切替を防ぎ、想定所有者とJWTの一致はA→Bの競合を防ぎます。RevenueCatのApple Search Ads連携およびRevenueCat→PostHog連携はオフで、
   RevenueCatはサブスクリプションだけを処理します。PostHogは分析設定で許可した場合にのみ、限定的な
   クライアント側ファネルイベントを受け取ります。自動の画面キャプチャおよびセッション記録は
   <strong>オフ</strong>です。</p>

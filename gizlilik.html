@@ -92,7 +92,7 @@
 
 <main>
   <h1>Gizlilik Politikası ve KVKK Aydınlatma Metni</h1>
-  <div class="sub">Son güncelleme: 10 Ağustos 2026 · Yürürlük: 10 Ağustos 2026</div>
+  <div class="sub">Son güncelleme: 10 Ekim 2026 · Yürürlük: 10 Ağustos 2026</div>
 
   <h2><span class="n">1</span> Veri Sorumlusu</h2>
   <p>İşbu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") ve
@@ -118,6 +118,7 @@
     <tr><td><strong>Sağlık (özel nitelikli)</strong></td><td>boy, kilo, hedef kilo, yaş, cinsiyet, vücut ölçümleri; antrenman ve set kayıtları, kişisel rekorlar; öğün, su ve beslenme kayıtları; diyet kısıtları (helal vb. inanç da açığa çıkarabilir); Fitly Koç sohbetinde sağlıkla ilgili anlattıklarınız; HealthKit verileri</td><td><strong>Açık rıza (m.6)</strong></td></tr>
     <tr><td>Kullanım verisi (psödonim)</td><td>kota sayaçları, anonim UUID'ye bağlı ürün istatistikleri (yalnız sayı/etiket), token kullanım sayıları</td><td>Meşru menfaat (m.5)</td></tr>
     <tr><td>Reklam edinimi / atıf (psödonim)</td><td>Kimlik doğrulama sonrasındaki StoreKit ilk-edinim-sürümü adayı için Apple Ads standart AdServices alanları psödonim UUID ile Supabase'te saklanır. Bu sürüm kontrolü upgrade'i dışlar; aynı sürüm redownload'ını veya başka cihazdaki edinimi kesin ayırmaz. Download/Redownload/PreOrder sınıflamasında Apple'ın <code>conversionType</code> alanı esastır ve yeni-kullanıcı raporları yalnız Download'ı kullanır. Ham belirteç asla saklanmaz; SHA-256 özeti 24 saatte sona erer ve saatlik silme işlemiyle en geç 25 saatte kaldırılır.</td><td>Meşru menfaat (m.5)</td></tr>
+    <tr><td>Reklam ölçümü olayları ve cihaz kimlikleri (psödonim)</td><td><strong>Meta:</strong> Ayarlar → "Tanı ve kullanım verisi" anahtarı açıkken her kurulumdan: kurulum, uygulamanın açılması ve oturum süresi, tanıtımın tamamlanması, deneme başlangıcı ve abonelik olayları, cihaz bilgileri (model, işletim sistemi, dil, saat dilimi gibi), uygulamaya özgü cihaz kimliği (IDFV) ve IP adresi; reklam kimliğiniz (IDFA) yalnız Apple'ın ATT penceresinde izlemeye izin verdikten sonra. <strong>TikTok:</strong> yalnız izlemeye izin verdikten sonra ve aynı anahtar açıkken: kurulum, her açılış, ikinci gün geri dönüş, tanıtımın tamamlanması, deneme başlangıcı ve abonelik olayları, cihaz bilgileri, IDFV, IDFA ve IP adresi. İkisine de hiçbir zaman gönderilmez: sağlık verisi, mesajlar, ad, e-posta, ödeme tutarı.</td><td>İzleme izninden önce meşru menfaat (m.5/2(f)); izin verdikten sonra açık rıza (m.5/1)</td></tr>
     <tr><td>Abonelik / finansal (genel)</td><td>App Store işlem durumu, ürün kimliği, abonelik dönemi</td><td>Sözleşme (m.5)</td></tr>
     <tr><td>Anonim / kişisel olmayan</td><td>egzersiz kataloğu, yemek kataloğu, paylaşımlı tarif önbelleği</td><td>—</td></tr>
   </table>
@@ -129,6 +130,7 @@
     <li>İlerlemenizin takibi (kilo grafiği, rekorlar, seriler) — <em>açık rıza</em>.</li>
     <li>Aboneliğin işletilmesi, Pro özelliklerinin açılması ve kötüye kullanım/limit denetimi — <em>sözleşme / meşru menfaat</em>.</li>
     <li>Apple Ads edinim performansının ölçülmesi ve geliştirici reklam/pazarlamasının yönetilmesi — <em>meşru menfaat</em>.</li>
+    <li>Hangi reklamların Fitly'ye kullanıcı getirdiğinin Meta ve TikTok ile ölçülmesi (reklam ölçümü ve atıf): <em>izleme izninden önce meşru menfaat (m.5/2(f)), izin verdikten sonra açık rıza (m.5/1); Ayarlar'dan kapatılabilir</em>.</li>
     <li>Uygulama kararlılığı (çökme raporları) ve ürün geliştirme (anonim kullanım metrikleri) — <em>meşru menfaat; ayarlar üzerinden devre dışı bırakılabilir</em>.</li>
   </ul>
 
@@ -154,7 +156,10 @@
     <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Fitly Koç sohbet içeriği + AI bağlamı (profil özeti, ölçüm/aktivite özetleri, aktif plan özeti)</td><td>ABD</td></tr>
     <tr><td>Apple / AdServices</td><td>Kimlik doğrulama ve StoreKit ilk-edinim-sürümü adayından sonra Supabase Edge Function'ımız ham AdServices belirtecini Apple'a yalnız geçici olarak yollar. UUID, e-posta, isim, sağlık verisi, serbest metin veya IDFA gönderilmez. Apple'ın standart yanıtı ve esas dönüşüm türü AB'deki Supabase'e döner.</td><td>ABD / global hizmet</td></tr>
     <tr><td>RevenueCat</td><td>Abonelik/işlem verisi + psödonim kullanıcı kimliği (yalnız UUID). <strong>RevenueCat'e AdServices belirteci, Apple Ads yanıtı, e-posta, isim, sağlık verisi, serbest metin veya IDFA gönderilmez.</strong></td><td>ABD</td></tr>
+    <tr><td>Meta Platforms, Inc.</td><td>Reklam ölçümü olayları, cihaz bilgileri, IDFV ve IP adresi; IDFA yalnız izlemeye izin verdikten sonra. Sağlık verisi, mesaj, iletişim bilgisi veya ödeme tutarı gönderilmez (bkz. Bölüm 10).</td><td>ABD</td></tr>
+    <tr><td>TikTok (TikTok Pte. Ltd. ve bağlı şirketleri)</td><td>Yalnız izlemeye izin verdikten sonra: reklam ölçümü olayları, cihaz bilgileri, IDFV, IDFA ve IP adresi. Sağlık verisi, mesaj, iletişim bilgisi veya ödeme tutarı gönderilmez (bkz. Bölüm 10).</td><td>ABD / Singapur</td></tr>
   </table>
+  <p>Reklam ölçümü için Meta ve TikTok'a yapılan aktarım, Meta ve TikTok'un iş araçları şartlarındaki veri aktarım hükümleri kapsamında gerçekleşir (Meta Business Tools Terms, TikTok Business Products (Data) Terms); yukarıdaki yapay zeka aktarım onayına dayanmaz.</p>
   <p>Fotoğrafla öğün kaydı ve serbest-metin makro tahmini gibi bazı akışlarda,
   <strong>yalnızca siz açıkça bir butona dokunduğunuzda</strong> (bu dokunuş aktarım
   talebinizdir) yazdığınız yemek adı veya çektiğiniz fotoğraf yapay zeka servisine gönderilir;
@@ -170,6 +175,8 @@
     <tr><td>Apple / AdServices</td><td>Kimliği doğrulanmış Supabase Edge Function üzerinden geçici standart atıf-belirteci alışverişi; ham belirteç saklanmaz (bkz. §5)</td><td>ABD / global hizmet</td></tr>
     <tr><td>PostHog</td><td>Yalnız analitik tercihiniz izin verirse: sınırlı istemci funnel olayları + psödonim UUID; serbest metin, sağlık, fiyat, işlem veya Apple kampanya verisi yok</td><td class="region">AB — Frankfurt</td></tr>
     <tr><td>RevenueCat</td><td>Yalnız abonelik yönetimi. Apple Search Ads atfı ve RevenueCat→PostHog entegrasyonları kapalıdır.</td><td>ABD</td></tr>
+    <tr><td>Meta (Meta Platforms, Inc.)</td><td>Meta SDK'sı ile reklam ölçümü ve atıf. Meta olayları Fitly'nin ölçümü için işler; iş araçları şartları uyarınca kendi amaçları için bağımsız veri sorumlusu olarak da işler. <a href="https://www.facebook.com/privacy/policy/">Meta Gizlilik Politikası</a></td><td>ABD</td></tr>
+    <tr><td>TikTok (TikTok Pte. Ltd.)</td><td>TikTok SDK'sı ile reklam ölçümü ve atıf, yalnız izlemeye izin verdikten sonra. TikTok olayları Fitly'nin ölçümü için işler; iş ürünleri şartları uyarınca kendi amaçları için bağımsız veri sorumlusu olarak da işler. <a href="https://www.tiktok.com/legal/privacy-policy">TikTok Gizlilik Politikası</a></td><td>ABD / Singapur</td></tr>
     <tr><td>Brevo</td><td>Giriş/doğrulama e-postaları (yalnız e-posta adresi + bağlantı; sağlık içeriği asla)</td><td class="region">AB — Paris</td></tr>
     <tr><td>GitHub Pages + Cloudflare</td><td>Giriş bağlantısı yönlendirme sayfası (<strong>kişisel veri akmaz</strong>)</td><td>Global (statik sayfa)</td></tr>
   </table>
@@ -214,15 +221,20 @@
   talepleriniz KVKK'nın öngördüğü süre içinde (en geç 30 gün) sonuçlandırılır.</p>
 
   <h2><span class="n">10</span> Çerezler ve İzleme</h2>
-  <p>Fitly bir mobil uygulamadır; reklam amaçlı takip (cross-app tracking) yapmaz,
-  Apple ATT izni gerektirmez. StoreKit'teki sürüm eşitliği yalnız upgrade'i dışlayan bir
+  <p>Fitly bir mobil uygulamadır. Hangi reklamların Fitly'ye kullanıcı getirdiğini ölçmek için Meta ve TikTok SDK'larını kullanır (bkz. Bölüm 2, 3, 5 ve 6). Onboarding sırasında iOS, Apple'ın ATT (App Tracking Transparency) izin penceresini gösterir:</p>
+  <ul>
+    <li><strong>İzlemeye izin verirseniz:</strong> Meta'ya reklam kimliğiniz (IDFA) de iletilir ve TikTok SDK'sı çalışmaya başlar: kurulum, her açılış, ikinci gün geri dönüş, tanıtımın tamamlanması, deneme başlangıcı ve abonelik olayları; cihaz bilgileri, IDFV, IDFA ve IP adresiyle birlikte TikTok'a gönderilir. TikTok SDK'sı ayrıca Apple'ın SKAdNetwork ölçümünü günceller. Hukuki sebep: açık rızanız.</li>
+    <li><strong>İzin vermezseniz (veya izin henüz sorulmadıysa):</strong> IDFA toplanmaz ve TikTok'a hiçbir şey gönderilmez. Meta, Bölüm 2'deki uygulama olaylarını cihaz bilgileri, IDFV ve IP adresiyle birlikte meşru menfaate dayanarak almaya devam eder.</li>
+    <li><strong>Ayarlar → "Tanı ve kullanım verisi":</strong> bu anahtarı kapattığınızda Fitly'nin Meta ve TikTok'a gönderdiği bütün olaylar hemen durur. Meta SDK'sı, uygulama yeniden başlatılana kadar reklam kimliği içermeyen günlük bir durum bildirimi göndermeye devam edebilir.</li>
+    <li><strong>iOS Ayarlar → Gizlilik ve Güvenlik → İzleme:</strong> Fitly için izleme iznini dilediğiniz zaman geri alabilirsiniz; bu durumda reklam kimliği gönderimi ve TikTok'a gönderim durur.</li>
+  </ul>
+  <p>Sağlık verileriniz Meta'ya veya TikTok'a hiçbir zaman gönderilmez. Meta ve TikTok'un kendi işlemesi için kendi gizlilik politikaları geçerlidir (bkz. Bölüm 6). Apple Ads atfı (AdServices) IDFA kullanmaz. StoreKit'teki sürüm eşitliği yalnız upgrade'i dışlayan bir
   ilk-edinim-sürümü adayıdır; aynı sürüm redownload'ını veya başka cihazdaki edinimi kesin dışlamaz.
   Kimliği doğrulanmış UUID oluştuktan sonra iOS AdServices belirtecini Edge Function'ımıza yollar;
   Function belirteci Apple'a geçici olarak iletir, ham belirteci asla saklamaz ve Apple'ın standart
   yanıtını AB'deki Supabase'te saklar. Apple'ın <code>conversionType</code> alanı Download/Redownload/
   PreOrder sınıflamasında esastır. Yerel sahip kaydı yalnız aynı kurulum dururken olağan hesap
-  değişimini; istek sahibi ile JWT eşitliği ise A→B yarışını engeller. <strong>IDFA toplanmaz ve uygulamalar arası
-  takip yapılmaz.</strong> RevenueCat Apple Search
+  değişimini; istek sahibi ile JWT eşitliği ise A→B yarışını engeller. RevenueCat Apple Search
   Ads ve RevenueCat→PostHog entegrasyonları kapalıdır. PostHog yalnız analitik tercihiniz izin verirse
   sınırlı istemci funnel olaylarını alır; otomatik ekran yakalama ve oturum kaydı <strong>kapalıdır</strong>
   ve analitiği Ayarlar'dan tamamen devre dışı bırakabilirsiniz.</p>

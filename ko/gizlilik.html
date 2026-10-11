@@ -92,7 +92,7 @@
 
 <main>
   <h1>개인정보 처리방침 및 KVKK 고지문</h1>
-  <div class="sub">최종 업데이트: 2026년 8월 10일 · 시행일: 2026년 8월 10일</div>
+  <div class="sub">최종 업데이트: 2026년 10월 10일 · 시행일: 2026년 8월 10일</div>
 
   <h2><span class="n">1</span> 데이터 관리자</h2>
   <p>본 고지문은 제6698호 개인정보 보호법(이하 "KVKK") 및
@@ -118,6 +118,7 @@
     <tr><td><strong>건강 (민감/특별 범주)</strong></td><td>키, 체중, 목표 체중, 나이, 성별, 신체 치수; 운동 및 세트 기록, 개인 기록; 식사, 수분 및 영양 기록; 식이 제한(할랄 등 신념을 드러낼 수도 있음); Fitly 코치 대화에서 건강과 관련해 말씀하신 내용; HealthKit 데이터</td><td><strong>명시적 동의 (제6조)</strong></td></tr>
     <tr><td>이용 데이터 (가명)</td><td>할당량 카운터, 익명 UUID에 연결된 제품 통계(숫자/라벨만), 토큰 사용량 수치</td><td>정당한 이익 (제5조)</td></tr>
     <tr><td>광고 획득 / 기여도 (가명)</td><td>인증된 StoreKit 최초 획득 버전 후보에 대해 Apple Ads AdServices의 표준 필드를 가명 UUID와 연결하여 Supabase에 저장합니다. 버전 검사는 업그레이드를 제외하지만 같은 버전의 재다운로드나 다른 기기에서의 획득을 확실히 제외하지는 못합니다. Download/Redownload/PreOrder 분류는 Apple의 <code>conversionType</code>이 기준이며 신규 사용자 보고에는 Download만 사용합니다. 원본 토큰은 저장하지 않고, SHA-256 재전송 해시는 24시간 후 만료되며 매시간 정리되어 25시간 이내 삭제됩니다.</td><td>정당한 이익 (제5조)</td></tr>
+    <tr><td>광고 측정 이벤트 및 기기 식별자 (가명)</td><td><strong>Meta:</strong> 설정 → "진단 및 사용 데이터"가 켜져 있는 동안 모든 설치에서: 설치, 앱 실행 및 세션 시간, 튜토리얼 완료, 체험 시작 및 구독 이벤트, 기기 정보(모델, 운영체제, 언어, 시간대 등), 앱별 기기 식별자(IDFV) 및 IP 주소. 광고 식별자(IDFA)는 Apple의 ATT 창에서 추적을 허용한 후에만 전송됩니다. <strong>TikTok:</strong> 추적을 허용한 후에만, 같은 스위치가 켜져 있을 때: 설치, 매번의 앱 실행, 다음 날 재방문, 튜토리얼 완료, 체험 시작 및 구독 이벤트, 기기 정보, IDFV, IDFA 및 IP 주소. 두 회사 모두에 절대 전송하지 않는 항목: 건강 정보, 메시지, 이름, 이메일, 결제 금액.</td><td>추적 허용 전에는 정당한 이익(제5조 제2항 (f)), 허용 후에는 명시적 동의(제5조 제1항)</td></tr>
     <tr><td>구독 / 금융 (일반)</td><td>App Store 거래 상태, 제품 ID, 구독 기간</td><td>계약 (제5조)</td></tr>
     <tr><td>익명 / 비개인정보</td><td>운동 카탈로그, 음식 카탈로그, 공유 레시피 캐시</td><td>—</td></tr>
   </table>
@@ -129,6 +130,7 @@
     <li>진행 상황 추적(체중 그래프, 기록, 연속 기록) — <em>명시적 동의</em>.</li>
     <li>구독 운영, Pro 기능 활성화 및 오용/한도 관리 — <em>계약 / 정당한 이익</em>.</li>
     <li>Apple Ads 획득 성과 측정 및 개발자 광고/마케팅 관리 — <em>정당한 이익</em>.</li>
+    <li>어떤 광고가 Fitly로 사용자를 데려오는지 Meta 및 TikTok으로 측정(광고 측정 및 기여도): <em>추적 허용 전에는 정당한 이익(제5조 제2항 (f)), 허용 후에는 명시적 동의(제5조 제1항); 설정에서 끌 수 있음</em>.</li>
     <li>앱 안정성(충돌 리포트) 및 제품 개선(익명 이용 지표) — <em>정당한 이익; 설정에서 비활성화할 수 있음</em>.</li>
   </ul>
 
@@ -154,7 +156,10 @@
     <tr><td>OpenRouter → OpenAI / Anthropic / Google</td><td>Fitly 코치 대화 내용 + AI 컨텍스트(프로필 요약, 측정/활동 요약, 활성 플랜 요약)</td><td>미국</td></tr>
     <tr><td>Apple / AdServices</td><td>인증과 StoreKit 최초 획득 버전 후보 확인 후 인증된 Supabase Edge Function이 원본 토큰을 Apple에 일시적으로만 전송합니다. Apple에는 UUID, 이메일, 이름, 건강 정보, 자유 텍스트 또는 IDFA를 보내지 않으며, 기준이 되는 전환 유형을 포함한 표준 응답은 Supabase의 EU 리전으로 돌아옵니다.</td><td>미국 / 글로벌</td></tr>
     <tr><td>RevenueCat</td><td>구독/거래 데이터와 가명 UUID만 전송합니다. AdServices 토큰과 Apple 기여도 응답은 전송하지 않으며, <strong>이메일, 이름, 건강 정보, 자유 텍스트 또는 IDFA도 절대 전송하지 않습니다.</strong></td><td>미국</td></tr>
+    <tr><td>Meta Platforms, Inc.</td><td>광고 측정 이벤트, 기기 정보, IDFV 및 IP 주소. IDFA는 추적을 허용한 후에만 전송합니다. 건강 정보, 메시지, 연락처 정보 또는 결제 금액은 전송하지 않습니다(섹션 10 참조).</td><td>미국</td></tr>
+    <tr><td>TikTok (TikTok Pte. Ltd. 및 계열사)</td><td>추적을 허용한 후에만: 광고 측정 이벤트, 기기 정보, IDFV, IDFA 및 IP 주소. 건강 정보, 메시지, 연락처 정보 또는 결제 금액은 전송하지 않습니다(섹션 10 참조).</td><td>미국 / 싱가포르</td></tr>
   </table>
+  <p>광고 측정을 위한 Meta 및 TikTok으로의 이전은 Meta와 TikTok 비즈니스 도구 약관의 데이터 이전 조항(Meta Business Tools Terms, TikTok Business Products (Data) Terms)에 따라 이루어지며, 위에 설명한 AI 국외 이전 동의에 근거하지 않습니다.</p>
   <p>사진 식사 기록이나 자유 텍스트 매크로 추정과 같은 일부 흐름에서는,
   <strong>귀하가 명시적으로 버튼을 누른 경우에만</strong>(이 누름이 곧 이전
   요청입니다) 귀하가 입력한 음식 이름이나 촬영한 사진이 인공지능 서비스로 전송됩니다.
@@ -170,6 +175,8 @@
     <tr><td>Apple / AdServices</td><td>인증된 Supabase Edge Function을 통한 기여도 토큰의 일시 처리. 원본 토큰은 저장하지 않음</td><td>미국 / 글로벌</td></tr>
     <tr><td>PostHog</td><td>분석 선택이 허용하는 경우에만: 제한된 클라이언트 퍼널 이벤트 + 가명 UUID. 자유 텍스트, 건강 정보, 가격, 거래 또는 Apple 캠페인 데이터 없음</td><td class="region">EU — 프랑크푸르트</td></tr>
     <tr><td>RevenueCat</td><td>구독 관리만 수행합니다. RevenueCat의 Apple Search Ads 연동과 RevenueCat→PostHog 연동은 <strong>꺼져 있습니다</strong></td><td>미국</td></tr>
+    <tr><td>Meta (Meta Platforms, Inc.)</td><td>Meta SDK를 통한 광고 측정 및 기여도 분석. Meta는 Fitly의 측정을 위해 이벤트를 처리하며, 비즈니스 도구 약관에 따라 자체 목적을 위한 독립적인 개인정보처리자로서도 처리합니다. <a href="https://www.facebook.com/privacy/policy/">Meta 개인정보처리방침</a></td><td>미국</td></tr>
+    <tr><td>TikTok (TikTok Pte. Ltd.)</td><td>TikTok SDK를 통한 광고 측정 및 기여도 분석(추적을 허용한 후에만). TikTok은 Fitly의 측정을 위해 이벤트를 처리하며, 비즈니스 제품 약관에 따라 자체 목적을 위한 독립적인 개인정보처리자로서도 처리합니다. <a href="https://www.tiktok.com/legal/privacy-policy">TikTok 개인정보처리방침</a></td><td>미국 / 싱가포르</td></tr>
     <tr><td>Brevo</td><td>로그인/인증 이메일(이메일 주소 + 링크만; 건강 콘텐츠는 절대 아님)</td><td class="region">EU — 파리</td></tr>
     <tr><td>GitHub Pages + Cloudflare</td><td>로그인 링크 리디렉션 페이지(<strong>개인정보가 흐르지 않음</strong>)</td><td>글로벌(정적 페이지)</td></tr>
   </table>
@@ -209,14 +216,19 @@
   귀하의 요청은 KVKK가 정한 기간 내(늦어도 30일 이내)에 처리됩니다.</p>
 
   <h2><span class="n">10</span> 쿠키 및 추적</h2>
-  <p>Fitly는 모바일 애플리케이션으로, 광고 목적의 추적(크로스 앱 트래킹)을 하지 않으며,
-  Apple ATT 권한을 요구하지 않습니다. StoreKit 버전 일치는 업그레이드를 제외하는 최초 획득 버전
+  <p>Fitly는 모바일 애플리케이션입니다. 어떤 광고가 Fitly로 사용자를 데려오는지 측정하기 위해 Meta 및 TikTok SDK를 사용합니다(섹션 2, 3, 5, 6 참조). 초기 설정 중에 iOS가 Apple의 ATT(App Tracking Transparency) 창을 표시합니다:</p>
+  <ul>
+    <li><strong>추적을 허용하는 경우:</strong> Meta는 광고 식별자(IDFA)도 받으며, TikTok SDK가 작동을 시작합니다. 설치, 매번의 앱 실행, 다음 날 재방문, 튜토리얼 완료, 체험 시작 및 구독 이벤트가 기기 정보, IDFV, IDFA 및 IP 주소와 함께 TikTok으로 전송됩니다. TikTok SDK는 Apple의 SKAdNetwork 측정도 업데이트합니다. 법적 근거: 귀하의 명시적 동의.</li>
+    <li><strong>허용하지 않는 경우(또는 묻기 전):</strong> IDFA는 수집되지 않으며 TikTok에는 아무것도 전송되지 않습니다. Meta는 섹션 2에 나열된 앱 이벤트를 기기 정보, IDFV 및 IP 주소와 함께 정당한 이익에 근거하여 계속 받습니다.</li>
+    <li><strong>설정 → "진단 및 사용 데이터":</strong> 이 스위치를 끄면 Fitly가 Meta와 TikTok에 보내는 모든 이벤트가 즉시 중단됩니다. 앱을 다음에 다시 시작할 때까지 Meta SDK가 광고 식별자 없이 하루 한 번 상태 알림을 보낼 수 있습니다.</li>
+    <li><strong>iOS 설정 → 개인정보 보호 및 보안 → 추적:</strong> 언제든지 Fitly의 추적 허용을 철회할 수 있으며, 그러면 광고 식별자 전송과 TikTok으로의 전송이 중단됩니다.</li>
+  </ul>
+  <p>귀하의 건강 정보는 결코 Meta나 TikTok으로 전송되지 않습니다. Meta와 TikTok 자체의 처리에는 각 회사의 개인정보처리방침이 적용됩니다(섹션 6 참조). Apple Ads 기여도 분석(AdServices)은 IDFA를 사용하지 않습니다. StoreKit 버전 일치는 업그레이드를 제외하는 최초 획득 버전
   후보일 뿐이며 같은 버전의 재다운로드나 다른 기기에서의 획득을 확실히 제외하지는 못합니다. 인증 후
   iOS가 토큰을 Edge Function으로 보내면 Function은 이를 Apple에 일시 전송하고 원본을 저장하지 않으며
   표준 응답을 EU에 저장합니다. Download/Redownload/PreOrder 분류는 Apple의
   <code>conversionType</code>이 기준입니다. 로컬 소유자 기록은 해당 설치가 유지되는 동안에만 일반적인
-  계정 전환을 막고, 예상 소유자와 JWT의 일치는 A→B 경합을 막습니다. <strong>IDFA를
-  수집하거나 앱 간에 귀하를 추적하지 않습니다.</strong> RevenueCat의 Apple Search Ads 연동과
+  계정 전환을 막고, 예상 소유자와 JWT의 일치는 A→B 경합을 막습니다. RevenueCat의 Apple Search Ads 연동과
   RevenueCat→PostHog 연동은 꺼져 있으며 RevenueCat은 구독만 처리합니다. PostHog는 분석 선택이
   허용하는 경우에만 제한된 클라이언트 퍼널 이벤트를 수신합니다. 자동 화면 캡처와 세션 기록은
   <strong>꺼져 있습니다</strong>.</p>
